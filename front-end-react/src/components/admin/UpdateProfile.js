@@ -8,33 +8,12 @@ import LayoutCenter from "../layout/LayoutCenter"
 
 export default function UpdateProfile() {
 
-
-
-
-
-  var textarea = document.querySelector('textarea');
-
-  textarea.addEventListener('keydown', autosize);
-               
-  function autosize(){
-    var el = this;
-    setTimeout(function(){
-      el.style.cssText = 'height:auto; padding:0';
-      // for box-sizing other than "content-box" use:
-      // el.style.cssText = '-moz-box-sizing:content-box';
-      el.style.cssText = 'height:' + el.scrollHeight + 'px';
-    },0);
-  }
-
-
-
-
-
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState("")
+  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
@@ -89,6 +68,7 @@ export default function UpdateProfile() {
                 type="password"
                 ref={passwordRef}
                 placeholder="Leave blank to keep the same"
+                defaultValue={password}
               />
             </Form.Group>
             <Form.Group id="password-confirm">

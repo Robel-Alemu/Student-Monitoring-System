@@ -102,6 +102,9 @@ import UpdateStudentPage from "./components/pages/UpdateStudentPage"
 import AddNewUserPage from "./components/pages/AddNewUserPage"
 import EditStudentPage from "./components/pages/EditStudentPage"
 import AllUsersPage from "./components/pages/AllUsersPage"
+import PrivateRouteRoleCheck from "./routes/PrivateRouteRoleCheck"
+import AddGrade from "./components/data-encoder/AddGrade"
+import AddAttendance from "./components/data-encoder/AddAttendance"
 function App() {
 
 
@@ -153,7 +156,20 @@ function App() {
       <div className="w-100" style={{ height: "100%" }}> 
         <Router>
           <AuthProvider>
+
             <Switch>
+
+              {/* <PrivateRouteRoleCheck exact path="/" component={Dashboard}/>
+              <PrivateRouteRoleCheck path="/data-encoder" component={DataEncoderNavigation}/>
+              <PrivateRouteRoleCheck path="/update-profile" component={UpdateProfile}/>
+              <PrivateRouteRoleCheck path="/add-user" component={AddNewUserPage}/>
+              <PrivateRouteRoleCheck path="/users" component={AllUsersPage}/>
+              <PrivateRouteRoleCheck path="/broadcast-message" component={AddBroadcastPage}/>
+              <PrivateRoute path ="/update-student" component={UpdateStudent}/>
+             
+              <PrivateRoute path ="/add-student" component={AddStudentPage}/> */}
+            
+            
               <PrivateRoute exact path="/data-encoder" component={DataEncoderNavigation} />
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
@@ -165,15 +181,16 @@ function App() {
               <PrivateRoute path ="/edit-broadcast-message" component={EditBroadcastMessage}/>
               <PrivateRoute path ="/all-students" component={AllStudentList}/>
               <PrivateRoute path ="/update-student" component={EditStudentPage}/>
-              {/* <PrivateRoute path ="/update-student" component={UpdateStudent}/> */}
+              <PrivateRoute path ="/update-student" component={UpdateStudent}/>
               <Route path="/signup" component={SignupPage} />
               <Route path="/login" component={Login} />
-            
              
-              
+             
+              <PrivateRoute path ="/add-grade" component={AddGrade}/>
+              <PrivateRoute path ="/add-attendance" component={AddAttendance}/>
               
 
-              {/* <Route path="/forgot-password" component={ForgotPassword} /> */}
+               {/* <Route path="/forgot-password" component={ForgotPassword} />  */}
             </Switch>
           </AuthProvider>
         </Router>

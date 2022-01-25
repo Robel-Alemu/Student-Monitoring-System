@@ -13,9 +13,9 @@ const {
     getUser
 } = require('../controllers/accountController');
 
-const { AddStudent, getStudent, getAllStudent, updateStudent, deleteStudent} = require("../controllers/studentController");
+const { AddStudent, getStudent, getAllStudent, updateStudent, deleteStudent,  AddGrade, AddAttendance} = require("../controllers/studentController");
 
-const {AddBroadcast, getBroadcastMessages,updateBroadcastMessage} = require("../controllers/broadcastMessage");
+const {AddBroadcast,AddB,getB,getGrades, getBroadcastMessages,updateBroadcastMessage} = require("../controllers/broadcastMessage");
 
 const router = express.Router();
 
@@ -36,8 +36,16 @@ router.get('/Student-Information',getAllStudent);
 router.get('/Student-Information/:studentId',getStudent);
 router.post('/Student-Information',AddStudent);
 
+
+router.post("/add-grade",AddGrade);
+router.post("/add-attendance",AddAttendance);
+
+
 router.get('/broadcast-messages', getBroadcastMessages);
 router.post('/Broadcast-Message', AddBroadcast);
+router.post('/Broadcast', AddB);
+router.get('/getB/:id', getB);
+router.get('/getG', getGrades);
 router.put('/update-message/:id',updateBroadcastMessage);
 
 router.put('/update-student/:id',updateStudent);
