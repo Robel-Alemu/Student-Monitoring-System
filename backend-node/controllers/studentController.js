@@ -154,41 +154,83 @@ const AddGrade = async (req, res) => {
     }
     data.pop();
 
-
-    function checkUniqueStudentId(array){
+    function checkUniqueStudentId(array) {
       let isUnique = true;
       let idExist = true;
-let items = array.length;
-console.log(array);
-      for(let i=0; i< items; i++){
-        console.log(array[i].studentId)
-        if (array[i].studentId==undefined){
-idExist = false;
-break;
+      let isGradeFile = true;
 
+      let gradeMatch = true;
+      let termMatch = true;
+      let sectionMatch = true;
+      let subjectMatch = true;
+      let items = array.length;
+      console.log(array);
+      for (let i = 0; i < items; i++) {
+        console.log(array[i].studentId);
+        if (array[i].studentId == undefined) {
+          idExist = false;
+          break;
+        }
+        if (array[i].subject == undefined) {
+          isGradeFile = false;
+          break;
+        }
+        if (array[i].term != term) {
+          termMatch = false;
+          break;
+        }
+        if (array[i].grade != grade) {
+          gradeMatch = false;
+          break;
+        }
+        if (array[i].section != section) {
+          sectionMatch = false;
+          break;
+        }
+        if (array[i].subject != subject) {
+          subjectMatch = false;
+          break;
         }
         // idExist = true;
-        for(let j=i+1; j<items; j++ ){
-          
+        for (let j = i + 1; j < items; j++) {
           console.log(array[j].studentId);
-          if (array[i].studentId == array[j].studentId)
-            isUnique = false;
-            console.log(isUnique);
-            break;
+          if (array[i].studentId == array[j].studentId) isUnique = false;
+          console.log(isUnique);
+          break;
         }
-        if (isUnique == false)
-        break;
+        if (isUnique == false) break;
       }
-      console.log(isUnique,idExist);
+      console.log(
+        isUnique,
+        idExist,
+        isGradeFile,
+        termMatch,
+        gradeMatch,
+        sectionMatch,
+        subjectMatch
+      );
       const result = {
-        studentIdExist : idExist,
-        studentIsUnique: isUnique
-      }
-      return (result);
+        studentIdExist: idExist,
+        studentIsUnique: isUnique,
+        isGradeFile : isGradeFile,
+        termMatched: termMatch,
+        gradeMatched: gradeMatch,
+        sectionMatched: sectionMatch,
+        subjectMatched: subjectMatch,
+      };
+      return result;
     }
 
-    let validate = checkUniqueStudentId(data)
-    if (validate.studentIdExist && validate.studentIsUnique){
+    let validate = checkUniqueStudentId(data);
+    if (
+      validate.studentIdExist &&
+      validate.studentIsUnique &&
+      validate.isGradeFile &&
+      validate.termMatched &&
+      validate.gradeMatched &&
+      validate.sectionMatched &&
+      validate.subjectMatched
+    ) {
       data.forEach(async (g) => {
         if (g.firstTest == undefined) g.firstTest = defaultValue;
         if (g.secondtTest == undefined) g.secondTest = defaultValue;
@@ -200,30 +242,67 @@ break;
         //     .send({ message: "Student Id must not be empty! Please check file" });
         //   return false;
         // }
-        
-        // else {
-          await addGrade(g);
-          // flag = 1;
-          return true;
-        
-      });
-      
-        res.status(200).send({ message: "Grades added successfully!" });
-    }
 
-    else if(!validate.studentIdExist) {
-      res.status(400).send({ message: "Student id must not be empty among the data, please try again" });
+        // else {
+        await addGrade(g);
+        // flag = 1;
+        return true;
+      });
+
+      res.status(200).send({ message: "Grades added successfully!" });
+    } else if (!validate.studentIdExist) {
+      res
+        .status(400)
+        .send({
+          message:
+            "Student id must not be empty among the data, please try again",
+        });
+    } else if (!validate.studentIsUnique) {
+      res
+        .status(400)
+        .send({
+          message: "Student id is not unique among the data, please try again",
+        });
+    } else if (!validate.isGradeFile) {
+      res
+        .status(400)
+        .send({
+          message: "File may not be a correct grade format , please try again",
+        });
     }
-    else if(!validate.studentIsUnique) {
-      res.status(400).send({ message: "Student id is not unique among the data, please try again" });
+     else if (!validate.termMatched) {
+      res
+        .status(400)
+        .send({
+          message: "Term selected and Term value in file did not match, please check your file again!",
+        });
     }
-   
+     else if (!validate.gradeMatched) {
+      res
+        .status(400)
+        .send({
+          message: "Grade selected and Grade value in file did not match, please check your file again!",
+        });
+    }
+     else if (!validate.sectionMatched) {
+      res
+        .status(400)
+        .send({
+          message: "Section selected and Section value in file did not match, please check your file again!",
+        });
+    }
+     else if (!validate.subjectMatched) {
+      res
+        .status(400)
+        .send({
+          message: "Subject selected and Subject value in file did not match, please check your file again!",
+        });
+    }
   } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
   }
 };
-
 
 const AddAttendance = async (req, res) => {
   try {
@@ -240,108 +319,114 @@ const AddAttendance = async (req, res) => {
     const year = data[lastItem].year;
     const type = data[lastItem].type;
     const defaultDate = datePosted;
-  if (type === "attendance"){
-    async function addAttendance(attendance) {
-      // console.log(x);
+    if (type === "attendance") {
+      async function addAttendance(attendance) {
+        // console.log(x);
 
-      await firestore
-        .collection("Attendance")
-        .doc(year)
-        .collection(term)
-        .doc("grade-" + grade)
-        .collection("section " + section)
-        .doc()
-        .set(attendance);
-    }
-    data.pop();
+        await firestore
+          .collection("Attendance")
+          .doc(year)
+          .collection(term)
+          .doc("grade-" + grade)
+          .collection("section " + section)
+          .doc()
+          .set(attendance);
+      }
+      data.pop();
 
+      function checkAttendanceValidity(array) {
+        let isUnique = true;
+        let idExist = true;
+        let statusExist = true;
 
-    function checkAttendanceValidity(array){
-      let isUnique = true;
-      let idExist = true;
-      let statusExist = true;
-      
-let items = array.length;
-console.log(array);
-      for(let i=0; i< items; i++){
-        console.log(array[i].studentId)
-        if (array[i].studentId==undefined){
-idExist = false;
-break;
+        let items = array.length;
+        console.log(array);
+        for (let i = 0; i < items; i++) {
+          console.log(array[i].studentId);
+          if (array[i].studentId == undefined) {
+            idExist = false;
+            break;
+          }
+          if (array[i].status == undefined) {
+            statusExist = false;
+            break;
+          }
 
-        }
-        if (array[i].status==undefined){
-statusExist = false;
-break;
-
-        }
-        // idExist = true;
-        for(let j=i+1; j<items; j++ ){
-          
-          console.log(array[j].studentId);
-          if (array[i].studentId == array[j].studentId)
-            isUnique = false;
+          // idExist = true;
+          for (let j = i + 1; j < items; j++) {
+            console.log(array[j].studentId);
+            if (array[i].studentId == array[j].studentId) isUnique = false;
             console.log(isUnique);
             break;
+          }
+          if (isUnique == false) break;
         }
-        if (isUnique == false)
-        break;
+        console.log(isUnique, idExist, statusExist);
+        const result = {
+          studentIdExist: idExist,
+          studentIsUnique: isUnique,
+          attendanceStatusExist: statusExist,
+        };
+        return result;
       }
-      console.log(isUnique,idExist,statusExist);
-      const result = {
-        studentIdExist : idExist,
-        studentIsUnique: isUnique,
-        attendanceStatusExist : statusExist
-      }
-      return (result);
-    }
 
-    let validate = checkAttendanceValidity(data)
-    if ((validate.studentIdExist) && (validate.studentIsUnique) && (validate.attendanceStatusExist)){
-      data.forEach(async (g) => {
+      let validate = checkAttendanceValidity(data);
+      if (
+        validate.studentIdExist &&
+        validate.studentIsUnique &&
+        validate.attendanceStatusExist
+      ) {
+        data.forEach(async (g) => {
+          if (g.term == undefined) g.term = term;
+          if (g.grade == undefined) g.grade = grade;
+          if (g.section == undefined) g.section = section;
+          if (g.date == undefined) g.date = defaultDate;
+          // if (g.studentId == undefined) {
+          //   res
+          //     .status(400)
+          //     .send({ message: "Student Id must not be empty! Please check file" });
+          //   return false;
+          // }
 
-        if (g.term == undefined) g.term = term;
-        if (g.grade == undefined) g.grade = grade;
-        if (g.section == undefined) g.section = section;
-        if (g.date == undefined) g.date = defaultDate;
-        // if (g.studentId == undefined) {
-        //   res
-        //     .status(400)
-        //     .send({ message: "Student Id must not be empty! Please check file" });
-        //   return false;
-        // }
-        
-        // else {
+          // else {
           // g.datePosted = datePosted
           await addAttendance(g);
           // flag = 1;
           return true;
-        
-      });
-      
-        res.status(200).send({ message: "Attendance added successfully!" });
-    }
+        });
 
-    else if(!validate.studentIdExist) {
-      res.status(400).send({ message: "Student id must not be empty among the data, please try again" });
-    }
-    else if(!validate.studentIsUnique) {
-      res.status(400).send({ message: "Student id is not unique among the data, please try again" });
-    }
-    else if(!validate.attendanceStatusExist) {
-      res.status(400).send({ message: "Student attendance status should not be empty, please try again" });
-    }
-  }
-  else 
-  res.status(400).send({ message: "data is not correct format for attendance" });
-   
+        res.status(200).send({ message: "Attendance added successfully!" });
+      } else if (!validate.studentIdExist) {
+        res
+          .status(400)
+          .send({
+            message:
+              "Student id must not be empty among the data,  please check your file again!",
+          });
+      } else if (!validate.studentIsUnique) {
+        res
+          .status(400)
+          .send({
+            message:
+              "Student id is not unique among the data,  please check your file again!",
+          });
+      } else if (!validate.attendanceStatusExist) {
+        res
+          .status(400)
+          .send({
+            message:
+              "Student attendance status should not be empty, please check your file again!",
+          });
+      }
+    } else
+      res
+        .status(400)
+        .send({ message: "data is not correct format for attendance" });
   } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
   }
-
 };
-
 
 module.exports = {
   AddStudent,
@@ -351,5 +436,5 @@ module.exports = {
   deleteStudent,
 
   AddGrade,
-  AddAttendance
+  AddAttendance,
 };
