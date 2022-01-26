@@ -21,7 +21,7 @@ function AddBroadcastPage() {
 
 
     fetch(
-      "http://localhost:8080/api/broadcast-message",
+      "https://student-monitoring.herokuapp.com/api/broadcast-message",
       {
         method: "POST",
         body: JSON.stringify(message),

@@ -1,7 +1,9 @@
 "use strict";
 
+const res = require("express/lib/response");
 //const res = require("express/lib/response");
 const firebase = require("../connection/db");
+const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
 const StudentInformation = require("../models/StudentInformation");
 
@@ -468,6 +470,72 @@ const AddAttendance = async (req, res) => {
   }
 };
 
+
+const GetStudentGrade = async (req, res) =>{
+
+  
+const studentId = req.params.studentId;
+const term = req.params.term;
+const grade = req.params.grade;
+const section = req.params.section;
+const subject = req.params.subject;
+
+console.log(`ID:- ${studentId}\nTerm:- ${term} \nGrade:- ${grade} \nSection:- ${section} \nSubject:- ${subject}`)
+try {
+  const studentGrade = await firestore
+  .collection("Grade")
+  .doc(term)
+  .collection("grade-" + grade)
+  .doc("section " + section)
+  .collection(subject);
+  
+  const data = await studentGrade.get()
+  
+  // data = data.filter(studentInfo => {
+  //   return studentInfo.studentId == studentId
+  // })
+    
+    let studentGradeArray = [];
+    if (data.empty) {
+      res.status(404).send({ message: "No student record found" });
+    } else {
+      data.forEach((doc) => {
+        const studentGrade = new StudentGrade(
+          doc.id,
+          doc.data().studentId,
+          doc.data().studentName,
+          doc.data().grade,
+          doc.data().section,
+          doc.data().subject,
+          doc.data().firstTest,
+          doc.data().secondTest,
+          doc.data().final,
+          doc.data().assessements,
+          doc.data().term
+        );
+        studentGradeArray.push(studentGrade);
+      });
+
+      studentGradeArray = studentGradeArray.filter(student => {
+        return student.studentId == parseInt(studentId)
+      })
+      // console.log(typeof studentId)
+      // console.log(studentGradeArray)
+      res.send(studentGradeArray);
+     
+    }
+  
+} catch (error) {
+  res.status(400).send({ message: error.message });
+}
+
+
+
+
+
+
+};
+
 module.exports = {
   AddStudent,
   getStudent,
@@ -476,5 +544,6 @@ module.exports = {
   deleteStudent,
 
   AddGrade,
+  GetStudentGrade,
   AddAttendance,
 };
