@@ -1,20 +1,21 @@
 {
-  "name": "student-monitoring-system",
+  "name": "backend-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": { 
-     "start": "nodemon backend-node/index.js"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon backend-node/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Robel-Alemu/Student-Monitoring-System.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Robel-Alemu/Student-Monitoring-System/issues"
-  },
-  "homepage": "https://github.com/Robel-Alemu/Student-Monitoring-System#readme"
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "firebase": "^8.0.1",
+    "node-xlsx": "^0.21.0",
+    "nodemon": "^2.0.15"
+  }
 }
