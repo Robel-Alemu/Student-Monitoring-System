@@ -12,7 +12,9 @@ Endpoint.use(cors());
 Endpoint.use(bodyParser.json());
 
 Endpoint.use('/api', routes.routes);
-
+Endpoint.get('/',(req, res)=>{
+    res.status(200).json({message:"Success"})
+})
 
 
 Endpoint.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
