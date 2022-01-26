@@ -6,8 +6,8 @@ dotenv.config();
 
 const {
     PORT,
-    HOST,
-    HOST_URL,
+    // HOST,
+    // HOST_URL,
     API_KEY,
     AUTH_DOMAIN,
     DATABASE_URL,
@@ -18,7 +18,7 @@ const {
 } = process.env;
 
 assert(PORT, 'PORT is required');
-assert(HOST, 'HOST is required');
+// assert(HOST, 'HOST is required');
 
 module.exports = {
     port: PORT,
