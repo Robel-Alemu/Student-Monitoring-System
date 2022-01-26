@@ -1,0 +1,20 @@
+{
+  "name": "student-monitoring-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": { 
+     "start": "nodemon backend-node/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robel-Alemu/Student-Monitoring-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Robel-Alemu/Student-Monitoring-System/issues"
+  },
+  "homepage": "https://github.com/Robel-Alemu/Student-Monitoring-System#readme"
+}
