@@ -22,8 +22,8 @@ assert(HOST, 'HOST is required');
 
 module.exports = {
     port: PORT,
-    host: HOST,
-    url: HOST_URL,
+    // host: HOST,
+    // url: HOST_URL,
     firebaseConfig: {
         apiKey: API_KEY,
         authDomain: AUTH_DOMAIN,
