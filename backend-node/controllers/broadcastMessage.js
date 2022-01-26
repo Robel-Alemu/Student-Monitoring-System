@@ -11,11 +11,11 @@ const AddBroadcast = async (req, res, next) => {
 
     try{
         
-        const data = [req.body];
+        const data = req.body;
         
             
-         await firestore.collection("Broadcast-Messages").doc().set(data);
-        res.status(200).send({message:"Message Added successfully"});
+        await firestore.collection("Broadcast-Messages").doc().set(data);
+        res.status(200).send({message:'data added successfully'});
         
        
     } catch(error){

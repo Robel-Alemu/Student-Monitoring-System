@@ -10,7 +10,7 @@ function AllBroadcastMessagesPage() {
   useEffect(() => {
      setIsLoading(true);
     fetch(
-      "http://localhost:8080/api/broadcast-messages"
+      "https://student-monitoring.herokuapp.com/api/broadcast-messages"
     )
       .then((response) => {
         console.log(response.body);

@@ -13,7 +13,7 @@ function AllUsersPage() {
    
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8080/api/users")
+    fetch("https://student-monitoring.herokuapp.com/api/users")
       .then((response) => {
         console.log(response.body);
         return response.json();

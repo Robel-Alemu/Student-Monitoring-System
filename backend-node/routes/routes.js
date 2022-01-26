@@ -42,7 +42,7 @@ router.post("/add-attendance",AddAttendance);
 
 
 router.get('/broadcast-messages', getBroadcastMessages);
-router.post('/Broadcast-Message', AddBroadcast);
+router.post('/broadcast-message', AddBroadcast);
 router.post('/Broadcast', AddB);
 router.get('/getB/:id', getB);
 router.get('/getG', getGrades);

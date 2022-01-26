@@ -21,7 +21,7 @@ const [isLoading, setIsLoading] = useState(true);
 //   useEffect(() => {
 //     setIsLoading(true);
     function searchHandler(){
-    fetch("http://localhost:8080/api/Student-Information/"+enteredId)
+    fetch("https://student-monitoring.herokuapp.com/api/Student-Information/"+enteredId)
       .then((response) => {
         console.log(response.body);
         return response.json();

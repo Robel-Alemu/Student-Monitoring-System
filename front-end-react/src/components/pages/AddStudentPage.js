@@ -8,7 +8,7 @@ function AddStudentPage() {
   const [responses, setResponse] = useState();
   function addStudentHandler(studentData) {
     fetch(
-      "http://localhost:8080/api/Student-Information",
+      "https://student-monitoring.herokuapp.com/api/Student-Information",
       {
         method: "POST",
         body: JSON.stringify(studentData),

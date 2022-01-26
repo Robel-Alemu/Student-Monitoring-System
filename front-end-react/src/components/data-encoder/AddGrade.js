@@ -30,11 +30,7 @@ function AddGrade(){
                 const worksheet = workbook.Sheets[sheetName];
                 const json = xlsx.utils.sheet_to_json(worksheet);
                 console.log(json);
-                json.forEach(x=>{
-                    if (x.studentid === ""){
-                        alert("student Id is empty for " + x.studentName);
-                    }
-                })
+                
                 grades = [...json];
                 console.log(grades)
                 
@@ -69,7 +65,7 @@ console.log(grades);
         e.preventDefault();
 
         fetch(
-            "http://localhost:8080/api/add-grade",
+            "https://student-monitoring.herokuapp.com/api/add-grade",
             {
               method: "POST",
               body: JSON.stringify(grades),
