@@ -64,8 +64,10 @@ console.log(grades);
 
         e.preventDefault();
 
-        fetch(
-            "https://student-monitoring.herokuapp.com/api/add-grade",
+        fetch
+        (
+            // https://student-monitoring.herokuapp.com
+            "http://localhost:8080/api/update-grade",
             {
               method: "POST",
               body: JSON.stringify(grades),
@@ -79,10 +81,14 @@ console.log(grades);
             })
             .then((data) => {
               alert(data.message);
-              console.log(data)
+
+             
     }
 
+
             )
+            var form = document.getElementById('file');
+            form.reset();
 
     }
     
