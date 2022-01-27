@@ -128,6 +128,9 @@ const deleteStudent = async (req, res, next) => {
   }
 };
 
+
+
+
 const AddGrade = async (req, res) => {
   try {
     const data = req.body;
@@ -154,6 +157,23 @@ const AddGrade = async (req, res) => {
         .doc()
         .set(grades);
     }
+
+
+    async function updateGrade(grades){
+      const grade = await firestore
+      .collection("Grade")
+      .doc(term)
+      .collection("grade-" + grade)
+      .doc("section " + section)
+      .collection(subject)
+      .where("studentId", "==", id)
+      .get();
+
+    grade.forEach((doc) => {
+      doc.ref.update(grades);
+    });
+    console.log("updated");
+    }
     data.pop();
 
     function checkUniqueStudentId(array) {
@@ -166,8 +186,14 @@ const AddGrade = async (req, res) => {
       let sectionMatch = true;
       let subjectMatch = true;
       let items = array.length;
+      let studentDataExist = true;
+
       console.log(array);
       for (let i = 0; i < items; i++) {
+        let checkExistance = getStudent(array[i].studentId);
+        if ((checkExistance.empty))
+          studentDataExist = false;
+          console.log(studentDataExist);
         console.log(array[i].studentId);
         if (array[i].studentId == undefined) {
           idExist = false;
@@ -219,11 +245,14 @@ const AddGrade = async (req, res) => {
         gradeMatched: gradeMatch,
         sectionMatched: sectionMatch,
         subjectMatched: subjectMatch,
+        studentDataExist : studentDataExist
       };
       return result;
     }
 
     let validate = checkUniqueStudentId(data);
+
+
     if (
       validate.studentIdExist &&
       validate.studentIsUnique &&
@@ -232,7 +261,7 @@ const AddGrade = async (req, res) => {
       validate.gradeMatched &&
       validate.sectionMatched &&
       validate.subjectMatched
-    ) {
+    )   {
       data.forEach(async (g) => {
         if (g.firstTest == undefined) g.firstTest = defaultValue;
         if (g.secondtTest == undefined) g.secondTest = defaultValue;
@@ -246,7 +275,12 @@ const AddGrade = async (req, res) => {
         // }
 
         // else {
-        await addGrade(g);
+          if(!(validate.studentDataExist)){
+            await addGrade(g);
+          }
+          else if(validate.studentDataExist)
+          updateGrade(g);
+            
         // flag = 1;
         return true;
       });
