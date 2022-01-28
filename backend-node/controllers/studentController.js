@@ -4,6 +4,7 @@ const req = require("express/lib/request");
 const res = require("express/lib/response");
 //const res = require("express/lib/response");
 const firebase = require("../connection/db");
+const StudentAttendance = require("../models/StudentAttendance");
 const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
 const StudentInformation = require("../models/StudentInformation");
@@ -491,6 +492,59 @@ const AddGrade = async (req, res) => {
   }
 };
 
+
+
+
+
+
+async function fetch_firebaseAttendance(year,term, grade, section) {
+  const studentGrade = await firestore
+    .collection("Attendance")
+    .doc(year)
+    .collection(term)
+    .doc("grade-" + grade)
+    .collection("section " + section)
+    
+
+  const data = await studentGrade.get();
+
+  let studentAttendanceArray = [];
+  if (data.empty) {
+    return true;
+  } else {
+    data.forEach((doc) => {
+      const studentAttendance = new StudentAttendance(
+        doc.id,
+        doc.data().studentId,
+        doc.data().studentName,
+        doc.data().term,
+        doc.data().grade,
+        doc.data().section,
+        doc.data().status,
+        doc.data().date,
+        
+        
+      );
+      studentAttendanceArray.push(studentAttendance);
+    });
+    return studentAttendanceArray;
+  }
+}
+
+async function addAttendance(year,term,grade,section,attendance) {
+  // console.log(x);
+
+  await firestore
+    .collection("Attendance")
+    .doc(year)
+    .collection(term)
+    .doc("grade-" + grade)
+    .collection("section " + section)
+    .doc()
+    .set(attendance);
+}
+
+
 const AddAttendance = async (req, res) => {
   try {
     const data = req.body;
@@ -506,20 +560,40 @@ const AddAttendance = async (req, res) => {
     const year = data[lastItem].year;
 
     const defaultDate = datePosted;
-
-    async function addAttendance(attendance) {
-      // console.log(x);
-
-      await firestore
-        .collection("Attendance")
-        .doc(year)
-        .collection(term)
-        .doc("grade-" + grade)
-        .collection("section " + section)
-        .doc()
-        .set(attendance);
-    }
     data.pop();
+    // async function addAttendance(attendance) {
+    //   // console.log(x);
+
+    //   await firestore
+    //     .collection("Attendance")
+    //     .doc(year)
+    //     .collection(term)
+    //     .doc("grade-" + grade)
+    //     .collection("section " + section)
+    //     .doc()
+    //     .set(attendance);
+    // }
+    let excelResult = data;
+    let hasError = false;
+
+    let canAdd = false;
+
+    const defaultValue = "";
+    let firebaseResult = await fetch_firebaseAttendance(year,term, grade, section);
+    if (firebaseResult == true) canAdd = true;
+    // console.log(firebaseResult);
+    for (let i = 0; i < excelResult.length && !hasError; i++) {
+      if (excelResult[i].date == undefined) excelResult[i].date=datePosted;
+      let id = excelResult[i].studentId;
+      let date =excelResult[i].date;
+      console.log(date);
+      for (let j = 0; j < firebaseResult.length && !hasError; j++) {
+      
+      //  console.log(firebaseResult[j].year) 
+        if (firebaseResult[j].studentId == id && firebaseResult[j].date == date ) hasError = true;
+      }
+    }
+    // console.log(firebaseResult,hasError)
 
     function checkAttendanceValidity(array) {
       let isUnique = true;
@@ -532,9 +606,9 @@ const AddAttendance = async (req, res) => {
       let termMatch = true;
       let sectionMatch = true;
 
-      console.log(array);
+      // console.log(array);
       for (let i = 0; i < items; i++) {
-        console.log(array[i].studentId);
+        // console.log(array[i].studentId);
         if (array[i].studentId == undefined) {
           idExist = false;
           break;
@@ -566,9 +640,9 @@ const AddAttendance = async (req, res) => {
 
         // idExist = true;
         for (let j = i + 1; j < items; j++) {
-          console.log(array[j].studentId);
+          // console.log(array[j].studentId);
           if (array[i].studentId == array[j].studentId) isUnique = false;
-          console.log(isUnique);
+          // console.log(isUnique);
           break;
         }
         if (isUnique == false) break;
@@ -595,7 +669,17 @@ const AddAttendance = async (req, res) => {
     }
 
     let validate = checkAttendanceValidity(data);
-    if (
+
+     if (!validate.attendanceStatusExist) {
+      res.status(400).send({
+        message:
+          "Student attendance status should not be empty, please check your file again!",
+      });
+    }
+   
+    else if (!hasError) {
+    
+      if (
       validate.studentIdExist &&
       validate.studentIsUnique &&
       validate.attendanceStatusExist &&
@@ -618,7 +702,7 @@ const AddAttendance = async (req, res) => {
 
         // else {
         // g.datePosted = datePosted
-        await addAttendance(g);
+        await addAttendance(year,term,grade,section,g);
         // flag = 1;
         return true;
       });
@@ -634,12 +718,7 @@ const AddAttendance = async (req, res) => {
         message:
           "Student id is not unique among the data,  please check your file again!",
       });
-    } else if (!validate.attendanceStatusExist) {
-      res.status(400).send({
-        message:
-          "Student attendance status should not be empty, please check your file again!",
-      });
-    } else if (!validate.statusIsValid) {
+    }  else if (!validate.statusIsValid) {
       res.status(400).send({
         message:
           "Student attendance status must only be (P, A, and Permission) values, please check your file again!",
@@ -660,7 +739,18 @@ const AddAttendance = async (req, res) => {
           "Section selected and Section value in file did not match, please check your file again!",
       });
     }
-  } catch (error) {
+  }
+
+  else if (hasError) {
+    res.status(400).send({
+      message:
+        "file contains student attendance entry that already exist, please use update option if necessary, please check your file again!",
+    });
+  }
+  
+}
+
+catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
   }

@@ -15,6 +15,19 @@ function AddGrade(){
     const gradeRef = useRef();
     const sectionRef = useRef();
   
+    // let subjectNormal = ['maths','physics','chemistry'];
+    // let subjectArt = ['history','business','art'];
+    
+    // let selectedSubjects =[];
+
+    // if(gradeRef.current.value == 9 && gradeRef.current.value == 10 && gradeRef.current.value == 11){
+    //     selectedSubjects = [...subjectNormal];
+
+    // }
+    // else
+    // selectedSubjects = [...subjectArt];
+    
+
 
 
     let grades=[];
@@ -131,7 +144,8 @@ console.log(grades);
               <Form.Group id="subject">
               <Form.Label>Subject</Form.Label>
                 <Form.Control size="sm" as="select" ref={subjectRef} required>
-                  <option>maths</option>
+                
+                  <option>Maths</option>
                   <option>physics</option>
                   <option>english</option>
                   <option>amharic</option>

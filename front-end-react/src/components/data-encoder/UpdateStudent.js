@@ -92,7 +92,7 @@ function UpdateStudent(props) {
     event.preventDefault();
     const id = studentId.current.value;
 
-    fetch("http://localhost:8080/api/delete-student/" + id, {
+    fetch("https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
       method: "DELETE",
       //   body: JSON.stringify(studentData),
       headers: { "Content-Type": "application/json" },

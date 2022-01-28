@@ -1,0 +1,14 @@
+class StudentAttendance {
+  constructor(id, studentId, studentName, term, grade, section, status, date) {
+    this.id = id;
+    this.studentId = studentId;
+    this.studentName = studentName;
+    this.term = term;
+    this.grade = grade;
+    this.section = section;
+    this.status = status;
+    this.date = date;
+  }
+}
+
+module.exports = StudentAttendance;
