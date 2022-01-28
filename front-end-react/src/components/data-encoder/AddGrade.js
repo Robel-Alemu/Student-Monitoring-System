@@ -8,114 +8,104 @@ import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
 
-function AddGrade(){
-   
-    const subjectRef = useRef();
-    const termRef = useRef();
-    const gradeRef = useRef();
-    const sectionRef = useRef();
-  
-    // let subjectNormal = ['maths','physics','chemistry'];
-    // let subjectArt = ['history','business','art'];
-    
-    // let selectedSubjects =[];
+function AddGrade() {
+  const subjectRef = useRef();
+  const termRef = useRef();
+  const gradeRef = useRef();
+  const sectionRef = useRef();
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+  // let subjectNormal = ['maths','physics','chemistry'];
+  // let subjectArt = ['history','business','art'];
 
-    // if(gradeRef.current.value == 9 && gradeRef.current.value == 10 && gradeRef.current.value == 11){
-    //     selectedSubjects = [...subjectNormal];
+  // let selectedSubjects =[];
 
-    // }
-    // else
-    // selectedSubjects = [...subjectArt];
-    
+  // if(gradeRef.current.value == 9 && gradeRef.current.value == 10 && gradeRef.current.value == 11){
+  //     selectedSubjects = [...subjectNormal];
 
+  // }
+  // else
+  // selectedSubjects = [...subjectArt];
 
+  let grades = [];
 
-    let grades=[];
+  const readUploadFile = (e) => {
+    e.preventDefault();
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = e.target.result;
+        const workbook = xlsx.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = xlsx.utils.sheet_to_json(worksheet);
+        console.log(json);
 
-    const readUploadFile = (e) => {
-        e.preventDefault();
-        if (e.target.files) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const data = e.target.result;
-                const workbook = xlsx.read(data, { type: "array" });
-                const sheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[sheetName];
-                const json = xlsx.utils.sheet_to_json(worksheet);
-                console.log(json);
-                
-                grades = [...json];
-                console.log(grades)
-                
-            };
-            reader.readAsArrayBuffer(e.target.files[0]);
-        }
+        grades = [...json];
+        console.log(grades);
+      };
+      reader.readAsArrayBuffer(e.target.files[0]);
     }
+  };
 
-    function clickHandler(e){
-    
+  function clickHandler(e) {
     const enteredSubject = subjectRef.current.value;
     const enteredTerm = termRef.current.value;
     const enteredGrade = gradeRef.current.value;
     const enteredSection = sectionRef.current.value;
 
-
     const gradeEntryData = {
-        
-       
-        term : enteredTerm,
-        grade: enteredGrade,
-        section: enteredSection,
-        subject: enteredSubject
-        
-      };
-      grades.push(gradeEntryData);
-  
-console.log(grades);
+      term: enteredTerm,
+      grade: enteredGrade,
+      section: enteredSection,
+      subject: enteredSubject,
+    };
+    grades.push(gradeEntryData);
 
+    console.log(grades);
 
+    e.preventDefault();
 
-        e.preventDefault();
+    fetch(
+      // https://student-monitoring.herokuapp.com
+      "http://localhost:8080/api/add-grade",
+      {
+        method: "POST",
+        body: JSON.stringify(grades),
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => {
+        console.log(grades);
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message == "Grades added successfully!") {setSuccess(data.message);
+        setError("");}
 
-        fetch
-        (
-            // https://student-monitoring.herokuapp.com
-            "http://localhost:8080/api/update-grade",
-            {
-              method: "POST",
-              body: JSON.stringify(grades),
-              headers: { "Content-Type": "application/json" },
-            }
-            
-           
-           ).then((response) => {
-            console.log(grades)
-              return response.json();
-            })
-            .then((data) => {
-              alert(data.message);
+        else {setError(data.message);
+                setSuccess("");}
 
-             
-    }
+        // alert(data.message);
+        document.getElementById("upload").value = null;
+      });
+    var form = document.getElementById("file");
+    form.reset();
 
+  }
 
-            )
-            var form = document.getElementById('file');
-            form.reset();
-
-    }
-    
-
-    return(
-
-<><DataEncoderCenterLayout><Card>
+  return (
+    <>
+      <DataEncoderCenterLayout>
+        <Card>
           <Card.Body>
             <h3 className="text-center mb-4">Add Student Grade</h3>
 
-            {/* {error && <Alert variant="danger">{error}</Alert>} */}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={clickHandler}>
-            <Form.Group id="term">
-              <Form.Label>Term</Form.Label>
+              <Form.Group id="term">
+                <Form.Label>Term</Form.Label>
                 <Form.Control size="sm" as="select" ref={termRef} required>
                   <option>first-term</option>
                   <option>sescond-term</option>
@@ -124,7 +114,7 @@ console.log(grades);
                 </Form.Control>
               </Form.Group>
               <Form.Group id="grade">
-              <Form.Label>Grade</Form.Label>
+                <Form.Label>Grade</Form.Label>
                 <Form.Control size="sm" as="select" ref={gradeRef} required>
                   <option>9</option>
                   <option>10</option>
@@ -133,7 +123,7 @@ console.log(grades);
                 </Form.Control>
               </Form.Group>
               <Form.Group id="section">
-              <Form.Label>Section</Form.Label>
+                <Form.Label>Section</Form.Label>
                 <Form.Control size="sm" as="select" ref={sectionRef} required>
                   <option>A</option>
                   <option>B</option>
@@ -142,9 +132,8 @@ console.log(grades);
                 </Form.Control>
               </Form.Group>
               <Form.Group id="subject">
-              <Form.Label>Subject</Form.Label>
+                <Form.Label>Subject</Form.Label>
                 <Form.Control size="sm" as="select" ref={subjectRef} required>
-                
                   <option>Maths</option>
                   <option>physics</option>
                   <option>english</option>
@@ -152,31 +141,25 @@ console.log(grades);
                 </Form.Control>
               </Form.Group>
 
-        <Form.Group id="file">
-        <label htmlFor="upload">Upload File</label>
-        <input
-        type="file"
-        name="upload"
-        id="upload"
-        onChange={readUploadFile}
-    />
-        </Form.Group>
-              <Button  className="w-100" type="submit">
+              <Form.Group id="file">
+                <label htmlFor="upload">Upload File</label>
+                <input
+                  type="file"
+                  name="upload"
+                  id="upload"
+                  required
+                  onChange={readUploadFile}
+                />
+              </Form.Group>
+              <Button className="w-100" type="submit">
                 Add Grade
               </Button>
             </Form>
           </Card.Body>
-        </Card></DataEncoderCenterLayout>
+        </Card>
+      </DataEncoderCenterLayout>
     </>
-
-
-
-
-
-
-
-
-    )
-};
+  );
+}
 
 export default AddGrade;

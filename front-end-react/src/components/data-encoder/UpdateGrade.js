@@ -8,21 +8,31 @@ import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
 
-function AddAttendance(){
+function UpdateGrade(){
    
-    
+    const subjectRef = useRef();
     const termRef = useRef();
     const gradeRef = useRef();
     const sectionRef = useRef();
-    const [error, setError] = useState();
-    const [success, setSuccess] = useState();
-    const date = new Date();
+  const [error,setError] = useState();
+  const [success,setSuccess] = useState();
 
-    const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-    const year =`${date.getFullYear()}`;
+    // let subjectNormal = ['maths','physics','chemistry'];
+    // let subjectArt = ['history','business','art'];
+    
+    // let selectedSubjects =[];
+
+    // if(gradeRef.current.value == 9 && gradeRef.current.value == 10 && gradeRef.current.value == 11){
+    //     selectedSubjects = [...subjectNormal];
+
+    // }
+    // else
+    // selectedSubjects = [...subjectArt];
     
 
-    let attendance=[];
+
+
+    let grades=[];
 
     const readUploadFile = (e) => {
         e.preventDefault();
@@ -32,15 +42,12 @@ function AddAttendance(){
                 const data = e.target.result;
                 const workbook = xlsx.read(data, { type: "array" });
                 const sheetName = workbook.SheetNames[0];
-                
                 const worksheet = workbook.Sheets[sheetName];
-                
-                console.log(worksheet);
                 const json = xlsx.utils.sheet_to_json(worksheet);
                 console.log(json);
                 
-                attendance = [...json];
-                console.log(attendance)
+                grades = [...json];
+                console.log(grades)
                 
             };
             reader.readAsArrayBuffer(e.target.files[0]);
@@ -49,71 +56,68 @@ function AddAttendance(){
 
     function clickHandler(e){
     
-   
+    const enteredSubject = subjectRef.current.value;
     const enteredTerm = termRef.current.value;
     const enteredGrade = gradeRef.current.value;
     const enteredSection = sectionRef.current.value;
 
 
-    const AttendanceEntryData = {
+    const gradeEntryData = {
         
        
         term : enteredTerm,
         grade: enteredGrade,
         section: enteredSection,
-        datePosted : currentDate,
-        year: year,
-        type: "attendance"
-      
+        subject: enteredSubject
         
       };
-      attendance.push(AttendanceEntryData);
+      grades.push(gradeEntryData);
   
-// console.log(attendance);
+console.log(grades);
 
 
 
         e.preventDefault();
 
-        fetch(
+        fetch
+        (
             // https://student-monitoring.herokuapp.com
-            "http://localhost:8080/api/add-attendance",
+            "http://localhost:8080/api/update-grade",
             {
               method: "POST",
-              body: JSON.stringify(attendance),
+              body: JSON.stringify(grades),
               headers: { "Content-Type": "application/json" },
             }
             
            
            ).then((response) => {
-            console.log(attendance)
+            console.log(grades)
               return response.json();
             })
             .then((data) => {
-            //   alert(data.message);
-            //   console.log(data)
-            //   document.getElementById("upload").value = null;
-            if (data.message == "Attendance added successfully!") {setSuccess(data.message);
+          
+            if (data.message == "Grades Updated successfully!") {setSuccess(data.message);
                 setError("");}
         
                 else {setError(data.message);
                         setSuccess("");}
-        
-                // alert(data.message);
         document.getElementById("upload").value = null;
     }
 
-            )
 
+            )
+            
 
     }
+
+
     
 
     return(
 
 <><DataEncoderCenterLayout><Card>
           <Card.Body>
-            <h3 className="text-center mb-4">Add Student Attendance</h3>
+            <h3 className="text-center mb-4">Update Student Grades</h3>
 
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
@@ -145,7 +149,16 @@ function AddAttendance(){
                   <option>D</option>
                 </Form.Control>
               </Form.Group>
-             
+              <Form.Group id="subject">
+              <Form.Label>Subject</Form.Label>
+                <Form.Control size="sm" as="select" ref={subjectRef} required>
+                
+                  <option>Maths</option>
+                  <option>physics</option>
+                  <option>english</option>
+                  <option>amharic</option>
+                </Form.Control>
+              </Form.Group>
 
         <Form.Group id="file">
         <label htmlFor="upload">Upload File</label>
@@ -155,11 +168,10 @@ function AddAttendance(){
         id="upload"
         required
         onChange={readUploadFile}
-        
     />
         </Form.Group>
               <Button  className="w-100" type="submit">
-                Add Attendance
+                Update Grades
               </Button>
             </Form>
           </Card.Body>
@@ -176,4 +188,4 @@ function AddAttendance(){
     )
 };
 
-export default AddAttendance;
+export default UpdateGrade;

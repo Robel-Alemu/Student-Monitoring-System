@@ -50,7 +50,10 @@ function DataEncoderNavigation() {
                 <Link to="/update-profile-d">Update Profile</Link>
               </li>
               <li >
-                <Link style={{"color":"white"}} to="/add-grade">Add Grade</Link>
+                <Link style={{"color":"white"}} to="/add-grade">Add Grades</Link>
+              </li>
+              <li >
+                <Link style={{"color":"white"}} to="/update-grade">Update Grades</Link>
               </li>
               <li >
                 <Link style={{"color":"white"}} to="/add-attendance">Add Attendance</Link>
