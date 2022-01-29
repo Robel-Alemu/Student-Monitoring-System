@@ -717,6 +717,62 @@ const AddAttendance = async (req, res) => {
   }
 };
 
+
+
+
+
+// async function updateAttendance(id,year,term, grade, section,attendance) {
+//   const g = await firestore
+//   .collection("Attendance")
+//   .doc(year)
+//   .collection(term)
+//   .doc("grade-" + grade)
+//   .collection("section " + section).where("studentId", "==",id)
+//    .get();
+
+//   g.forEach((doc) => {
+//     doc.ref.update(attendance);
+//   });
+//   console.log("updated");
+// }
+
+
+const UpdateAttendance = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const year = data.year;
+    const term = data.term;
+    const grade = data.grade;
+    const section = data.section;
+    
+    const g = await firestore
+  .collection("Attendance")
+  .doc(year)
+  .collection(term)
+  .doc("grade-" + grade)
+  .collection("section " + section).where("studentId", "==", id);
+  let x = await g.get();
+
+    console.log(x);
+
+    x.forEach((doc) => {
+    doc.ref.update(data);
+  });
+  console.log("updated");
+ 
+
+    res.status(200).send({ message: "Attendance Updated successfuly" });
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+    // res.status(400).send(error.message);
+  }
+};
+
+
+
+
+
 const GetStudentGrade = async (req, res) => {
   const studentId = req.params.studentId;
   const term = req.params.term;
@@ -825,4 +881,5 @@ module.exports = {
   UpdateGradeBulk,
 
   AddAttendance,
+  UpdateAttendance
 };

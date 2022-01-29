@@ -77,7 +77,7 @@ function AddAttendance(){
 
         fetch(
             // https://student-monitoring.herokuapp.com
-            "http://localhost:8080/api/add-attendance",
+            "http://localhost:8080/api/update-attendance",
             {
               method: "POST",
               body: JSON.stringify(attendance),
@@ -90,9 +90,7 @@ function AddAttendance(){
               return response.json();
             })
             .then((data) => {
-            //   alert(data.message);
-            //   console.log(data)
-            //   document.getElementById("upload").value = null;
+           
             if (data.message == "Attendance added successfully!") {setSuccess(data.message);
                 setError("");}
         
