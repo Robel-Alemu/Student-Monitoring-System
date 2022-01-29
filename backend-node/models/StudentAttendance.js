@@ -1,8 +1,9 @@
 class StudentAttendance {
-  constructor(id, studentId, studentName, term, grade, section, status, date) {
+  constructor(id, studentId, studentName,year, term, grade, section, status, date) {
     this.id = id;
     this.studentId = studentId;
     this.studentName = studentName;
+    this.year = year;
     this.term = term;
     this.grade = grade;
     this.section = section;

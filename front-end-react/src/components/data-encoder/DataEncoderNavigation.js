@@ -44,6 +44,9 @@ function DataEncoderNavigation() {
               <li>
                 <Link to="/update-student">Update Student</Link>
               </li>
+              <li>
+                <Link to="/update-attendance">Update Attendance</Link>
+              </li>
               
               
               <li>

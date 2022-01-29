@@ -106,6 +106,8 @@ import PrivateRouteRoleCheck from "./routes/PrivateRouteRoleCheck"
 import AddGrade from "./components/data-encoder/AddGrade"
 import AddAttendance from "./components/data-encoder/AddAttendance"
 import UpdateGrade from "./components/data-encoder/UpdateGrade"
+import UpdateAttendancePage from "./components/pages/UpdateAttendancePage"
+import UpdateAttendance from "./components/data-encoder/UpdateAttendance"
 function App() {
 
 
@@ -187,6 +189,10 @@ function App() {
               <Route path="/login" component={Login} />
              
              
+              <PrivateRoute path ="/update-attendance" component={UpdateAttendancePage}/>
+              <PrivateRoute path ="/update-attendance" component={UpdateAttendance}/>
+           
+
               <PrivateRoute path ="/add-grade" component={AddGrade}/>
               <PrivateRoute path ="/update-grade" component={UpdateGrade}/>
               <PrivateRoute path ="/add-attendance" component={AddAttendance}/>

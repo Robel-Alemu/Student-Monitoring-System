@@ -721,20 +721,47 @@ const AddAttendance = async (req, res) => {
 
 
 
-// async function updateAttendance(id,year,term, grade, section,attendance) {
-//   const g = await firestore
-//   .collection("Attendance")
-//   .doc(year)
-//   .collection(term)
-//   .doc("grade-" + grade)
-//   .collection("section " + section).where("studentId", "==",id)
-//    .get();
+const getAttendanceDetail = async (req, res, next) => {
+  try {
+    const studentId = req.params.studentId;
+    const year = req.params.year;
+    const term = req.params.term;
+    const grade = req.params.grade;
+    const section = req.params.section;
 
-//   g.forEach((doc) => {
-//     doc.ref.update(attendance);
-//   });
-//   console.log("updated");
-// }
+    const attendance = await firestore
+    .collection("Attendance")
+    .doc(year)
+    .collection(term)
+    .doc("grade-" + grade)
+    .collection("section " + section).where("studentId", "==", studentId);
+    // let x = await attendance.get();
+    const data = await attendance.get();
+    const attendanceArray = [];
+    if (data.empty) {
+      res.status(404).send({ message: "No student record found" });
+    } else {
+      data.forEach((doc) => {
+        const attendance = new StudentAttendance(
+          doc.id,
+          doc.data().studentId,
+          doc.data().studentName,
+          doc.data().year,
+          doc.data().term,
+          doc.data().grade,
+          doc.data().section,
+          doc.data().status,
+          doc.data().date
+          
+        );
+        attendanceArray.push(attendance);
+      });
+      res.send(attendanceArray);
+    }
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+};
 
 
 const UpdateAttendance = async (req, res, next) => {
@@ -881,5 +908,6 @@ module.exports = {
   UpdateGradeBulk,
 
   AddAttendance,
-  UpdateAttendance
+  UpdateAttendance,
+  getAttendanceDetail
 };

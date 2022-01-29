@@ -77,7 +77,7 @@ function AddAttendance(){
 
         fetch(
             // https://student-monitoring.herokuapp.com
-            "http://localhost:8080/api/update-attendance",
+            "http://localhost:8080/api/add-attendance",
             {
               method: "POST",
               body: JSON.stringify(attendance),
