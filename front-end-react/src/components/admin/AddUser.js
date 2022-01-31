@@ -35,6 +35,17 @@ function AddUser(props) {
     props.onSignup(userData);
   }
 
+  function loadHandler(event){
+    event.preventDefault();
+    var email = document.getElementById("email");
+    email.value = " ";
+    var password = document.getElementById("password");
+    password.value = " ";
+
+  }
+
+  
+
   return (
     <LayoutCenter><Card>
 
@@ -42,7 +53,7 @@ function AddUser(props) {
             <h3 className="text-center mb-4">Add User</h3>
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler} onLoad={loadHandler} autocomplete="off">
               <Container>
                 <Row>
                   <Col sm = {6}>

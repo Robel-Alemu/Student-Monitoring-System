@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, Container, Col ,Row} from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
@@ -63,11 +63,22 @@ import LayoutCenter from "../layout/LayoutCenter";
 
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={submitHandler}>
-              <Form.Group id="studentId">
+
+           
+            
+              <Container>
+              <Row>
+                  <Col sm = {6}>
+                  <Form.Group id="studentId">
                 <Form.Label>Student ID</Form.Label>
                 <Form.Control type="text" ref={studentId} size="sm" required />
               </Form.Group>
-              <Form.Group id="firstName">
+                  </Col>
+                  
+                </Row>
+                <Row>
+                  <Col sm = {6}>
+                  <Form.Group id="firstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control type="text" ref={firstName} size="sm" required />
               </Form.Group>
@@ -93,8 +104,9 @@ import LayoutCenter from "../layout/LayoutCenter";
                   <option>D</option>
                 </Form.Control>
               </Form.Group>
-
-              <Form.Group id="parentName1">
+                  </Col>
+                  <Col sm = {6}>
+                  <Form.Group id="parentName1">
                 <Form.Label>Parent Name</Form.Label>
                 <Form.Control type="text" size="sm" ref={parent1NameRef} required />
               </Form.Group>
@@ -110,9 +122,20 @@ import LayoutCenter from "../layout/LayoutCenter";
                 <Form.Label>Parent Phone</Form.Label>
                 <Form.Control type="text" size="sm" ref={parent2PhoneRef}  />
               </Form.Group>
-              <Button disabled={loading} className="w-100" type="submit">
+                  </Col>
+                </Row>
+                <Form.Group id="id">
+                
+                     <Button disabled={loading} className="w-100" type="submit">
                 Add Student
               </Button>
+              </Form.Group>
+              </Container>
+              
+              
+
+              
+             
             </Form>
           </Card.Body>
         </Card></DataEncoderCenterLayout>
