@@ -10,6 +10,7 @@ import AddUser from "./AddUser";
 import { AuthProvider } from "../../AuthContext/AuthContext";
 import PrivateRoute from "../../routes/PrivateRoute";
 import AllBroadcastMessagesPage from "../pages/AllBroadcastMessagesPage"
+import LayoutCenter from "../layout/LayoutCenter"
 
 
 export default function Dashboard() {

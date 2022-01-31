@@ -45,7 +45,7 @@ function Users(props) {
             <Card.Title>{props.role}</Card.Title>
             <Card.Text>Phone: {props.phone}</Card.Text>
             <Card.Text>Email: {props.email}</Card.Text>
-            <Button variant="primary" onClick={deleteHandler}>
+            <Button variant="danger" onClick={deleteHandler}>
               Delete
             </Button>
           </Card.Body>

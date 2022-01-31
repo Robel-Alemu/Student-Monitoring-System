@@ -28,21 +28,21 @@ import Students from "./Students";
 
 
 
-function StudentList(props){
+function GradesList(props){
     const DisplayData=props.students.map(
         (info)=>{
             return(
                 <tr>
             
               <td>{info.studentId}</td>
-              <td>{info.firstName}</td>
-              <td>{info.lastName}</td>
+              <td>{info.studentName}</td>
+              <td>{info.term}</td>
               <td>{info.grade}</td>
               <td>{info.section}</td>
-              <td>{info.parent1Name}</td>
-              <td>{info.parent1Phone}</td>
-              <td>{info.parent2Name}</td>
-              <td>{info.parent2Phone}</td>
+              <td>{info.firstTest}</td>
+              <td>{info.secondTest}</td>
+              <td>{info.final}</td>
+              <td>{info.assessements}</td>
               
               
                 </tr>
@@ -57,14 +57,14 @@ function StudentList(props){
                     <tr>
                     <th>ID</th>
                    
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Student Name</th>
+              <th>Term</th>
               <th>Grade</th>
               <th>Section</th>
-              <th>parent1 Name</th>
-              <th>Parent1 Phone</th>
-              <th>Parent2 Name</th>
-              <th>Parent2 Phone</th>
+              <th>First Test</th>
+              <th>Second Test</th>
+              <th>Final</th>
+              <th>Assessements</th>
 
                     </tr>
                 </thead>
@@ -82,4 +82,4 @@ function StudentList(props){
  
 
 
-export default StudentList;
+export default GradesList;

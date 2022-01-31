@@ -88,12 +88,12 @@ function BroadcastMessages(props) {
             <Row>
               <Col md={1}>
                 {" "}
-                <Button variant="primary" onClick={editHandler}>
+                <Button variant="warning" onClick={editHandler}>
                   Edit
                 </Button>
               </Col>
               <Col md={{ span: 1, offset: 0 }}>
-                <Button variant="primary" onClick={updateHandler}>
+                <Button variant="success" onClick={updateHandler}>
                   Update
                 </Button>
               </Col>

@@ -87,7 +87,7 @@ function UpdateAttendance(props) {
         // console.log(data);
         
            
-            if (data.message == "Attendance Updated successfully") {setSuccess(data.message);
+            if (data.message == "Attendance Updated successfuly") {setSuccess(data.message);
                 setError("");}
         
                 else {setError(data.message);

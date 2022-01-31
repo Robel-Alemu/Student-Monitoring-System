@@ -84,6 +84,9 @@ function Adminavigation() {
                <li  >
                <Link to="/all-students">Students</Link>
                </li>
+               <li  >
+               <Link to="/view-grades">View Grades</Link>
+               </li>
                
                <li ><NavDropdown  style={{"color":"white"}}
           id="nav-dropdown-dark-example"

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import classes from "./AddUser.module.css";
 // import Card from "../ui/Card"
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, Container, Row, Col } from "react-bootstrap";
 import Adminavigation from "./AdminNavigation";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
@@ -43,7 +43,10 @@ function AddUser(props) {
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
             <Form onSubmit={submitHandler}>
-              <Form.Group id="name">
+              <Container>
+                <Row>
+                  <Col sm = {6}>
+                  <Form.Group id="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="text" ref={nameInputRef} size="sm" required />
               </Form.Group>
@@ -51,7 +54,9 @@ function AddUser(props) {
                 <Form.Label>Phone</Form.Label>
                 <Form.Control type="text" ref={phoneInputRef} size="sm" required />
               </Form.Group>
-              <Form.Group id="role">
+                  </Col>
+                
+                  <Col sm ={6}> <Form.Group id="role">
               <Form.Label>Role</Form.Label>
                 <Form.Control size="sm" as="select" ref={roleInputRef} required>
                   <option>Admin</option>
@@ -62,7 +67,11 @@ function AddUser(props) {
               <Form.Group id="email">
                 <Form.Label>email</Form.Label>
                 <Form.Control type="email" ref={emailInputRef} size="sm" required defaultValue={""}/>
-              </Form.Group>
+              </Form.Group></Col>
+                </Row>
+              </Container>
+              
+             
               
             
 

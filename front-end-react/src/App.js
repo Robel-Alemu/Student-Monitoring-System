@@ -108,6 +108,11 @@ import AddAttendance from "./components/data-encoder/AddAttendance"
 import UpdateGrade from "./components/data-encoder/UpdateGrade"
 import UpdateAttendancePage from "./components/pages/UpdateAttendancePage"
 import UpdateAttendance from "./components/data-encoder/UpdateAttendance"
+import ViewGradePage from "./components/pages/ViewGrades"
+import StudentList from "./components/admin/StudentList"
+import GradesList from "./components/admin/GradesList"
+
+
 function App() {
 
 
@@ -191,6 +196,9 @@ function App() {
              
               <PrivateRoute path ="/update-attendance" component={UpdateAttendancePage}/>
               <PrivateRoute path ="/update-attendance" component={UpdateAttendance}/>
+             
+             
+              <PrivateRoute path ="/view-grades" component={ViewGradePage}/>
            
 
               <PrivateRoute path ="/add-grade" component={AddGrade}/>
