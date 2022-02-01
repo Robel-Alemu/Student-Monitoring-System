@@ -725,6 +725,13 @@ const getAttendanceDetail = async (req, res, next) => {
   try {
     const studentId = req.params.studentId;
     const year = req.params.year;
+    const date = req.params.date;
+    
+let date_ = new Date(date).toLocaleDateString('en-GB', {
+  month: '2-digit',day: '2-digit',year: 'numeric'});
+// console.log(y);
+// y.split('T')[0]
+//    console.log(y);
     const term = req.params.term;
     const grade = req.params.grade;
     const section = req.params.section;
@@ -756,7 +763,17 @@ const getAttendanceDetail = async (req, res, next) => {
         );
         attendanceArray.push(attendance);
       });
-      res.send(attendanceArray);
+      let filteredArray = [];
+      attendanceArray.forEach(x=>{
+        if(x.date == date_)
+          filteredArray.push(x);
+      })
+      if (filteredArray.length == 0) {
+        res.status(404).send({ message: "No student record found" });
+      }
+      else {console.log(filteredArray);
+        res.send(filteredArray);}
+      
     }
   } catch (err) {
     res.status(400).send({ message: err.message });
@@ -768,6 +785,8 @@ const UpdateAttendance = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
+    console.log(data.date);
+    const date = req.params.date;
     const year = data.year;
     const term = data.term;
     const grade = data.grade;
@@ -778,7 +797,7 @@ const UpdateAttendance = async (req, res, next) => {
   .doc(year)
   .collection(term)
   .doc("grade-" + grade)
-  .collection("section " + section).where("studentId", "==", id);
+  .collection("section " + section).where("studentId", "==", id).where("date", "==", data.date);
   let x = await g.get();
 
     console.log(x);

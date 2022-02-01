@@ -38,6 +38,8 @@ const [isLoading, setIsLoading] = useState(true);
         }
         // setIsLoading(false);
         setLoadedStudent(student);
+
+        
       });
     }
 

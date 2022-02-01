@@ -77,7 +77,7 @@ function AddUser(props) {
               </Form.Group>
               <Form.Group id="email">
                 <Form.Label>email</Form.Label>
-                <Form.Control type="email" ref={emailInputRef} size="sm" required defaultValue={""}/>
+                <Form.Control type="email" ref={emailInputRef} size="sm" required  defaultValue={""}/>
               </Form.Group></Col>
                 </Row>
               </Container>

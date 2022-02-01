@@ -9,7 +9,8 @@ import DataEncoderLayout from "../layout/DataEncoderLayout";
 function EditStudentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedStudent, setLoadedStudent] = useState([]);
-  
+  const [error,setError] = useState();
+ 
 
   const id = useRef();
    
@@ -42,8 +43,13 @@ function EditStudentPage() {
         }
         setIsLoading(false);
         setLoadedStudent(student);
-        console.log(loadedStudent[0]);
-        alert(data.message);
+        // console.log(loadedStudent[0]);
+        // alert(data.message);
+        if (data.message == "No student record found") {setError(data.message);
+          }
+  
+          else {
+            setError("");}
       });
 
   }
@@ -65,13 +71,16 @@ function EditStudentPage() {
     <section >
         <DataEncoderLayout><Container>
   <Row>
-    <Col sm={8}><h1>Student</h1></Col>
+    <Col sm={8}><h2>Update Student </h2>
+      {error && <Alert variant="danger">{error}</Alert>}
+            </Col>
     <Col sm={4}>
-     
-    <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"30px"}}/>
-    <Button  className="w-100" onClick = {searchHandler}>
+    <Form onSubmit={searchHandler}>
+    <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"20px"}} required/>
+    <Button  className="w-100" type="submit">
                 Search
               </Button>
+              </Form>
  </Col>
   </Row>
 </Container>

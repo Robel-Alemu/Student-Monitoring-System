@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
+import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 
 function UpdateStudent(props) {
   //     const [sId, setSId] = useState("");
@@ -42,8 +43,9 @@ function UpdateStudent(props) {
   const parent1PhoneRef = useRef();
   const parent2NameRef = useRef();
   const parent2PhoneRef = useRef();
-  const [error, setError] = useState("");
 
+  const [error,setError] = useState();
+  const [success,setSuccess] = useState();
   const history = useHistory();
 
   function submitHandler(event) {
@@ -81,8 +83,13 @@ function UpdateStudent(props) {
         return response.json();
       })
       .then((data) => {
-        alert(data.message);
+        // alert(data.message);
         console.log(data);
+        if (data.message == "Student Updated successfuly") {setSuccess(data.message);
+          setError("");}
+  
+          else {setError(data.message);
+                  setSuccess("");}
 
         //   setResponse(data);
       });
@@ -102,9 +109,13 @@ function UpdateStudent(props) {
         return response.json();
       })
       .then((data) => {
-        alert(data.message);
+        // alert(data.message);
         console.log(data);
-
+        if (data.message == "Student Deleted successfuly") {setSuccess(data.message);
+          setError("");}
+  
+          else {setError(data.message);
+                  setSuccess("");}
         //   setResponse(data);
       });
 
@@ -114,13 +125,18 @@ function UpdateStudent(props) {
 
   return (
     <>
-      <Card style={{marginTop:"30px"}}>
+    <Card style={{marginTop:"30px"}}>
         <Card.Body>
-          <h3 className="text-center mb-4">Update Student Detail</h3>
+          {/* <h3 className="text-center mb-4">Update Student Detail</h3> */}
 
           {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
           <Form onSubmit={submitHandler}>
-            <Form.Group id="studentId">
+
+            <Container>
+              <Row>
+            <Col sm = {4}>
+      <Form.Group id="studentId">
               <Form.Label>Student ID</Form.Label>
               <Form.Control
                 disabled={true}
@@ -131,6 +147,10 @@ function UpdateStudent(props) {
                 defaultValue={props.studentId}
               />
             </Form.Group>
+            </Col>
+            </Row>
+    <Row>
+     <Col sm = {6}>
             <Form.Group id="firstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
@@ -151,7 +171,9 @@ function UpdateStudent(props) {
                 defaultValue={props.lastName}
               />
             </Form.Group>
-            <Form.Group id="grade">
+      
+   
+      <Form.Group id="grade">
               <Form.Label>Grade</Form.Label>
               <Form.Control
                 size="sm"
@@ -181,8 +203,10 @@ function UpdateStudent(props) {
                 <option>D</option>
               </Form.Control>
             </Form.Group>
+      </Col>
 
-            <Form.Group id="parentName1">
+      <Col sm = {6}>
+      <Form.Group id="parentName1">
               <Form.Label>Parent Name</Form.Label>
               <Form.Control
                 type="text"
@@ -220,17 +244,26 @@ function UpdateStudent(props) {
                 defaultValue={props.parent2P}
               />
             </Form.Group>
+        </Col>
+     
+    </Row>
+
+            </Container>
+            
+           
+
+           
 
             <Container>
               {/* <Row> */}
               <Row>
-                <Col md={4}>
-                  <Button className="w-100" type="submit">
+                <Col sm={6}>
+                  <Button className="w-100" variant="success" type="submit">
                     Update
                   </Button>
                 </Col>
-                <Col md={{ span: 4, offset: 4 }}>
-                  <Button variant="danger" onClick={deleteHandler}>
+                <Col sm ={6}>
+                  <Button  className="w-100" variant="danger" onClick={deleteHandler}>
                     Delete
                   </Button>
                 </Col>
@@ -252,6 +285,7 @@ function UpdateStudent(props) {
           </Form>
         </Card.Body>
       </Card>
+      
     </>
   );
 }

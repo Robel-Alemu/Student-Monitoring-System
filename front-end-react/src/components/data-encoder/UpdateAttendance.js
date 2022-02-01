@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
+import CommonLayout from "../layout/CommonLayout";
 
 function UpdateAttendance(props) {
   //     const [sId, setSId] = useState("");
@@ -31,6 +32,8 @@ function UpdateAttendance(props) {
 
   // const id = useRef();
   // const enteredId = id.current.value;
+
+
 
   const studentIdRef = useRef();
   const studentNameRef = useRef();
@@ -123,14 +126,18 @@ function UpdateAttendance(props) {
 
   return (
     <>
-      <Card style={{marginTop:"30px"}}>
+   
+      <Card style={{marginTop:"30px"} , {innerWidth:"60%"}} >
         <Card.Body>
           <h3 className="text-center mb-4">Update Student Attendance</h3>
 
           {error && <Alert variant="danger">{error}</Alert>}
           {success && <Alert variant="success">{success}</Alert>}
           <Form onSubmit={submitHandler}>
-            <Form.Group id="studentId">
+
+          <Row>
+                  <Col sm = {4}>
+                  <Form.Group id="studentId">
               <Form.Label>Student ID</Form.Label>
               <Form.Control
                 disabled={true}
@@ -162,7 +169,10 @@ function UpdateAttendance(props) {
                 required
                 defaultValue={props.year}
               />
-            </Form.Group>
+</Form.Group>
+              </Col>
+              <Col sm = {4}>
+            
             <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control
@@ -174,8 +184,9 @@ function UpdateAttendance(props) {
                 defaultValue={props.term}
               />
             </Form.Group>
-
-            <Form.Group id="grade">
+                 
+                 
+                  <Form.Group id="grade">
               <Form.Label>Grade</Form.Label>
               <Form.Control
                 type="text"
@@ -195,17 +206,12 @@ function UpdateAttendance(props) {
                 disabled={true}
                 required
                 defaultValue={props.section}
-              />
-            </Form.Group>
-            <Form.Group id="status">
-                <Form.Label>Status</Form.Label>
-                <Form.Control size="sm" as="select" ref={statusRef} required defaultValue={props.status}>
-                  <option>P</option>
-                  <option>A</option>
-                  <option>Permission</option>
-                  
-                </Form.Control>
-              </Form.Group>
+              /> </Form.Group>
+               </Col>
+               <Col sm = {4}>
+           
+            
+              
             <Form.Group id="date">
               <Form.Label>Date</Form.Label>
               <Form.Control
@@ -216,30 +222,25 @@ function UpdateAttendance(props) {
                 defaultValue={props.date}
               />
             </Form.Group>
-
-            <Container>
-              {/* <Row> */}
-              <Row>
-                <Col md={4}>
-                  <Button className="w-100" type="submit">
+            <Form.Group id="status">
+                <Form.Label>Status</Form.Label>
+                <Form.Control size="sm" as="select" ref={statusRef} required defaultValue={props.status}>
+                  <option>P</option>
+                  <option>A</option>
+                  <option>Permission</option>
+                  
+                </Form.Control>
+                </Form.Group>
+            <Button className="w-100" type="submit" style={{marginTop:"28px"}} variant="success">
                     Update
                   </Button>
-                </Col>
-                <Col md={{ span: 4, offset: 4 }}>
-                  <Button variant="danger" onClick={deleteHandler}>
-                    Delete
-                  </Button>
-                </Col>
-              </Row>
-              {/* <Col sm={3}><Button  className="w-100" type="submit">
-              Update
-              </Button></Col>
-    <Col sm={3}>
-     
-    <Button variant="primary" onClick={deleteHandler}>Delette</Button >
- </Col>
-  </Row> */}
-            </Container>
+                  </Col>
+                </Row>
+           
+
+         
+
+            
 
             {/* <Button  className="w-100" type="submit">
               Update
@@ -248,6 +249,7 @@ function UpdateAttendance(props) {
           </Form>
         </Card.Body>
       </Card>
+      
     </>
   );
 }

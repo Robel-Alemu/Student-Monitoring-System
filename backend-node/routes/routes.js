@@ -44,7 +44,7 @@ router.post("/update-grade",UpdateGradeBulk);
 router.post("/add-grade",AddGrade);
 router.get("/filter-grades/:term/:grade/:section/:subject",filterGrades);
 router.get("/get-grade/:term/:grade/:section/:subject/:studentId",GetStudentGrade);
-router.get("/get-attendance/:year/:term/:grade/:section/:studentId",getAttendanceDetail);
+router.get("/get-attendance/:year/:term/:grade/:section/:studentId/:date",getAttendanceDetail);
 router.post("/add-attendance",AddAttendance);
 router.put("/update-attendance/:id",UpdateAttendance);
 
