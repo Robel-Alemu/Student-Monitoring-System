@@ -93,7 +93,9 @@ function Adminavigation() {
           title="Dropdown"
           menuVariant="dark"
         >
-          <NavDropdown.Item >Action</NavDropdown.Item>
+          <NavDropdown.Item > <li style={{"color":"Black"}} >
+               <Link to="/view-attendance-admin">View Attendance</Link>
+               </li></NavDropdown.Item>
           <NavDropdown.Item >Another action</NavDropdown.Item>
           <NavDropdown.Item >Something</NavDropdown.Item>
           <NavDropdown.Divider />

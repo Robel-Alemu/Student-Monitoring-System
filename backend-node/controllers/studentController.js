@@ -914,6 +914,64 @@ const filterGrades = async (req, res) => {
   }
 };
 
+
+
+
+
+
+const getAttendanceBySection = async (req, res) => {
+  
+  const year = req.params.year;
+  const term = req.params.term;
+  const grade = req.params.grade;
+  const section = req.params.section;
+  const date = req.params.date;
+ 
+  let date_ = new Date(date).toLocaleDateString('en-GB', {
+    month: '2-digit',day: '2-digit',year: 'numeric'});
+  // console.log(
+  //   `ID:- ${studentId}\nTerm:- ${term} \nGrade:- ${grade} \nSection:- ${section} \nSubject:- ${subject}`
+  // );
+  try {
+    const attendance = await firestore
+  .collection("Attendance")
+  .doc(year)
+  .collection(term)
+  .doc("grade-" + grade)
+  .collection("section " + section).where("date", "==", date_);
+
+    const data = await attendance.get();
+
+    let studentAttendanceArray = [];
+    if (data.empty) {
+      res.status(404).send({ message: "No attendance record found" });
+    } else {
+      data.forEach((doc) => {
+        const attendance = new StudentAttendance(
+          doc.id,
+          doc.data().studentId,
+          doc.data().studentName,
+          doc.data().year,
+          doc.data().term,
+          doc.data().grade,
+          doc.data().section,
+          doc.data().status,
+          doc.data().date
+        );
+        studentAttendanceArray.push(attendance);
+      });
+
+      // studentAttendanceArray = studentAttendanceArray.filter((student) => {
+      //   return student.studentId == parseInt(studentId);
+      // });
+
+      res.send(studentAttendanceArray);
+    }
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
 module.exports = {
   AddStudent,
   getStudent,
@@ -928,5 +986,6 @@ module.exports = {
 
   AddAttendance,
   UpdateAttendance,
-  getAttendanceDetail
+  getAttendanceDetail,
+  getAttendanceBySection
 };

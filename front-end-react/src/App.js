@@ -111,6 +111,7 @@ import UpdateAttendance from "./components/data-encoder/UpdateAttendance"
 import ViewGradePage from "./components/pages/ViewGrades"
 import StudentList from "./components/admin/StudentList"
 import GradesList from "./components/admin/GradesList"
+import ViewAttendancePage from "./components/pages/ViewAttendance"
 
 
 function App() {
@@ -196,7 +197,15 @@ function App() {
              
               <PrivateRoute path ="/update-attendance" component={UpdateAttendancePage}/>
               <PrivateRoute path ="/update-attendance" component={UpdateAttendance}/>
-             
+              {/* <PrivateRoute path ="/view-attendance" component={ViewAttendancePage  {...title}="admin"} /> */}
+             <PrivateRoute path ="/view-attendance-admin">
+<ViewAttendancePage title ={"admin"}/> 
+
+             </PrivateRoute>
+             <PrivateRoute path ="/view-attendance">
+<ViewAttendancePage title ={"dataE"}/> 
+
+             </PrivateRoute>
              
               <PrivateRoute path ="/view-grades" component={ViewGradePage}/>
            
@@ -206,7 +215,7 @@ function App() {
               <PrivateRoute path ="/add-attendance" component={AddAttendance}/>
               
 
-               {/* <Route path="/forgot-password" component={ForgotPassword} />  */}
+               
             </Switch>
           </AuthProvider>
         </Router>

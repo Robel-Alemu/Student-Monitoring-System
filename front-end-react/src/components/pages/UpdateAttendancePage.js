@@ -170,6 +170,7 @@ function UpdateAttendancePage() {
 // };
     setIsLoading(true);
     fetch(
+        
         "http://localhost:8080/api/get-attendance/"+year+"/"+enteredTerm+"/"+enteredGrade+"/"+enteredSection+"/"+enteredId+"/"+startDate
         // {
         //     method: "GET",
