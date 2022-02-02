@@ -161,14 +161,34 @@ console.log(grades);
               </Form.Group>
 
         <Form.Group id="file">
-        <label htmlFor="upload">Upload File</label>
+        {/* <label htmlFor="upload">Upload File</label>
         <input
         type="file"
         name="upload"
         id="upload"
         required
         onChange={readUploadFile}
+    /> */}
+    <div className="input-group">
+  <div className="input-group-prepend">
+    <span className="input-group-text" id="inputGroupFileAddon01">
+      Upload
+    </span>
+  </div>
+  <div className="custom-file">
+    <input
+      type="file"
+      className="custom-file-input"
+      id="upload"
+      onChange={readUploadFile}
+      required
+      aria-describedby="inputGroupFileAddon01"
     />
+    <label className="custom-file-label" htmlFor="inputGroupFile01">
+      Choose file
+    </label>
+  </div>
+</div>
         </Form.Group>
               <Button  className="w-100" type="submit">
                 Update Grades
