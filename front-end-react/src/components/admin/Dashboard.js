@@ -30,10 +30,10 @@ export default function Dashboard() {
 //   }
 
   return (
-    <Layout>
+    <LayoutCenter>
       <AllBroadcastMessagesPage />
         
-        </Layout>
+        </LayoutCenter>
     
 
 

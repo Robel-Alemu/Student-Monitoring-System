@@ -1,5 +1,5 @@
 
-import { Form, Button, Card, FormControl, Alert,Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Card, FormControl, Alert,Container, Row, Col, Spinner } from "react-bootstrap";
 
 import { useState, useEffect } from "react";
 import { useRef } from "react";
@@ -61,7 +61,17 @@ function EditStudentPage() {
   if (isLoading) {
     return (
       <section>
-          <DataEncoderLayout><p>Loading...</p></DataEncoderLayout>
+          <DataEncoderLayout>  <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button></DataEncoderLayout>
         
       </section>
     );

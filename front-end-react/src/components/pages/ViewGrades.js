@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner
 } from "react-bootstrap";
 
 import { useState, useEffect } from "react";
@@ -79,7 +80,20 @@ function ViewGradePage() {
     return (
       <section>
         <LayoutCenter>
-          <p>Loading...</p>
+          {/* <p>Loading...</p> */}
+          <>
+  <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button>
+</>
         </LayoutCenter>
       </section>
     );

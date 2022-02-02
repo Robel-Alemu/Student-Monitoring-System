@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Card, Button,Container, Row, Col } from "react-bootstrap";
+import { Card, Button,Container, Row, Col,Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Example from "./Modal";
 
@@ -25,7 +25,8 @@ function BroadcastMessages(props) {
     // props.onEdit(editMessage);
     // history.push("/edit-broadcast-message");
   }
-
+  const [error,setError] = useState();
+  const [success,setSuccess] = useState();
   const [value, setValue] = useState();
 
   function updateHandler(event) {
@@ -49,7 +50,12 @@ function BroadcastMessages(props) {
         return response.json();
       })
       .then((data) => {
-        alert(data.message);
+        // alert(data.message);
+        if (data.message == "Message Updated successfuly") {setSuccess(data.message);
+          setError("");}
+  
+          else {setError(data.message);
+                  setSuccess("");}
         console.log(data);
         const refresh = () => {
           // re-renders the component
@@ -66,6 +72,11 @@ function BroadcastMessages(props) {
   }
 
   return (
+    
+    <div>
+      {error && <Alert variant="danger">{error}</Alert>}
+          {success && <Alert variant="success">{success}</Alert>}
+    
     <li style={{ listStyle: "none" }}>
       <Card style={{marginTop: "30px"}}>
         {/* <Card.Header as="h5">{props.datePosted}</Card.Header> */}
@@ -86,13 +97,13 @@ function BroadcastMessages(props) {
           <Container>
             {/* <Row> */}
             <Row>
-              <Col md={1}>
-                {" "}
+              <Col sm={1}>
+                
                 <Button variant="warning" onClick={editHandler}>
                   Edit
                 </Button>
               </Col>
-              <Col md={{ span: 1, offset: 0 }}>
+              <Col sm={10} >
                 <Button variant="success" onClick={updateHandler}>
                   Update
                 </Button>
@@ -110,6 +121,7 @@ function BroadcastMessages(props) {
         </Card.Body>
       </Card>
     </li>
+    </div>
   );
 }
 

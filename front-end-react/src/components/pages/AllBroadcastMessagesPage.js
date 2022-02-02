@@ -2,7 +2,7 @@
 import MessageList from "../admin/MessageList";
 
 import { useState, useEffect } from "react";
-
+import {Button,Spinner } from "react-bootstrap"
 function AllBroadcastMessagesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMessages, setLoadedMessages] = useState([]);
@@ -34,7 +34,17 @@ function AllBroadcastMessagesPage() {
   if (isLoading) {
     return (
       <section>
-        <p>Loading...</p>
+          <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button>
       </section>
     );
   }

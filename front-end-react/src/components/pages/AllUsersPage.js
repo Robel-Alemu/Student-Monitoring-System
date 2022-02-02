@@ -2,7 +2,7 @@
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Layout from "../layout/Layout";
-import { Form, FormControl, Button, Container, Row, Col} from "react-bootstrap"
+import { Form, FormControl, Button, Container, Row, Col,Spinner} from "react-bootstrap"
 import AllUsersList from "../admin/AllUsersList";
 import DataEncoderLayout from "../layout/DataEncoderLayout";
 import LayoutCenter from "../layout/LayoutCenter";
@@ -36,7 +36,17 @@ function AllUsersPage() {
   if (isLoading) {
     return (
       <section>
-          <LayoutCenter><p>Loading...</p></LayoutCenter>
+          <LayoutCenter>  <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button></LayoutCenter>
         
       </section>
     );

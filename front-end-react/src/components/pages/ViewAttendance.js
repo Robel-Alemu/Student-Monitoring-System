@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner
 } from "react-bootstrap";
 
 import { useState, useEffect } from "react";
@@ -91,7 +92,17 @@ function ViewAttendancePage({ title }) {
     return (
       <section>
         <Layout>
-          <p>Loading...</p>
+        <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button>
         </Layout>
       </section>
     );
@@ -100,7 +111,17 @@ function ViewAttendancePage({ title }) {
           return (
         <section>
           <DataEncoderCenterLayout>
-            <p>Loading...</p>
+          <Button variant="primary" disabled>
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="visually-hidden">Loading...please wait</span>
+  
+  </Button>
           </DataEncoderCenterLayout>
         </section>
       );

@@ -64,7 +64,7 @@ function Adminavigation() {
 
 <Navbar variant="dark" bg="dark" expand="lg">
   <Container fluid>
-    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+    <Navbar.Brand href="#home">{currentUser.email}</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbar-dark-example" />
     <Navbar.Collapse id="navbar-dark-example">
       <Nav className={classes.nav}>
@@ -75,30 +75,36 @@ function Adminavigation() {
               <li>
                <Link style={{"color":"white"}} to="/broadcast-message">Broadcast Message</Link>
                </li>
-               <li  >
-                 <Link style={{"color":"white"}} to="/add-user">Add User</Link>
-          </li>
-               <li  >
-                 <Link style={{"color":"white"}} to="/users">Users</Link>
-               </li>
-               <li  >
-               <Link to="/all-students">Students</Link>
-               </li>
-               <li  >
-               <Link to="/view-grades">View Grades</Link>
-               </li>
-               
-               <li ><NavDropdown  style={{"color":"white"}}
+               <li ><NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
-          title="Dropdown"
+          title="Users"
           menuVariant="dark"
         >
-          <NavDropdown.Item > <li style={{"color":"Black"}} >
-               <Link to="/view-attendance-admin">View Attendance</Link>
-               </li></NavDropdown.Item>
-          <NavDropdown.Item >Another action</NavDropdown.Item>
-          <NavDropdown.Item >Something</NavDropdown.Item>
-          <NavDropdown.Divider />
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/add-user">Add User</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/users">View Users</Link>
+              </NavDropdown.Item>
+     
+          </NavDropdown></li>
+              
+               
+               <li ><NavDropdown  style={{color:"white"}}
+          id="nav-dropdown-dark-example"
+          title="Student"
+          menuVariant="dark"
+        >
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/all-students">View Students</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/view-grades">View Grade</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/view-attendance-admin">View Attendance</Link>
+              </NavDropdown.Item>
+          
           
         </NavDropdown></li>
                </ul>
