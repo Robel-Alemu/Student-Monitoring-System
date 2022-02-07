@@ -67,10 +67,10 @@ function Adminavigation() {
     <Navbar.Brand href="#home">{currentUser.email}</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbar-dark-example" />
     <Navbar.Collapse id="navbar-dark-example">
-      <Nav className={classes.nav}>
-      <ul  >
-             <li >
-                <Link style={{"color":"white"}} to="/">Home</Link>
+      <Nav className={classes.nav} style={{textDecoration: "none"}}>
+      <ul style={{textDecoration: "none"}}  >
+             <li style={{textDecoration: "none"}}>
+                <Link className={classes.links} style={{"color":"white"}} to="/">Home</Link>
               </li>
               <li>
                <Link style={{"color":"white"}} to="/broadcast-message">Broadcast Message</Link>
@@ -99,10 +99,15 @@ function Adminavigation() {
                <Link style={{color:"black"}} to="/all-students">View Students</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/view-grades">View Grade</Link>
+               <Link style={{color:"black"}} to="/view-grades-admin">View Grade</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/view-attendance-admin">View Attendance</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+          <Button variant="outline-dark" size="sm" onClick={handleLogout}>
+          Log Out
+       </Button>
               </NavDropdown.Item>
           
           

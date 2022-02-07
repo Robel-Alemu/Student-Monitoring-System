@@ -26,6 +26,7 @@ function AddGrade() {
   // }
   // else
   // selectedSubjects = [...subjectArt];
+  const [fileName, setFileName]= useState("Choose File");
 
   let grades = [];
 
@@ -37,14 +38,18 @@ function AddGrade() {
         const data = e.target.result;
         const workbook = xlsx.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
+        console.log(sheetName);
         const worksheet = workbook.Sheets[sheetName];
         const json = xlsx.utils.sheet_to_json(worksheet);
         console.log(json);
 
         grades = [...json];
         console.log(grades);
+        
+        setFileName((document.getElementById("upload").value).split("\\").pop()) 
       };
       reader.readAsArrayBuffer(e.target.files[0]);
+      
     }
   };
 
@@ -63,6 +68,10 @@ function AddGrade() {
     grades.push(gradeEntryData);
 
     console.log(grades);
+    // let x = grades.length-1;
+    // grades.forEach(x=>{
+    //  y= x.studentId.to
+    // })
 
     e.preventDefault();
 
@@ -87,6 +96,7 @@ function AddGrade() {
                 setSuccess("");}
 
         // alert(data.message);
+        
         document.getElementById("upload").value = null;
       });
     var form = document.getElementById("file");
@@ -135,9 +145,15 @@ function AddGrade() {
                 <Form.Label>Subject</Form.Label>
                 <Form.Control size="sm" as="select" ref={subjectRef} required>
                   <option>Maths</option>
-                  <option>physics</option>
-                  <option>english</option>
-                  <option>amharic</option>
+                  <option>Physics</option>
+                  <option>English</option>
+                  <option>Biology</option>
+                  <option>Chemistry</option>
+                  <option>Amharic</option>
+                  <option>Physical Education</option>
+                  <option>IT</option>
+                  
+                  
                 </Form.Control>
               </Form.Group>
 
@@ -151,24 +167,30 @@ function AddGrade() {
                   onChange={readUploadFile}
                 /> */}
                 <div className="input-group">
-  <div className="input-group-prepend">
+  {/* <div className="input-group-prepend">
     <span className="input-group-text" id="inputGroupFileAddon01">
-      Upload
+      Choose file 
     </span>
-  </div>
+  </div> */}
   <div className="custom-file">
+  
     <input
       type="file"
       className="custom-file-input"
       id="upload"
+
       onChange={readUploadFile}
       required
       aria-describedby="inputGroupFileAddon01"
+      // onchange="document.getElementById('fileName').value = document.getElementById('upload').value;"
     />
-    <label className="custom-file-label" htmlFor="inputGroupFile01">
-      Choose file
-    </label>
+    <label id = "fileName" className="custom-file-label" htmlFor="inputGroupFile01"  >
+   
+      {fileName}</label>
+      
+    
   </div>
+  
 </div>
               </Form.Group>
               <Button className="w-100" type="submit">

@@ -721,64 +721,6 @@ const AddAttendance = async (req, res) => {
 
 
 
-const getAttendanceDetail = async (req, res, next) => {
-  try {
-    const studentId = req.params.studentId;
-    const year = req.params.year;
-    const date = req.params.date;
-    
-let date_ = new Date(date).toLocaleDateString('en-GB', {
-  month: '2-digit',day: '2-digit',year: 'numeric'});
-// console.log(y);
-// y.split('T')[0]
-//    console.log(y);
-    const term = req.params.term;
-    const grade = req.params.grade;
-    const section = req.params.section;
-
-    const attendance = await firestore
-    .collection("Attendance")
-    .doc(year)
-    .collection(term)
-    .doc("grade-" + grade)
-    .collection("section " + section).where("studentId", "==", studentId);
-    // let x = await attendance.get();
-    const data = await attendance.get();
-    const attendanceArray = [];
-    if (data.empty) {
-      res.status(404).send({ message: "No student record found" });
-    } else {
-      data.forEach((doc) => {
-        const attendance = new StudentAttendance(
-          doc.id,
-          doc.data().studentId,
-          doc.data().studentName,
-          doc.data().year,
-          doc.data().term,
-          doc.data().grade,
-          doc.data().section,
-          doc.data().status,
-          doc.data().date
-          
-        );
-        attendanceArray.push(attendance);
-      });
-      let filteredArray = [];
-      attendanceArray.forEach(x=>{
-        if(x.date == date_)
-          filteredArray.push(x);
-      })
-      if (filteredArray.length == 0) {
-        res.status(404).send({ message: "No student record found" });
-      }
-      else {console.log(filteredArray);
-        res.send(filteredArray);}
-      
-    }
-  } catch (err) {
-    res.status(400).send({ message: err.message });
-  }
-};
 
 
 const UpdateAttendance = async (req, res, next) => {
@@ -791,13 +733,13 @@ const UpdateAttendance = async (req, res, next) => {
     const term = data.term;
     const grade = data.grade;
     const section = data.section;
-    
+    console.log(data.date)
     const g = await firestore
   .collection("Attendance")
   .doc(year)
   .collection(term)
   .doc("grade-" + grade)
-  .collection("section " + section).where("studentId", "==", id).where("date", "==", data.date);
+  .collection("section " + section).where("studentId", "==", id).where("date", "==",data.date );
   let x = await g.get();
 
     console.log(x);
@@ -915,6 +857,88 @@ const filterGrades = async (req, res) => {
 };
 
 
+const getAttendanceDetail = async (req, res, next) => {
+  try {
+    const studentId = req.params.studentId;
+    const year = req.params.year;
+    const date = req.params.date;
+    
+    let date_ = new Date(date).toLocaleDateString('zh-Hans-CN', {
+      year: 'numeric',month: '2-digit',day: '2-digit',});
+// console.log(y);
+// y.split('T')[0]
+//    console.log(y);
+    const term = req.params.term;
+    const grade = req.params.grade;
+    const section = req.params.section;
+  
+    let ch = [];
+    let x = date_.length;
+    for(let i=0; i<x; i++){
+      if(date_[i] == "/")
+      ch.push("-")
+      else
+      ch.push(date_[i]);
+      
+    }
+    // let z = ch.reverse().toString().replace(/,/, ''); 
+    console.log(ch,"last mukera")
+    let z = ch.toString()
+    console.log(z)
+    let check = ""
+    for(let i=0; i<z.length; i++){
+      if(z[i] == ",")
+      console.log("j")
+      else
+      check+=z[i];
+      
+    }
+    let dateAdded = check.toString()
+    console.log(check.toString(),"===")
+
+    const attendance = await firestore
+    .collection("Attendance")
+    .doc(year)
+    .collection(term)
+    .doc("grade-" + grade)
+    .collection("section " + section).where("studentId", "==", studentId);
+    // let x = await attendance.get();
+    const data = await attendance.get();
+    const attendanceArray = [];
+    if (data.empty) {
+      res.status(404).send({ message: "No student record found" });
+    } else {
+      data.forEach((doc) => {
+        const attendance = new StudentAttendance(
+          doc.id,
+          doc.data().studentId,
+          doc.data().studentName,
+          doc.data().year,
+          doc.data().term,
+          doc.data().grade,
+          doc.data().section,
+          doc.data().status,
+          doc.data().date
+          
+        );
+        attendanceArray.push(attendance);
+      });
+      let filteredArray = [];
+      attendanceArray.forEach(x=>{
+        if(x.date == dateAdded)
+          filteredArray.push(x);
+      })
+      if (filteredArray.length == 0) {
+        res.status(404).send({ message: "No student record found" });
+      }
+      else {console.log(filteredArray);
+        res.send(filteredArray);}
+      
+    }
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+};
 
 
 
@@ -927,18 +951,46 @@ const getAttendanceBySection = async (req, res) => {
   const section = req.params.section;
   const date = req.params.date;
  
-  let date_ = new Date(date).toLocaleDateString('en-GB', {
-    month: '2-digit',day: '2-digit',year: 'numeric'});
+  let date_ = new Date(date).toLocaleDateString('zh-Hans-CN', {
+    year: 'numeric',month: '2-digit',day: '2-digit',});
   // console.log(
   //   `ID:- ${studentId}\nTerm:- ${term} \nGrade:- ${grade} \nSection:- ${section} \nSubject:- ${subject}`
   // );
+  console.log(date_)
+  // let check =  date_.replace("/", "-")
+  let ch = [];
+let x = date_.length;
+for(let i=0; i<x; i++){
+  if(date_[i] == "/")
+  ch.push("-")
+  else
+  ch.push(date_[i]);
+  
+}
+// let z = ch.reverse().toString().replace(/,/, ''); 
+console.log(ch,"last mukera")
+let z = ch.toString()
+console.log(z)
+let check = ""
+for(let i=0; i<z.length; i++){
+  if(z[i] == ",")
+  console.log("j")
+  else
+  check+=z[i];
+  
+}
+let dateAdded = check.toString()
+console.log(check.toString())
+
+console.log(z,"=========================")
+// console.log(check,"------------------")
   try {
     const attendance = await firestore
   .collection("Attendance")
   .doc(year)
   .collection(term)
   .doc("grade-" + grade)
-  .collection("section " + section).where("date", "==", date_);
+  .collection("section " + section).where("date", "==", dateAdded);
 
     const data = await attendance.get();
 

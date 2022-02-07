@@ -19,6 +19,13 @@
     background-color: #d7fc09;
     font-weight: bold;
   }
+  .links{
+    text-decoration: none;
+  }
+  .links :hover{
+   color: darkslategray;
+  }
+  
   
    .nav ul {
     list-style: none;
@@ -26,10 +33,12 @@
     padding: 0;
     display: flex;
     align-items: baseline;
+    text-decoration: none;
   }
   
    .nav li {
     margin-left: 3rem;
+    text-decoration: none;
   }
 
   #nav-dropdown-dark-example  a{

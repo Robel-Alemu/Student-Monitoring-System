@@ -16,6 +16,7 @@ function UpdateGrade(){
     const sectionRef = useRef();
   const [error,setError] = useState();
   const [success,setSuccess] = useState();
+  const [fileName, setFileName]= useState("Choose File");
 
     // let subjectNormal = ['maths','physics','chemistry'];
     // let subjectArt = ['history','business','art'];
@@ -48,6 +49,7 @@ function UpdateGrade(){
                 
                 grades = [...json];
                 console.log(grades)
+                setFileName((document.getElementById("upload").value).split("\\").pop()) 
                 
             };
             reader.readAsArrayBuffer(e.target.files[0]);
@@ -170,11 +172,11 @@ console.log(grades);
         onChange={readUploadFile}
     /> */}
     <div className="input-group">
-  <div className="input-group-prepend">
+  {/* <div className="input-group-prepend">
     <span className="input-group-text" id="inputGroupFileAddon01">
       Upload
     </span>
-  </div>
+  </div> */}
   <div className="custom-file">
     <input
       type="file"
@@ -185,7 +187,7 @@ console.log(grades);
       aria-describedby="inputGroupFileAddon01"
     />
     <label className="custom-file-label" htmlFor="inputGroupFile01">
-      Choose file
+      {fileName}
     </label>
   </div>
 </div>

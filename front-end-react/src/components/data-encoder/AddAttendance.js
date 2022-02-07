@@ -16,9 +16,10 @@ function AddAttendance(){
     const sectionRef = useRef();
     const [error, setError] = useState();
     const [success, setSuccess] = useState();
+    const [fileName, setFileName]= useState("Choose File");
     const date = new Date();
 
-    const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+    const currentDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     const year =`${date.getFullYear()}`;
     
 
@@ -41,7 +42,7 @@ function AddAttendance(){
                 
                 attendance = [...json];
                 console.log(attendance)
-                
+                setFileName((document.getElementById("upload").value).split("\\").pop()) 
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
@@ -156,11 +157,11 @@ function AddAttendance(){
         
     /> */}
     <div className="input-group">
-  <div className="input-group-prepend">
+  {/* <div className="input-group-prepend">
     <span className="input-group-text" id="inputGroupFileAddon01">
       Upload
     </span>
-  </div>
+  </div> */}
   <div className="custom-file">
     <input
       type="file"
@@ -171,7 +172,7 @@ function AddAttendance(){
       aria-describedby="inputGroupFileAddon01"
     />
     <label className="custom-file-label" htmlFor="inputGroupFile01">
-      Choose file
+    {fileName}
     </label>
   </div>
 </div>

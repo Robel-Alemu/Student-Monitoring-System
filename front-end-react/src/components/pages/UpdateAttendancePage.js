@@ -265,7 +265,7 @@ function UpdateAttendancePage() {
                        </Form.Group>
                        <Form.Group id="date" style={{marginLeft:"30px"}}>
                        <Form.Label>Date</Form.Label>
-                       <DatePicker dateFormat={"dd/MM/yyyy"} ref={dateRef} selected={startDate} onChange={(date) => setStartDate(date)} />
+                       <DatePicker dateFormat={"yyyy-MM-dd"} ref={dateRef} selected={startDate} onChange={(date) => setStartDate(date)} />
                        </Form.Group>
                       
             
