@@ -18,12 +18,14 @@ import LayoutCenter from "../layout/LayoutCenter";
   const parent1PhoneRef = useRef();
   const parent2NameRef = useRef();
   const parent2PhoneRef = useRef();
-  const [error, setError] = useState("");
+  
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   function submitHandler(event) {
-    event.preventDefault();
+    // event.preventDefault();
     const enteredStudentId = studentId.current.value;
     const enteredFirstName = firstName.current.value;
     const enteredLastName = lastName.current.value;
@@ -45,8 +47,37 @@ import LayoutCenter from "../layout/LayoutCenter";
       parent2Name: enteredParent2Name,
       parent2Phone: enteredParent2Phone,
     };
+    event.preventDefault();
+    fetch(
+      "https://student-monitoring.herokuapp.com/api/Student-Information",
+      {
+        method: "POST",
+        body: JSON.stringify(studentData),
+        headers: { "Content-Type": "application/json" },
+      }
+      
+      )
+      .then((response) => {
+        // console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message == "Student Added successfully") {
+          setSuccess(data.message);
+          setError("");
+        } else {
+          setError(data.message);
+          setSuccess("");}
+        // alert(data.message);
+        console.log(data);
+        
+        // setResponse(data.message);
 
-    props.onAddStudent(studentData);
+      });
+
+
+    // props.onAddStudent(studentData);
+    // console.log(props.responses,"***********");
     // setError(props.x);
   }
 
@@ -61,7 +92,9 @@ import LayoutCenter from "../layout/LayoutCenter";
           <Card.Body>
             <h3 className="text-center mb-4">Add Student Detail</h3>
 
+            {/* {error && <Alert variant="danger">{error}</Alert>} */}
             {error && <Alert variant="danger">{error}</Alert>}
+       {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={submitHandler}>
 
            

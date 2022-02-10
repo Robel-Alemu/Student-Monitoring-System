@@ -66,7 +66,7 @@ function UpdateAttendance(props) {
     const attendanceData = {
       studentId: enteredStudentId,
       studentName: enteredStudentName,
-      // year: enteredYear,
+     
       term: enteredTerm,
       grade: enteredGrade,
       section: enteredSection,
