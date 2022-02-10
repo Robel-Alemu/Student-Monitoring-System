@@ -154,7 +154,9 @@ function UpdateAttendancePage() {
   const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
   const year =`${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
-
+const [termBar,setTermBar] = useState("choose term");
+const [gradeBar,setGradeBar] = useState("choose grade");
+const [sectionBar,setSectionBar] = useState("choose section");
   
 
 
@@ -170,7 +172,7 @@ function UpdateAttendancePage() {
 // };
     setIsLoading(true);
     fetch(
-        
+     
         "http://localhost:8080/api/get-attendance/"+year+"/"+enteredTerm+"/"+enteredGrade+"/"+enteredSection+"/"+enteredId+"/"+startDate
         // {
         //     method: "GET",
@@ -197,6 +199,9 @@ function UpdateAttendancePage() {
         }
         setIsLoading(false);
         setLoadedStudent(student);
+        setTermBar({termRef})
+        setGradeBar({gradeRef})
+        setSectionBar({sectionRef})
         // console.log(loadedStudent[0]);
         if (data.message == "No student record found") setError(data.message);
         else setError("");
@@ -238,16 +243,22 @@ function UpdateAttendancePage() {
          
          <Form.Group id="term" style={{marginLeft:"30px"}}>
                        <Form.Label>Term</Form.Label>
-                         <Form.Control size="sm" as="select" ref={termRef} required >
+                       {/* <Form.Label htmlFor="inputTerm">Color picker</Form.Label> */}
+                       
+                         <Form.Control id="inputTerm" size="sm" as="select" ref={termRef} required >
+                         
                            <option>first-term</option>
                            <option>sescond-term</option>
                            <option>third-term</option>
                            <option>fourth-term</option>
                          </Form.Control>
+                         {/* <label id = "fileName" className="custom-file-label" htmlFor="inputTerm"  >
+   
+                         {termBar}</label> */}
                        </Form.Group>
                        <Form.Group id="grade" style={{marginLeft:"30px"}}>
                        <Form.Label>Grade</Form.Label>
-                         <Form.Control size="sm" as="select" ref={gradeRef} required>
+                         <Form.Control size="sm" as="select" ref={gradeRef} defaultValue={gradeBar} required>
                            <option>9</option>
                            <option>10</option>
                            <option>11</option>
@@ -256,7 +267,7 @@ function UpdateAttendancePage() {
                        </Form.Group>
                        <Form.Group id="section" style={{marginLeft:"30px"}}>
                        <Form.Label>Section</Form.Label>
-                         <Form.Control size="sm" as="select" ref={sectionRef} required>
+                         <Form.Control size="sm" as="select" ref={sectionRef} defaultValue={sectionBar} required>
                            <option>A</option>
                            <option>B</option>
                            <option>C</option>

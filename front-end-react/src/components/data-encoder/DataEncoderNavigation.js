@@ -36,10 +36,10 @@ function DataEncoderNavigation() {
       <Nav className={classes.nav}>
       <ul  >
              <li >
-                <Link style={{"color":"white"}} to="/data-encoder">Home</Link>
+                <Link className={classes.links} style={{"color":"white"}} to="/data-encoder">Home</Link>
               </li>
               <li>
-               <Link style={{"color":"white"}} to="/update-profile-d">Update Profile</Link>
+               <Link className={classes.links} style={{"color":"white"}} to="/update-profile-d">Update Profile</Link>
                </li>
                <li ><NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
@@ -47,10 +47,13 @@ function DataEncoderNavigation() {
           menuVariant="dark"
         >
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/add-student">Add Students</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/add-student">Add Students</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/update-student">Update Student</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/add-multiple-students">Add multiple Students</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link className={classes.links} style={{color:"black"}} to="/update-student">Update Student</Link>
               </NavDropdown.Item>
      
           </NavDropdown></li>
@@ -63,13 +66,13 @@ function DataEncoderNavigation() {
         >
          
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/add-grade">Add Grades</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/add-grade">Add Grades</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/update-grade">Update Grades</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/update-grade">Update Grades</Link>
               </NavDropdown.Item>
               <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/view-grades">View Grades</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/view-grades">View Grades</Link>
               </NavDropdown.Item>
           
           
@@ -81,13 +84,13 @@ function DataEncoderNavigation() {
         >
          
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/add-attendance">Add Attendance</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/add-attendance">Add Attendance</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/update-attendance">Update Attendance</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/update-attendance">Update Attendance</Link>
               </NavDropdown.Item>
               <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/view-attendance">View Attendance</Link>
+               <Link className={classes.links} style={{color:"black"}} to="/view-attendance">View Attendance</Link>
               </NavDropdown.Item>
           
               <NavDropdown.Item > 

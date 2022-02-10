@@ -108,6 +108,7 @@ import ViewGradePage from "./components/pages/ViewGrades";
 import StudentList from "./components/admin/StudentList";
 import GradesList from "./components/admin/GradesList";
 import ViewAttendancePage from "./components/pages/ViewAttendance";
+import AddMultipleStudents from "./components/data-encoder/AddMultipleStudents";
 
 function App() {
   let x = 4;
@@ -192,6 +193,7 @@ function App() {
                 <PrivateRoute path="/add-user" component={AddNewUserPage} />
                 <PrivateRoute path="/users" component={AllUsersPage} />
                 <PrivateRoute path="/add-student" component={AddStudentPage} />
+                <PrivateRoute path="/add-multiple-students" component={AddMultipleStudents} />
                 <PrivateRoute
                   path="/broadcast-message"
                   component={AddBroadcastPage}

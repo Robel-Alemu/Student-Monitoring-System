@@ -8,11 +8,11 @@ import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
 
-function AddGrade() {
-  const subjectRef = useRef();
-  const termRef = useRef();
-  const gradeRef = useRef();
-  const sectionRef = useRef();
+function AddMultipleStudents() {
+//   const subjectRef = useRef();
+//   const termRef = useRef();
+//   const gradeRef = useRef();
+//   const sectionRef = useRef();
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   // let subjectNormal = ['maths','physics','chemistry'];
@@ -27,17 +27,12 @@ function AddGrade() {
   // else
   // selectedSubjects = [...subjectArt];
   const [fileName, setFileName]= useState("Choose File");
-  const[grade,setGrade] = useState();
 
-
-  let grades = [];
+  let students = [];
 
   const readUploadFile = (e) => {
     e.preventDefault();
     if (e.target.files) {
-      setFileName(e.target.files[0].name)
-     
-
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target.result;
@@ -48,39 +43,31 @@ function AddGrade() {
         const json = xlsx.utils.sheet_to_json(worksheet);
         console.log(json);
 
-        grades = [...json];
-        setGrade(grades);
-        console.log(grade,"use state");
+        students = [...json];
+        console.log(students);
         
-       
-        // let fName = (document.getElementById("upload").value)
-        // console.log(fName)
-       
-        // setFileName(fName.split("\\").pop()) 
+        setFileName((document.getElementById("upload").value).split("\\").pop()) 
       };
       reader.readAsArrayBuffer(e.target.files[0]);
       
     }
-    
   };
 
   function clickHandler(e) {
-    const enteredSubject = subjectRef.current.value;
-    const enteredTerm = termRef.current.value;
-    const enteredGrade = gradeRef.current.value;
-    const enteredSection = sectionRef.current.value;
+    // const enteredSubject = subjectRef.current.value;
+    // const enteredTerm = termRef.current.value;
+    // const enteredGrade = gradeRef.current.value;
+    // const enteredSection = sectionRef.current.value;
 
-    const gradeEntryData = {
-      term: enteredTerm,
-      grade: enteredGrade,
-      section: enteredSection,
-      subject: enteredSubject,
-    };
-    setGrade(grade.push(gradeEntryData));
-    grades.push(gradeEntryData);
+    // const studentsEntryData = {
+    // //   term: enteredTerm,
+    //   grade: enteredGrade,
+    //   section: enteredSection,
+    // //   subject: enteredSubject,
+    // };
+    // students.push(studentsEntryData);
 
-    console.log(grades);
-    console.log(grade,"use state after add");
+    console.log(students);
     // let x = grades.length-1;
     // grades.forEach(x=>{
     //  y= x.studentId.to
@@ -90,19 +77,19 @@ function AddGrade() {
 
     fetch(
       // https://student-monitoring.herokuapp.com
-      "http://localhost:8080/api/add-grade",
+      "http://localhost:8080/api//add-multiple-students",
       {
         method: "POST",
-        body: JSON.stringify(grade),
+        body: JSON.stringify(students),
         headers: { "Content-Type": "application/json" },
       }
     )
       .then((response) => {
-        console.log(grades);
+        console.log(students);
         return response.json();
       })
       .then((data) => {
-        if (data.message == "Grades added successfully!") {setSuccess(data.message);
+        if (data.message == "Students added successfully!") {setSuccess(data.message);
         setError("");}
 
         else {setError(data.message);
@@ -112,8 +99,8 @@ function AddGrade() {
         
         document.getElementById("upload").value = null;
       });
-    // var form = document.getElementById("file");
-    // form.reset();
+    var form = document.getElementById("file");
+    form.reset();
 
   }
 
@@ -122,12 +109,12 @@ function AddGrade() {
       <DataEncoderCenterLayout>
         <Card>
           <Card.Body>
-            <h3 className="text-center mb-4">Add Student Grade</h3>
+            <h3 className="text-center mb-4">Add Students</h3>
 
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={clickHandler}>
-              <Form.Group id="term">
+              {/* <Form.Group id="term">
                 <Form.Label>Term</Form.Label>
                 <Form.Control size="sm" as="select" ref={termRef} required>
                   <option>first-term</option>
@@ -135,8 +122,8 @@ function AddGrade() {
                   <option>third-term</option>
                   <option>fourth-term</option>
                 </Form.Control>
-              </Form.Group>
-              <Form.Group id="grade">
+              </Form.Group> */}
+              {/* <Form.Group id="grade">
                 <Form.Label>Grade</Form.Label>
                 <Form.Control size="sm" as="select" ref={gradeRef} required>
                   <option>9</option>
@@ -153,8 +140,8 @@ function AddGrade() {
                   <option>C</option>
                   <option>D</option>
                 </Form.Control>
-              </Form.Group>
-              <Form.Group id="subject">
+              </Form.Group> */}
+              {/* <Form.Group id="subject">
                 <Form.Label>Subject</Form.Label>
                 <Form.Control size="sm" as="select" ref={subjectRef} required>
                   <option>Maths</option>
@@ -168,7 +155,7 @@ function AddGrade() {
                   
                   
                 </Form.Control>
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group id="file">
                 {/* <label htmlFor="upload">Upload File</label>
@@ -207,7 +194,7 @@ function AddGrade() {
 </div>
               </Form.Group>
               <Button className="w-100" type="submit">
-                Add Grade
+                Add Students
               </Button>
             </Form>
           </Card.Body>
@@ -217,4 +204,4 @@ function AddGrade() {
   );
 }
 
-export default AddGrade;
+export default AddMultipleStudents;

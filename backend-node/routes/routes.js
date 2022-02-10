@@ -13,7 +13,7 @@ const {
     getUser
 } = require('../controllers/accountController');
 
-const { AddStudent, getStudent, getAllStudent, updateStudent, deleteStudent,UpdateGradeBulk,getAttendanceDetail, getAttendanceBySection, AddGrade,GetStudentGrade,filterGrades, AddAttendance, UpdateAttendance} = require("../controllers/studentController");
+const { AddStudent,AddMultipleStudent, getStudent, getAllStudent, updateStudent, deleteStudent,UpdateGradeBulk,getAttendanceDetail, getAttendanceBySection, AddGrade,GetStudentGrade,filterGrades, AddAttendance, UpdateAttendance} = require("../controllers/studentController");
 
 const {AddBroadcast,AddB,getB,getGrades, getBroadcastMessages,updateBroadcastMessage} = require("../controllers/broadcastMessage");
 
@@ -38,6 +38,11 @@ router.post('/Student-Information',AddStudent);
 
 
 router.post("/update-grade",UpdateGradeBulk);
+
+
+
+router.post("/add-multiple-students",AddMultipleStudent);
+
 
 
 

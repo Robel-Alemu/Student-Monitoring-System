@@ -92,7 +92,7 @@ function ViewAttendancePage({ title }) {
 
     setIsLoading(true);
     fetch(
-      // "https://student-monitoring.herokuapp.com
+      // "https://student-monitoring.herokuapp.com/filter-attendance/year/term/grade/section
       "http://localhost:8080/api/filter-attendance/" +
         year +
         "/" +

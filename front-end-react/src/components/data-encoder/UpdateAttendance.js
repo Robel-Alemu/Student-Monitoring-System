@@ -55,7 +55,7 @@ function UpdateAttendance(props) {
     event.preventDefault();
     const enteredStudentId = studentIdRef.current.value;
     const enteredStudentName = studentNameRef.current.value;
-    const enteredYear = yearRef.current.value;
+    // const enteredYear = yearRef.current.value;
     const enteredTerm = termRef.current.value;
     const enteredGrade = gradeRef.current.value;
     const enteredSection = sectionRef.current.value;
@@ -66,7 +66,7 @@ function UpdateAttendance(props) {
     const attendanceData = {
       studentId: enteredStudentId,
       studentName: enteredStudentName,
-      year: enteredYear,
+      // year: enteredYear,
       term: enteredTerm,
       grade: enteredGrade,
       section: enteredSection,
@@ -160,7 +160,7 @@ function UpdateAttendance(props) {
                 defaultValue={props.studentName}
               />
             </Form.Group>
-            <Form.Group id="year">
+            {/* <Form.Group id="year">
               <Form.Label>Year</Form.Label>
               <Form.Control
                 type="text"
@@ -170,7 +170,7 @@ function UpdateAttendance(props) {
                 required
                 defaultValue={props.year}
               />
-</Form.Group>
+</Form.Group> */}
               </Col>
               <Col sm = {4}>
             
