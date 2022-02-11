@@ -191,7 +191,11 @@ function App() {
                   path="/update-profile-d"
                   component={DataEncoderUpdatePassword}
                 />
-                <PrivateRoute path="/add-user" component={AddNewUserPage} />
+                {/* <PrivateRoute path="/add-user" component={AddNewUserPage} /> */}
+                <PrivateRoute path="/add-user" component={AddUser} />
+
+
+
                 <PrivateRoute path="/users" component={AllUsersPage} />
                 
                 

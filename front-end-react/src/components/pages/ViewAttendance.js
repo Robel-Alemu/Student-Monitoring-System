@@ -193,6 +193,7 @@ function ViewAttendancePage({ title }) {
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
                     <Form.Control size="sm" as="select" ref={gradeRef} required>
+                      <option disabled="true">select grade</option>
                       <option>9</option>
                       <option>10</option>
                       <option>11</option>
@@ -265,6 +266,7 @@ function ViewAttendancePage({ title }) {
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
                     <Form.Control size="sm" as="select" ref={gradeRef} required>
+                    <option disabled="true">select grade</option>
                       <option>9</option>
                       <option>10</option>
                       <option>11</option>

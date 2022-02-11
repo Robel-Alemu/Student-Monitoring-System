@@ -63,7 +63,7 @@ const registerWithEmailAndPassword = async (req, res, next) => {
       role : data.role,
       email : data.email
      });
-    res.status(200).send({message:'data added successfully'});
+    res.status(200).send({message:'User Account created successfully'});
     console.log('data added successfully');
   } catch (err) {
     res.status(400).send({message:err.message});

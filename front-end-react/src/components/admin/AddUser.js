@@ -6,7 +6,7 @@ import Adminavigation from "./AdminNavigation";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
-
+import { useState } from "react";
 function AddUser(props) {
   const nameInputRef = useRef();
   const phoneInputRef = useRef();
@@ -14,16 +14,18 @@ function AddUser(props) {
   const emailInputRef = useRef("");
   const passwordInputRef = useRef("");
 
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
   function submitHandler(event) {
    
-    event.preventDefault();
-
+    
     const enteredName = nameInputRef.current.value;
     const enteredPhone = phoneInputRef.current.value;
     const enteredRole = roleInputRef.current.value;
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
+    
     const userData = {
       name: enteredName,
       phone: enteredPhone,
@@ -31,7 +33,35 @@ function AddUser(props) {
       email: enteredEmail,
       password : enteredPassword
     };
+    
+    event.preventDefault();
 
+    fetch(
+      "https://student-monitoring.herokuapp.com/api/Users",
+      {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+      }
+     
+     ).then((response) => {
+        // console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message == "User Account created successfully") {
+          setSuccess(data.message);
+          setError("");
+        } else {
+          setError(data.message);
+          setSuccess("");
+        }
+        // alert(data.message);
+        console.log(data)
+       
+      }
+    );
+        
     props.onSignup(userData);
   }
 
@@ -53,6 +83,9 @@ function AddUser(props) {
             <h3 className="text-center mb-4">Add User</h3>
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
+
+            {error && <Alert variant="danger">{error}</Alert>}
+       {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={submitHandler} onLoad={loadHandler} autocomplete="off">
               <Container>
                 <Row>
