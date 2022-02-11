@@ -41,8 +41,9 @@ function GradesList(props){
               <td>{info.section}</td>
               <td>{info.firstTest}</td>
               <td>{info.secondTest}</td>
-              <td>{info.final}</td>
               <td>{info.assessements}</td>
+              <td>{info.final}</td>
+              
               
               
                 </tr>
@@ -63,8 +64,9 @@ function GradesList(props){
               <th>Section</th>
               <th>First Test</th>
               <th>Second Test</th>
-              <th>Final</th>
+              
               <th>Assessements</th>
+              <th>Final</th>
 
                     </tr>
                 </thead>

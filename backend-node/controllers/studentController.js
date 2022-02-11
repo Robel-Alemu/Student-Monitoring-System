@@ -275,11 +275,12 @@ const UpdateGradeBulk = async (req, res) => {
       validate.subjectMatched
     ) {
       data.forEach(async (g) => {
+        
         g.studentId = (g.studentId).toString();
         if (g.firstTest == undefined) g.firstTest = defaultValue;
-
+        if (g.secondTest == undefined) g.secondTest = defaultValue;
         if (g.final == undefined) g.final = defaultValue;
-        if (g.secondtTest == undefined) g.secondTest = defaultValue;
+       
         if (g.assessements == undefined) g.assessements = defaultValue;
 
         await updateGrade(term, grade, section, subject, g);
@@ -1066,8 +1067,9 @@ const filterGrades = async (req, res) => {
           doc.data().subject,
           doc.data().firstTest,
           doc.data().secondTest,
-          doc.data().final,
           doc.data().assessements,
+          doc.data().final,
+          
           doc.data().term
         );
         studentGradeArray.push(studentGrade);

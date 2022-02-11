@@ -17,7 +17,7 @@ function UpdateGrade(){
   const [error,setError] = useState();
   const [success,setSuccess] = useState();
   const [fileName, setFileName]= useState("Choose File");
-
+  const[grade,setGrade] = useState();
     // let subjectNormal = ['maths','physics','chemistry'];
     // let subjectArt = ['history','business','art'];
     
@@ -49,6 +49,7 @@ function UpdateGrade(){
                 
                 grades = [...json];
                 console.log(grades)
+                setGrade(grades);
                 setFileName((document.getElementById("upload").value).split("\\").pop()) 
                 
             };
@@ -73,6 +74,7 @@ function UpdateGrade(){
         subject: enteredSubject
         
       };
+      setGrade(grade.push(gradeEntryData));
       grades.push(gradeEntryData);
   
 console.log(grades);
@@ -86,8 +88,8 @@ console.log(grades);
             // https://student-monitoring.herokuapp.com
             "http://localhost:8080/api/update-grade",
             {
-              method: "POST",
-              body: JSON.stringify(grades),
+              method: "PUT",
+              body: JSON.stringify(grade),
               headers: { "Content-Type": "application/json" },
             }
             

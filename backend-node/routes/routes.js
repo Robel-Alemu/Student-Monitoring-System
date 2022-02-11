@@ -37,7 +37,7 @@ router.get('/Student-Information/:studentId',getStudent);
 router.post('/Student-Information',AddStudent);
 
 
-router.post("/update-grade",UpdateGradeBulk);
+router.put("/update-grade",UpdateGradeBulk);
 
 
 

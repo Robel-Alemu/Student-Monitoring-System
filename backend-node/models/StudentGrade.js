@@ -1,5 +1,5 @@
 class StudentGrade {
-    constructor(id,studentId,studentName, grade, section,subject,firstTest,secondTest,final,assessement,term) {
+    constructor(id,studentId,studentName, grade, section,subject,firstTest,secondTest,assessements,final,term) {
       this.id=id;
       this.studentId = studentId;
       this.studentName = studentName;
@@ -9,9 +9,11 @@ class StudentGrade {
       
       this.firstTest=firstTest;
       this.secondTest=secondTest;
+      this.assessements=assessements;
       this.final=final;
-      this.assessement=assessement;
+      
       this.term = term;
+      
      
      
     }
