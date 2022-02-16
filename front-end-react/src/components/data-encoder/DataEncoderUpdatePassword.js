@@ -38,8 +38,8 @@ export default function DataEncoderUpdatePassword() {
       .then(() => {
         history.push("/data-encoder")
       })
-      .catch(() => {
-        setError("Failed to update account")
+      .catch((e) => {
+        setError(e.value,"Failed to update account")
       })
       .finally(() => {
         setLoading(false)

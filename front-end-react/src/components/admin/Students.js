@@ -35,6 +35,8 @@ function Students(props) {
               <td>{props.parent2N}</td>
               <td>{props.parent2P}</td>
               
+              
+              
             </tr>
             {/* </li> */}
           </tbody>

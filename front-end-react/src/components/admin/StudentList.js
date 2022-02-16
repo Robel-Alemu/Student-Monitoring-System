@@ -43,6 +43,8 @@ function StudentList(props){
               <td>{info.parent1Phone}</td>
               <td>{info.parent2Name}</td>
               <td>{info.parent2Phone}</td>
+              <td>{info.field}</td>
+              
               
               
                 </tr>
@@ -65,6 +67,7 @@ function StudentList(props){
               <th>Parent1 Phone</th>
               <th>Parent2 Name</th>
               <th>Parent2 Phone</th>
+              <th>Field</th>
 
                     </tr>
                 </thead>

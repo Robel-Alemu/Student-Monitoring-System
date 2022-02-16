@@ -38,7 +38,7 @@ function UpdateStudent(props) {
   const lastName = useRef();
   const gradeRef = useRef();
   const sectionRef = useRef();
-
+  const fieldRef = useRef();
   const parent1NameRef = useRef();
   const parent1PhoneRef = useRef();
   const parent2NameRef = useRef();
@@ -47,6 +47,25 @@ function UpdateStudent(props) {
   const [error,setError] = useState();
   const [success,setSuccess] = useState();
   const history = useHistory();
+
+  const [fieldIsVisible,setFieldIsVisible]= useState(false);
+  const [field,setField]= useState();
+function gradeChangeHandler(e){
+e.preventDefault();
+if (gradeRef.current.value == 11 || gradeRef.current.value == 12 )
+setFieldIsVisible(false)
+else (setFieldIsVisible(true))
+
+
+
+}
+
+function fieldHandler(e){
+  e.preventDefault()
+  if (gradeRef.current.value == 9 || gradeRef.current.value == 10) setField("normal")
+  else setField((fieldRef.current.value).toString())
+    console.log(field,"------------")
+}
 
   function submitHandler(event) {
     event.preventDefault();
@@ -59,7 +78,7 @@ function UpdateStudent(props) {
     const enteredParent1Phone = parent1PhoneRef.current.value;
     const enteredParent2Name = parent2NameRef.current.value;
     const enteredParent2Phone = parent2PhoneRef.current.value;
-
+   
     const studentData = {
       studentId: enteredStudentId,
       firstName: enteredFirstName,
@@ -70,10 +89,12 @@ function UpdateStudent(props) {
       parent1Phone: enteredParent1Phone,
       parent2Name: enteredParent2Name,
       parent2Phone: enteredParent2Phone,
+      field : field
     };
 
     //   props.onUpdateStudent(studentData);
-    fetch("http://localhost:8080/api/update-student/" + enteredStudentId, {
+    fetch(
+      "http://localhost:8080/api/update-student/" + enteredStudentId, {
       method: "PUT",
       body: JSON.stringify(studentData),
       headers: { "Content-Type": "application/json" },
@@ -99,7 +120,8 @@ function UpdateStudent(props) {
     event.preventDefault();
     const id = studentId.current.value;
 
-    fetch("https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
+    fetch(
+      "https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
       method: "DELETE",
       //   body: JSON.stringify(studentData),
       headers: { "Content-Type": "application/json" },
@@ -135,7 +157,7 @@ function UpdateStudent(props) {
 
             <Container>
               <Row>
-            <Col sm = {4}>
+            <Col sm = {6}>
       <Form.Group id="studentId">
               <Form.Label>Student ID</Form.Label>
               <Form.Control
@@ -147,7 +169,19 @@ function UpdateStudent(props) {
                 defaultValue={props.studentId}
               />
             </Form.Group>
+            
             </Col>
+            <Col sm = {6}>
+                  <Form.Group id="field">
+              <Form.Label>Field</Form.Label>
+                <Form.Control size="sm" as="select" onChange={fieldHandler}  disabled={fieldIsVisible} ref={fieldRef} required defaultValue={props.field}>
+                  <option>Natural Science</option>
+                  <option>Social Science</option>
+                  <option>Normal</option>
+                </Form.Control>
+              </Form.Group>
+
+                  </Col>
             </Row>
     <Row>
      <Col sm = {6}>
@@ -176,6 +210,7 @@ function UpdateStudent(props) {
       <Form.Group id="grade">
               <Form.Label>Grade</Form.Label>
               <Form.Control
+              onChange={gradeChangeHandler}
                 size="sm"
                 as="select"
                 ref={gradeRef}

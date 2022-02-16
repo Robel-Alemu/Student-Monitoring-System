@@ -75,6 +75,9 @@ function Adminavigation() {
               <li>
                <Link style={{"color":"white"}} to="/broadcast-message">Broadcast Message</Link>
                </li>
+              <li>
+               <Link style={{"color":"white"}} to="/add-class">Add Class</Link>
+               </li>
                <li ><NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
           title="Users"

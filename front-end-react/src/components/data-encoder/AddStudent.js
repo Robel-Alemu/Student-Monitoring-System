@@ -13,7 +13,7 @@ import LayoutCenter from "../layout/LayoutCenter";
   const lastName = useRef();
   const gradeRef = useRef();
   const sectionRef = useRef();
-
+  const fieldRef = useRef()
   const parent1NameRef = useRef();
   const parent1PhoneRef = useRef();
   const parent2NameRef = useRef();
@@ -23,6 +23,24 @@ import LayoutCenter from "../layout/LayoutCenter";
   const [success, setSuccess] = useState();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [fieldIsVisible,setFieldIsVisible]= useState(true);
+  const [field,setField]= useState();
+function gradeChangeHandler(e){
+e.preventDefault();
+if (gradeRef.current.value == 11 || gradeRef.current.value == 12 )
+setFieldIsVisible(false)
+else (setFieldIsVisible(true))
+
+
+
+}
+
+function fieldHandler(e){
+  e.preventDefault()
+  if (gradeRef.current.value == 9 || gradeRef.current.value == 10) setField("normal")
+  else setField((fieldRef.current.value).toString())
+    console.log(field,"------------")
+}
 
   function submitHandler(event) {
     // event.preventDefault();
@@ -35,7 +53,7 @@ import LayoutCenter from "../layout/LayoutCenter";
     const enteredParent1Phone = parent1PhoneRef.current.value;
     const enteredParent2Name = parent2NameRef.current.value;
     const enteredParent2Phone = parent2PhoneRef.current.value;
-
+    
     const studentData = {
       studentId : enteredStudentId,
       firstName: enteredFirstName,
@@ -46,10 +64,13 @@ import LayoutCenter from "../layout/LayoutCenter";
       parent1Phone: enteredParent1Phone,
       parent2Name: enteredParent2Name,
       parent2Phone: enteredParent2Phone,
+      field : field
     };
+    console.log(field)
     event.preventDefault();
     fetch(
-      "https://student-monitoring.herokuapp.com/api/Student-Information",
+      "http://localhost:8080/api/Student-Information",
+      // "https://student-monitoring.herokuapp.com/api/Student-Information",
       {
         method: "POST",
         body: JSON.stringify(studentData),
@@ -106,6 +127,18 @@ import LayoutCenter from "../layout/LayoutCenter";
                 <Form.Label>Student ID</Form.Label>
                 <Form.Control type="text" ref={studentId} size="sm" required />
               </Form.Group>
+              
+                  </Col>
+                  <Col sm = {6}>
+                  <Form.Group id="field">
+              <Form.Label>Field</Form.Label>
+                <Form.Control size="sm" as="select" onChange={fieldHandler} disabled={fieldIsVisible} ref={fieldRef} required>
+                  <option>Natural Science</option>
+                  <option>Social Science</option>
+                  
+                </Form.Control>
+              </Form.Group>
+
                   </Col>
                   
                 </Row>
@@ -121,7 +154,7 @@ import LayoutCenter from "../layout/LayoutCenter";
               </Form.Group>
               <Form.Group id="grade">
               <Form.Label>Grade</Form.Label>
-                <Form.Control size="sm" as="select" ref={gradeRef} required>
+                <Form.Control size="sm" as="select" onChange={gradeChangeHandler} ref={gradeRef} required>
                   <option>9</option>
                   <option>10</option>
                   <option>11</option>
@@ -139,6 +172,7 @@ import LayoutCenter from "../layout/LayoutCenter";
               </Form.Group>
                   </Col>
                   <Col sm = {6}>
+                  
                   <Form.Group id="parentName1">
                 <Form.Label>Parent Name</Form.Label>
                 <Form.Control type="text" size="sm" ref={parent1NameRef} required />

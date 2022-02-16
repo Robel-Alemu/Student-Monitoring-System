@@ -16,7 +16,7 @@ const {
 const { AddStudent,AddMultipleStudent, getStudent, getAllStudent, updateStudent, deleteStudent,UpdateGradeBulk,getAttendanceDetail, getAttendanceBySection, AddGrade,GetStudentGrade,filterGrades, AddAttendance, UpdateAttendance} = require("../controllers/studentController");
 
 const {AddBroadcast,AddB,getB,getGrades, getBroadcastMessages,updateBroadcastMessage} = require("../controllers/broadcastMessage");
-
+const{AddClass,GetClass} = require('../controllers/AdminController');
 const router = express.Router();
 
 router.post('/Users', registerWithEmailAndPassword);
@@ -65,6 +65,13 @@ router.put('/update-message/:id',updateBroadcastMessage);
 router.put('/update-student/:id',updateStudent);
 
 router.delete('/delete/:id',deleteAccount);
+
+
+router.post('/add-class',AddClass)
+router.get('/get-class/:classId',GetClass)
+
+
+
 module.exports = {
     routes: router
 }

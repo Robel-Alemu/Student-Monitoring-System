@@ -22,8 +22,10 @@ function EditStudentPage() {
     const enteredId = id.current.value;
     setIsLoading(true);
     fetch(
-      "https://student-monitoring.herokuapp.com/api/Student-Information/"+enteredId
+      "http://localhost:8080/api/Student-Information/"+enteredId
+      // "https://student-monitoring.herokuapp.com/api/Student-Information/"+enteredId
     )
+    // )
       .then((response) => {
         console.log(response.body);
         return response.json();

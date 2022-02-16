@@ -110,6 +110,7 @@ import GradesList from "./components/admin/GradesList";
 import ViewAttendancePage from "./components/pages/ViewAttendance";
 import AddMultipleStudents from "./components/data-encoder/AddMultipleStudents";
 import AddStudent from "./components/data-encoder/AddStudent";
+import AddClass from "./components/admin/AddClass";
 
 function App() {
   let x = 4;
@@ -193,6 +194,9 @@ function App() {
                 />
                 {/* <PrivateRoute path="/add-user" component={AddNewUserPage} /> */}
                 <PrivateRoute path="/add-user" component={AddUser} />
+                
+                
+                <PrivateRoute path="/add-class" component={AddClass} />
 
 
 

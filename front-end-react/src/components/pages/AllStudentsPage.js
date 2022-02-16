@@ -10,7 +10,10 @@ function AllStudentsPage() {
    
   useEffect(() => {
     setIsLoading(true);
-    fetch("https://student-monitoring.herokuapp.com/api/Student-Information")
+    fetch(
+      "http://localhost:8080/api/Student-Information"
+      // "https://student-monitoring.herokuapp.com/api/Student-Information"
+      )
       .then((response) => {
         console.log(response.body);
         return response.json();

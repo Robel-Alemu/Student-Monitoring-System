@@ -16,6 +16,7 @@ function StudentList(props) {
                 parent1P={student.parent1Phone}
                 parent2N={student.parent2Name}
                 parent2P={student.parent2Phone}
+                field = {student.field}
                 
                 
             />
