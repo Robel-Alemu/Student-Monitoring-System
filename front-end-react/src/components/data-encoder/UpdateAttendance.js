@@ -49,7 +49,17 @@ function UpdateAttendance(props) {
   const [success, setSuccess] = useState("");
   
 
+  
+  const [term, setTerm] = useState(["Select Term"])
+  const [sections,setSections]=useState(["Select Section"]);
+  const [classes,setClasses] = useState(["Select Grade"]);
+  const terms = ["first-term", "second-term", "third-term", "fourth-term"];
+
   const history = useHistory();
+
+
+  
+
 
   function submitHandler(event) {
     event.preventDefault();
@@ -96,7 +106,7 @@ function UpdateAttendance(props) {
         
                 else {setError(data.message);
                         setSuccess("");}
-
+                  
         //   setResponse(data);
       });
   }

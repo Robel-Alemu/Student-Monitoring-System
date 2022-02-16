@@ -114,15 +114,7 @@ function AddGrade() {
         });
   
   })
-
   
-    setTerm(terms)
-    
-  }
-
-  function gradeHandler(e){
-    e.preventDefault();
-    
   fetch(
     "http://localhost:8080/api/get-class/"+gradeRef.current.value
     // "https://student-monitoring.herokuapp.com/api/Student-Information",
@@ -157,7 +149,13 @@ function AddGrade() {
       // setResponse(data.message);
 
     });
+
+  
+    setTerm(terms)
+    
   }
+
+ 
 
   function clickHandler(e) {
     const enteredSubject = subjectRef.current.value;
@@ -242,7 +240,7 @@ function AddGrade() {
               </Form.Group>
               <Form.Group id="grade">
                 <Form.Label>Grade</Form.Label>
-                <Form.Control size="sm" as="select" ref={gradeRef} required onClick={gradeHandler}>>
+                <Form.Control size="sm" as="select" ref={gradeRef} required onClick={loadHandler}>>
                   {/* <option>9</option>
                   <option>10</option>
                   <option>11</option>

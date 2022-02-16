@@ -75,6 +75,13 @@ function ViewAttendancePage({ title }) {
   const gradeRef = useRef();
   const sectionRef = useRef();
   const subjectRef = useRef();
+
+
+  const [term, setTerm] = useState(["Select Term"])
+  const [sections,setSections]=useState(["Select Section"]);
+  const [classes,setClasses] = useState(["Select Grade"]);
+  const terms = ["first-term", "second-term", "third-term", "fourth-term"];
+
   const date = new Date();
   let x = { title };
   console.log(x);
@@ -84,6 +91,85 @@ function ViewAttendancePage({ title }) {
   }-${date.getFullYear()}`;
   const year = `${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
+
+
+  function termHandler(e){
+    e.preventDefault();
+    fetch(
+      "http://localhost:8080/api/get-all-class"
+      // "https://student-monitoring.herokuapp.com/api/Student-Information",
+     
+      
+      )
+      .then((response) => {
+        // console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        const classArray = [];
+  
+        for (const key in data) {
+          const classData = {
+            id: key,
+            ...data[key],
+          };
+          classArray.push(classData);}
+        // alert(data.message);
+       const gradesArray = []
+        classArray.forEach(x=>{
+          console.log(x);
+          gradesArray.push(x.class_)
+  
+        })
+        setClasses(gradesArray)
+        // console.log(grades);
+        // // setSubject(subjects)
+        // console.log(grades,"****Grades*****");
+        // grades.forEach(element => {
+        //   console.log(element)
+        // });
+  
+  })
+  
+  
+  fetch(
+    "http://localhost:8080/api/get-class/"+gradeRef.current.value
+    // "https://student-monitoring.herokuapp.com/api/Student-Information",
+   
+    
+    )
+    .then((response) => {
+      // console.log(response);
+      return response.json();
+    })
+    .then((data) => {
+      const classArray = [];
+  
+      for (const key in data) {
+        const classData = {
+          id: key,
+          ...data[key],
+        };
+        classArray.push(classData);}
+      // alert(data.message);
+      console.log(sections,"before******************")
+      setSections(classArray[0].section)
+      // if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
+      //   setSubject(subjectsOf9And10)
+      // }
+      // else setSubject(subjectsOf11And12)
+      // console.log(classArray[0].section);
+      // console.log(sections,"*********");
+      // sections.forEach(element => {
+      //   console.log(element)
+      // });
+      
+      // setResponse(data.message);
+  
+    });
+    setTerm(terms)
+  }
+
   function searchHandler() {
     // const enteredId = id.current.value;
     const term = termRef.current.value;
@@ -126,7 +212,9 @@ function ViewAttendancePage({ title }) {
         if (data.message == "No attendance record found")
           setError(data.message);
         else setError("");
-
+        setTerm([term])
+        setClasses([grade])
+        setSections([section])
         // console.log(loadedStudent[0]);
         // alert(data.message);
       });
@@ -177,27 +265,34 @@ function ViewAttendancePage({ title }) {
       <section>
         <Layout>
           <Container>
+          <h1>View Attendance</h1>
             {error && <Alert variant="danger">{error}</Alert>}
             <Row>
               <Col sm={8}>
                 <Row>
                   <Form.Group id="term" style={{ marginLeft: "30px" }}>
                     <Form.Label>Term</Form.Label>
-                    <Form.Control size="sm" as="select" ref={termRef} required>
-                      <option>first-term</option>
+                    <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
+                      {/* <option>first-term</option>
                       <option>sescond-term</option>
                       <option>third-term</option>
-                      <option>fourth-term</option>
+                      <option>fourth-term</option> */}
+                      {term.map(item => {
+      return (<option  >{item}</option>);})}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
-                    <Form.Control size="sm" as="select" ref={gradeRef} required>
-                      <option disabled="true">select grade</option>
+                    <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
+                      {/* <option disabled="true">select grade</option>
                       <option>9</option>
                       <option>10</option>
                       <option>11</option>
-                      <option>12</option>
+                      <option>12</option> */}
+                                                 
+{classes.map(item => {
+      return (<option  >{item}</option>);
+  })}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="section" style={{ marginLeft: "30px" }}>
@@ -208,10 +303,13 @@ function ViewAttendancePage({ title }) {
                       ref={sectionRef}
                       required
                     >
-                      <option>A</option>
+                      {/* <option>A</option>
                       <option>B</option>
                       <option>C</option>
-                      <option>D</option>
+                      <option>D</option> */}
+                      {sections.map(item => {
+      return (<option  >{item}</option>);
+  })}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="date" style={{ marginLeft: "30px" }}>
@@ -250,27 +348,34 @@ function ViewAttendancePage({ title }) {
       <section>
         <DataEncoderLayout>
           <Container>
+          <h1>View Attendance</h1>
             {error && <Alert variant="danger">{error}</Alert>}
             <Row>
               <Col sm={8}>
                 <Row>
                   <Form.Group id="term" style={{ marginLeft: "30px" }}>
                     <Form.Label>Term</Form.Label>
-                    <Form.Control size="sm" as="select" ref={termRef} required>
-                      <option>first-term</option>
+                    <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
+                      {/* <option>first-term</option>
                       <option>sescond-term</option>
                       <option>third-term</option>
-                      <option>fourth-term</option>
+                      <option>fourth-term</option> */}
+                      {term.map(item => {
+      return (<option  >{item}</option>);})}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
-                    <Form.Control size="sm" as="select" ref={gradeRef} required>
+                    <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
                    
-                      <option> 9</option>
+                      {/* <option> 9</option>
                       <option>10</option>
                       <option>11</option>
-                      <option>12</option>
+                      <option>12</option> */}
+                                                 
+{classes.map(item => {
+      return (<option  >{item}</option>);
+  })}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="section" style={{ marginLeft: "30px" }}>
@@ -280,11 +385,16 @@ function ViewAttendancePage({ title }) {
                       as="select"
                       ref={sectionRef}
                       required
+                      
                     >
-                      <option>A</option>
+                      {/* <option>A</option>
                       <option>B</option>
                       <option>C</option>
-                      <option>D</option>
+                      <option>D</option> */}
+
+{sections.map(item => {
+      return (<option  >{item}</option>);
+  })}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group id="date" style={{ marginLeft: "30px" }}>

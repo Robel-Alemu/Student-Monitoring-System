@@ -163,48 +163,6 @@ function onLoadHandler(e){
     setTerm(terms)
   }
 
-  function gradeHandler(e){
-    e.preventDefault()
-    
-
-  
-  fetch(
-    "http://localhost:8080/api/get-class/"+gradeRef.current.value
-    // "https://student-monitoring.herokuapp.com/api/Student-Information",
-   
-    
-    )
-    .then((response) => {
-      // console.log(response);
-      return response.json();
-    })
-    .then((data) => {
-      const classArray = [];
-
-      for (const key in data) {
-        const classData = {
-          id: key,
-          ...data[key],
-        };
-        classArray.push(classData);}
-      // alert(data.message);
-      console.log(sections,"before******************")
-      setSections(classArray[0].section)
-      if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
-        setSubject(subjectsOf9And10)
-      }
-      else setSubject(subjectsOf11And12)
-      console.log(classArray[0].section);
-      console.log(sections,"*********");
-      sections.forEach(element => {
-        console.log(element)
-      });
-      
-      // setResponse(data.message);
-
-    });
-}
-
   function searchHandler() {
     // const enteredId = id.current.value;
     const term = termRef.current.value;
@@ -360,7 +318,7 @@ if (x.title == "admin") {
             <Form.Group id="grade" style={{marginLeft:"30px"}}>
               <Form.Label>Grade</Form.Label>
               <Form.Control size="sm" as="select" ref={gradeRef} required 
-              onClick={gradeHandler}>
+              onClick={termHandler}>
                 {/* <option>9</option>
                 <option>10</option>
                 <option>11</option>
@@ -462,7 +420,7 @@ else{
             <Form.Group id="grade" style={{marginLeft:"30px"}}>
               <Form.Label>Grade</Form.Label>
               <Form.Control size="sm" as="select" ref={gradeRef} required 
-              onClick={gradeHandler}>
+              onClick={termHandler}>
                 {/* <option>9</option>
                 <option>10</option>
                 <option>11</option>
