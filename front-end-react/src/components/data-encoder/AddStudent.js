@@ -111,7 +111,16 @@ function gradeHandler(e){
         gradesArray.push(x.class_)
 
       })
-      setGrades(gradesArray)
+      const numberGrade = []
+      gradesArray.forEach(x=>{
+        numberGrade.push(parseInt(x))
+      })
+    numberGrade.sort(function(a, b) {
+      return a - b;
+    });
+    console.log(numberGrade)
+      // setClasses(numberGrade)
+      setGrades(numberGrade)
       console.log(grades);
       console.log(grades,"****Grades*****");
       grades.forEach(element => {

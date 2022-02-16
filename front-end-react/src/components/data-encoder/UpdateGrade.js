@@ -59,7 +59,16 @@ function UpdateGrade(){
           gradesArray.push(x.class_)
   
         })
-        setClasses(gradesArray)
+        const numberGrade = []
+        gradesArray.forEach(x=>{
+          numberGrade.push(parseInt(x))
+        })
+      numberGrade.sort(function(a, b) {
+        return a - b;
+      });
+      console.log(numberGrade)
+        setClasses(numberGrade)
+        // setClasses(gradesArray)
         console.log(grades);
         // setSubject(subjects)
         console.log(grades,"****Grades*****");

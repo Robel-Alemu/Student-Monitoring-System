@@ -99,7 +99,16 @@ function gradeHandler(e){
         gradesArray.push(x.class_)
 
       })
-      setGrades(gradesArray)
+      const numberGrade = []
+      gradesArray.forEach(x=>{
+        numberGrade.push(parseInt(x))
+      })
+    numberGrade.sort(function(a, b) {
+      return a - b;
+    });
+    console.log(numberGrade)
+      // setClasses(numberGrade)
+      setGrades(numberGrade)
       console.log(grades);
       console.log(grades,"****Grades*****");
       grades.forEach(element => {
@@ -201,12 +210,13 @@ function fieldHandler(e){
 
 
 
-  function onLoadHandler(e){e.preventDefault()
+  // function onLoadHandler(e){e.preventDefault()
   
-  document.getElementById("gradeSelect").value="choose grade"}
+  // document.getElementById("gradeSelect").value="choose grade"}
 
   function deleteHandler(event) {
     event.preventDefault();
+    if(window.confirm("Are you sure?")){
     const id = studentId.current.value;
 
     fetch(
@@ -229,7 +239,7 @@ function fieldHandler(e){
                   setSuccess("");}
         //   setResponse(data);
       });
-
+    }
     // props.onEdit(editMessage);
     history.push("/update-student");
   }
