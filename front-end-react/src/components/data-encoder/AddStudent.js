@@ -1,46 +1,166 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert, Container, Col ,Row} from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Card,
+  Alert,
+  Container,
+  Col,
+  Row,
+} from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
-
- function AddStudent(props) {
-   const studentId = useRef();
+function AddStudent(props) {
+  const studentId = useRef();
   const firstName = useRef();
   const lastName = useRef();
   const gradeRef = useRef();
   const sectionRef = useRef();
-  const fieldRef = useRef()
+  const fieldRef = useRef();
   const parent1NameRef = useRef();
   const parent1PhoneRef = useRef();
   const parent2NameRef = useRef();
   const parent2PhoneRef = useRef();
-  
+
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   const [loading, setLoading] = useState(false);
+  const [sections,setSections]=useState(["Select Section"]);
+  const [grades,setGrades] = useState(["Select Grade"]);
   const history = useHistory();
-  const [fieldIsVisible,setFieldIsVisible]= useState(true);
-  const [field,setField]= useState();
-function gradeChangeHandler(e){
-e.preventDefault();
-if (gradeRef.current.value == 11 || gradeRef.current.value == 12 )
-setFieldIsVisible(false)
-else (setFieldIsVisible(true))
+  const [fieldIsVisible, setFieldIsVisible] = useState(true);
+  const [field, setField] = useState();
+  function gradeChangeHandler(e) {
+    e.preventDefault();
 
 
+    fetch(
+      "http://localhost:8080/api/get-class/"+gradeRef.current.value
+      // "https://student-monitoring.herokuapp.com/api/Student-Information",
+     
+      
+      )
+      .then((response) => {
+        // console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        const classArray = [];
 
-}
+        for (const key in data) {
+          const classData = {
+            id: key,
+            ...data[key],
+          };
+          classArray.push(classData);}
+        // alert(data.message);
+        setSections(classArray[0].section)
+        console.log(classArray[0].section);
+        console.log(sections,"*********");
+        sections.forEach(element => {
+          console.log(element)
+        });
+        
+        // setResponse(data.message);
 
-function fieldHandler(e){
+      });
+
+
+    if (gradeRef.current.value == 11 || gradeRef.current.value == 12)
+      setFieldIsVisible(false);
+    else setFieldIsVisible(true);
+  }
+
+  function fieldHandler(e) {
+    e.preventDefault();
+    if (gradeRef.current.value == 9 || gradeRef.current.value == 10)
+      setField("normal");
+    else setField(fieldRef.current.value.toString());
+    console.log(field, "------------");
+  }
+
+function gradeHandler(e){
   e.preventDefault()
-  if (gradeRef.current.value == 9 || gradeRef.current.value == 10) setField("normal")
-  else setField((fieldRef.current.value).toString())
-    console.log(field,"------------")
+  fetch(
+    "http://localhost:8080/api/get-all-class"
+    // "https://student-monitoring.herokuapp.com/api/Student-Information",
+   
+    
+    )
+    .then((response) => {
+      // console.log(response);
+      return response.json();
+    })
+    .then((data) => {
+      const classArray = [];
+
+      for (const key in data) {
+        const classData = {
+          id: key,
+          ...data[key],
+        };
+        classArray.push(classData);}
+      // alert(data.message);
+     const gradesArray = []
+      classArray.forEach(x=>{
+        console.log(x);
+        gradesArray.push(x.class_)
+
+      })
+      setGrades(gradesArray)
+      console.log(grades);
+      console.log(grades,"****Grades*****");
+      grades.forEach(element => {
+        console.log(element)
+      });
+
+})
+
+
+fetch(
+  "http://localhost:8080/api/get-class/"+gradeRef.current.value
+  // "https://student-monitoring.herokuapp.com/api/Student-Information",
+ 
+  
+  )
+  .then((response) => {
+    // console.log(response);
+    return response.json();
+  })
+  .then((data) => {
+    const classArray = [];
+
+    for (const key in data) {
+      const classData = {
+        id: key,
+        ...data[key],
+      };
+      classArray.push(classData);}
+    // alert(data.message);
+    setSections(classArray[0].section)
+    console.log(classArray[0].section);
+    console.log(sections,"*********");
+    sections.forEach(element => {
+      console.log(element)
+    });
+    
+    // setResponse(data.message);
+
+  });
+
+
+if (gradeRef.current.value == 11 || gradeRef.current.value == 12)
+  setFieldIsVisible(false);
+else setFieldIsVisible(true);
+
 }
+
+
+
 
   function submitHandler(event) {
     // event.preventDefault();
@@ -53,9 +173,9 @@ function fieldHandler(e){
     const enteredParent1Phone = parent1PhoneRef.current.value;
     const enteredParent2Name = parent2NameRef.current.value;
     const enteredParent2Phone = parent2PhoneRef.current.value;
-    
+
     const studentData = {
-      studentId : enteredStudentId,
+      studentId: enteredStudentId,
       firstName: enteredFirstName,
       lastName: enteredLastName,
       grade: enteredGrade,
@@ -64,9 +184,9 @@ function fieldHandler(e){
       parent1Phone: enteredParent1Phone,
       parent2Name: enteredParent2Name,
       parent2Phone: enteredParent2Phone,
-      field : field
+      field: field,
     };
-    console.log(field)
+    console.log(field);
     event.preventDefault();
     fetch(
       "http://localhost:8080/api/Student-Information",
@@ -76,8 +196,7 @@ function fieldHandler(e){
         body: JSON.stringify(studentData),
         headers: { "Content-Type": "application/json" },
       }
-      
-      )
+    )
       .then((response) => {
         // console.log(response);
         return response.json();
@@ -88,129 +207,168 @@ function fieldHandler(e){
           setError("");
         } else {
           setError(data.message);
-          setSuccess("");}
+          setSuccess("");
+        }
         // alert(data.message);
-        console.log(data);
+
         
+        console.log(data);
+
         // setResponse(data.message);
-
       });
-
 
     // props.onAddStudent(studentData);
     // console.log(props.responses,"***********");
     // setError(props.x);
   }
 
- 
-    
-
-  
-
   return (
     <>
-    <DataEncoderCenterLayout><Card>
+      <DataEncoderCenterLayout>
+        <Card>
           <Card.Body>
             <h3 className="text-center mb-4">Add Student Detail</h3>
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
             {error && <Alert variant="danger">{error}</Alert>}
-       {success && <Alert variant="success">{success}</Alert>}
-            <Form onSubmit={submitHandler}>
-
-           
-            
+            {success && <Alert variant="success">{success}</Alert>}
+            <Form onSubmit={submitHandler} onLoad={gradeHandler}>
               <Container>
-              <Row>
-                  <Col sm = {6}>
-                  <Form.Group id="studentId">
-                <Form.Label>Student ID</Form.Label>
-                <Form.Control type="text" ref={studentId} size="sm" required />
-              </Form.Group>
-              
+                <Row>
+                  <Col sm={6}>
+                    <Form.Group id="studentId">
+                      <Form.Label>Student ID</Form.Label>
+                      <Form.Control
+                        type="text"
+                        ref={studentId}
+                        size="sm"
+                        required
+                      />
+                    </Form.Group>
                   </Col>
-                  <Col sm = {6}>
-                  <Form.Group id="field">
-              <Form.Label>Field</Form.Label>
-                <Form.Control size="sm" as="select" onChange={fieldHandler} disabled={fieldIsVisible} ref={fieldRef} required>
-                  <option>Natural Science</option>
-                  <option>Social Science</option>
-                  
-                </Form.Control>
-              </Form.Group>
-
+                  <Col sm={6}>
+                    <Form.Group id="field">
+                      <Form.Label>Field</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        as="select"
+                        onChange={fieldHandler}
+                        disabled={fieldIsVisible}
+                        ref={fieldRef}
+                        required
+                      >
+                        <option>Natural Science</option>
+                        <option>Social Science</option>
+                      </Form.Control>
+                    </Form.Group>
                   </Col>
-                  
                 </Row>
                 <Row>
-                  <Col sm = {6}>
-                  <Form.Group id="firstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" ref={firstName} size="sm" required />
-              </Form.Group>
-              <Form.Group id="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" ref={lastName} size="sm" required />
-              </Form.Group>
-              <Form.Group id="grade">
-              <Form.Label>Grade</Form.Label>
-                <Form.Control size="sm" as="select" onChange={gradeChangeHandler} ref={gradeRef} required>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group id="section">
-              <Form.Label>Section</Form.Label>
-                <Form.Control size="sm" as="select" ref={sectionRef} required>
-                  <option>A</option>
-                  <option>B</option>
-                  <option>C</option>
-                  <option>D</option>
-                </Form.Control>
-              </Form.Group>
+                  <Col sm={6}>
+                    <Form.Group id="firstName">
+                      <Form.Label>First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        ref={firstName}
+                        size="sm"
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group id="lastName">
+                      <Form.Label>Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        ref={lastName}
+                        size="sm"
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group id="grade">
+                      <Form.Label>Grade</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        as="select"
+                        // onChange={gradeChangeHandler}
+                        ref={gradeRef}
+                        required
+                        onClick={gradeHandler}
+                      >
+                       {grades.map(item => {
+      return (<option  >{item}</option>);
+  })}
+{/*                         
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option> */}
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group id="section">
+                      <Form.Label>Section</Form.Label>
+                       <Form.Control
+                        size="sm"
+                        as="select"
+                        ref={sectionRef}
+                        required
+                        placeholder="choose section"
+                      >
+                        {sections.map(item => {
+      return (<option  >{item}</option>);
+  })}
+                      
+                      </Form.Control>
+
+
+ 
+                    </Form.Group>
                   </Col>
-                  <Col sm = {6}>
-                  
-                  <Form.Group id="parentName1">
-                <Form.Label>Parent Name</Form.Label>
-                <Form.Control type="text" size="sm" ref={parent1NameRef} required />
-              </Form.Group>
-              <Form.Group id="parentPhone1">
-                <Form.Label>Parent Phone</Form.Label>
-                <Form.Control type="text" size="sm" ref={parent1PhoneRef} required />
-              </Form.Group>
-              <Form.Group id="parentName2">
-                <Form.Label>Parent Name</Form.Label>
-                <Form.Control type="text" size="sm" ref={parent2NameRef}  />
-              </Form.Group>
-              <Form.Group id="parentPhone2">
-                <Form.Label>Parent Phone</Form.Label>
-                <Form.Control type="text" size="sm" ref={parent2PhoneRef}  />
-              </Form.Group>
+                  <Col sm={6}>
+                    <Form.Group id="parentName1">
+                      <Form.Label>Parent Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        size="sm"
+                        ref={parent1NameRef}
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group id="parentPhone1">
+                      <Form.Label>Parent Phone</Form.Label>
+                      <Form.Control
+                        type="text"
+                        size="sm"
+                        ref={parent1PhoneRef}
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group id="parentName2">
+                      <Form.Label>Parent Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        size="sm"
+                        ref={parent2NameRef}
+                      />
+                    </Form.Group>
+                    <Form.Group id="parentPhone2">
+                      <Form.Label>Parent Phone</Form.Label>
+                      <Form.Control
+                        type="text"
+                        size="sm"
+                        ref={parent2PhoneRef}
+                      />
+                    </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group id="id">
-                
-                     <Button disabled={loading} className="w-100" type="submit">
-                Add Student
-              </Button>
-              </Form.Group>
+                  <Button disabled={loading} className="w-100" type="submit">
+                    Add Student
+                  </Button>
+                </Form.Group>
               </Container>
-              
-              
-
-              
-             
             </Form>
           </Card.Body>
-        </Card></DataEncoderCenterLayout>
-    
-     
-        
-        
-      
+        </Card>
+      </DataEncoderCenterLayout>
     </>
   );
 }

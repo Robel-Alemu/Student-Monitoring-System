@@ -44,7 +44,7 @@ const GetClass = async (req,res)=>{
 
         const classId = (req.params.classId).toString();
         const classData = await firestore
-      .collection("Class-Information").get();
+      .collection("Class-Information").where("class", "==", classId).get();
      const classArray = [];
       classData.forEach((doc)=>{
           const x = new SchoolClass(
@@ -62,6 +62,34 @@ doc.data().sections
         res.status(400).send(error.message)
     }
 }
+
+
+
+const GetAllClass = async (req,res)=>{
+
+
+  try {
+
+      
+      const classData = await firestore
+    .collection("Class-Information").get();
+   const classArray = [];
+    classData.forEach((doc)=>{
+        const x = new SchoolClass(
+            doc.id,
+doc.data().class,
+doc.data().sections
+        )
+        classArray.push(x)
+    })
+    console.log(classArray);
+    res.send(classArray);
+    
+      
+  } catch (error) {
+      res.status(400).send(error.message)
+  }
+}
   module.exports = {
-      AddClass,GetClass
+      AddClass,GetClass,GetAllClass
   };
