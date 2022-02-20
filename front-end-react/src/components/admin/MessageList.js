@@ -7,6 +7,7 @@ function MessageList(props) {
             {props.messages.map(message =>
                 <BroadcastMessages
                     id_={message.id}
+                    title = {message.title}
                     datePosted={message.datePosted}
                     message_={message.message}
                     

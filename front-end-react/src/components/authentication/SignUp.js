@@ -4,6 +4,7 @@ import { useAuth } from "../../AuthContext/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { app } from "../../firebase";
 import AuthLayout from "../layout/AuthLayout";
+import Login from "./Login";
 
 export default function Signup(props) {
   const nameRef = useRef()
@@ -17,7 +18,7 @@ export default function Signup(props) {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
-
+const [emailVal,setEmailVal]= useState(" ")
 
   // async function handleSubmit(e) {
   //   e.preventDefault()
@@ -50,8 +51,8 @@ export default function Signup(props) {
   function submitHandler(event) {
    
     event.preventDefault();
-
-    const enteredName = nameRef.current.value;
+try {
+  const enteredName = nameRef.current.value;
     const enteredPhone = phoneRef.current.value;
     const enteredRole = roleRef.current.value;
     const enteredEmail = emailRef.current.value;
@@ -66,6 +67,13 @@ export default function Signup(props) {
     };
 
     props.onSignup(userData);
+  
+} catch  {
+  setError("failed to sign up")
+  
+}
+    
+  //  history.push("/login")
   }
 
   return (
@@ -74,30 +82,30 @@ export default function Signup(props) {
       
       <h4 className="text-center mb-4">Sign Up</h4>
       {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} autoComplete="off"> 
       <Form.Group id="name">
           <Form.Label>Full Name</Form.Label>
-          <Form.Control type="text" ref={nameRef} size="sm" required />
+          <Form.Control type="text" ref={nameRef} size="sm" required placeholder="Enter Full Name" />
         </Form.Group>
         <Form.Group id="phone">
           <Form.Label>Phone</Form.Label>
-          <Form.Control type="text" size="sm" ref={phoneRef} required />
+          <Form.Control type="text" size="sm" ref={phoneRef} required placeholder="Enter Phone" />
         </Form.Group>
         <Form.Group id="role">
           <Form.Label>Role</Form.Label>
-          <Form.Control type="text" size="sm" ref={roleRef} required />
+          <Form.Control type="text" size="sm" ref={roleRef} required disabled="true" value={"Admin"} />
         </Form.Group>
         <Form.Group id="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" size="sm" ref={emailRef} required />
+          <Form.Control type="email" size="sm"  ref={emailRef} required autoComplete="new-email" placeholder="Enter Email"/>
         </Form.Group>
         <Form.Group id="password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" size="sm" ref={passwordRef} required />
+          <Form.Control type="password" size="sm" ref={passwordRef} required autoComplete="new-password" placeholder="Enter Password"/>
         </Form.Group>
         <Form.Group id="password-confirm">
           <Form.Label>Password Confirmation</Form.Label>
-          <Form.Control type="password" size="sm" ref={passwordConfirmRef} required />
+          <Form.Control type="password" size="sm" ref={passwordConfirmRef} required placeholder="Confirm Password" />
         </Form.Group>
         <Button disabled={loading} className="w-100" type="submit">
           Sign Up

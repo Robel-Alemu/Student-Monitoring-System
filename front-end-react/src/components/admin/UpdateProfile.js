@@ -38,8 +38,8 @@ export default function UpdateProfile() {
       .then(() => {
         history.push("/")
       })
-      .catch(() => {
-        setError("Failed to update account")
+      .catch((e) => {
+        setError(e.message)
       })
       .finally(() => {
         setLoading(false)
@@ -59,7 +59,8 @@ export default function UpdateProfile() {
                 type="email"
                 ref={emailRef}
                 required
-                defaultValue={currentUser.email}
+               autoComplete="new-email"
+               defaultValue={currentUser.email}
               />
             </Form.Group>
             <Form.Group id="password">
@@ -68,7 +69,7 @@ export default function UpdateProfile() {
                 type="password"
                 ref={passwordRef}
                 placeholder="Leave blank to keep the same"
-                defaultValue={password}
+                autoComplete="new-password"
               />
             </Form.Group>
             <Form.Group id="password-confirm">

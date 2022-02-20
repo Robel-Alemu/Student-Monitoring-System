@@ -111,6 +111,7 @@ import ViewAttendancePage from "./components/pages/ViewAttendance";
 import AddMultipleStudents from "./components/data-encoder/AddMultipleStudents";
 import AddStudent from "./components/data-encoder/AddStudent";
 import AddClass from "./components/admin/AddClass";
+import UpdateClass from "./components/admin/UpdateClass";
 
 function App() {
   let x = 4;
@@ -197,6 +198,7 @@ function App() {
                 
                 
                 <PrivateRoute path="/add-class" component={AddClass} />
+                <PrivateRoute path="/update-class" component={UpdateClass} />
 
 
 

@@ -110,7 +110,7 @@ function AddUser(props) {
               </Form.Group>
               <Form.Group id="email">
                 <Form.Label>email</Form.Label>
-                <Form.Control type="email" ref={emailInputRef} size="sm" required  defaultValue={""}/>
+                <Form.Control type="email" ref={emailInputRef} size="sm" required  autoComplete="new-email"/>
               </Form.Group></Col>
                 </Row>
               </Container>
@@ -121,7 +121,7 @@ function AddUser(props) {
 
               <Form.Group id="password">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" size="sm" ref={passwordInputRef} required defaultValue={""} />
+                <Form.Control type="password" size="sm" ref={passwordInputRef} required autoComplete="new-password" />
               </Form.Group>
               
               <Button  className="w-100" type="submit">

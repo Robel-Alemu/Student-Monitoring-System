@@ -79,9 +79,10 @@ function BroadcastMessages(props) {
     
     <li style={{ listStyle: "none" }}>
       <Card style={{marginTop: "30px"}}>
-        {/* <Card.Header as="h5">{props.datePosted}</Card.Header> */}
+        <Card.Header as="h3">{props.title}</Card.Header>
         <Card.Body>
           <Card.Title>Date: {props.datePosted}</Card.Title>
+
           <Card.Text>Message</Card.Text>
           <Card.Text>
             <textarea

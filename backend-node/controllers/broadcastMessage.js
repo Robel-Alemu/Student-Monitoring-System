@@ -190,7 +190,7 @@ const getBroadcastMessages = async (req, res, next) => {
 
 
       const message = await firestore.collection("Broadcast-Messages").orderBy("datePosted","desc");
-      
+      console.log(message)
       const data = await message.get();
       const messageArray = [];
       if (data.empty) {
@@ -199,12 +199,14 @@ const getBroadcastMessages = async (req, res, next) => {
         data.forEach((doc) => {
           const message = new BroadcastMessage(
             doc.id,
+            doc.data().title,
             doc.data().datePosted,
             doc.data().message,
            
           );
           messageArray.push(message);
         });
+        console.log(messageArray)
         res.send(messageArray);
       }
     } catch (err) {

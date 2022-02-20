@@ -224,7 +224,7 @@ const email = req.params.email;
       const data = await account.get();
       const accountArray = [];
       if (data.empty) {
-        res.status(404).send("No Account record found");
+        res.status(404).send({message: "No Account record found"});
       } else {
         data.forEach((doc) => {
           const account = new Account(
@@ -253,7 +253,7 @@ const email = req.params.email;
 
         const accountArray = [];
       if (data.empty) {
-        res.status(404).send("No Account record found");
+        res.status(404).send({message: "No Account record found"});
       } else {
         data.forEach((doc) => {
           const account = new Account(

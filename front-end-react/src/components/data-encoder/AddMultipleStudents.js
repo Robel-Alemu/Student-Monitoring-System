@@ -99,8 +99,7 @@ function AddMultipleStudents() {
         
         document.getElementById("upload").value = null;
       });
-    var form = document.getElementById("file");
-    form.reset();
+    
 
   }
 

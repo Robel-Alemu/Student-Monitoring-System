@@ -7,7 +7,7 @@ import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
 import { useState } from "react";
-function AddClass() {
+function UpdateClass() {
   const classInputRef = useRef();
   const sectionInputRef = useRef();
 //   const roleInputRef = useRef();
@@ -34,7 +34,7 @@ setIsRequired(false);
     
     const className = classInputRef.current.value;
     const sectionName = sectionInputRef.current.value;
-    // const enteredRole = roleInputRef.current.value; 
+    // const enteredRole = roleInputRef.current.value;
     // const enteredEmail = emailInputRef.current.value;
     // const enteredPassword = passwordInputRef.current.value;
     let uniqueSections = [...new Set(section)];
@@ -50,9 +50,9 @@ setIsRequired(false);
     event.preventDefault();
 
     fetch(
-      "http://localhost:8080/api/add-class",
+      "http://localhost:8080/api/update-class/"+className,
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(classData),
         headers: { "Content-Type": "application/json" },
       }
@@ -62,7 +62,7 @@ setIsRequired(false);
         return response.json();
       })
       .then((data) => {
-        if (data.message == "Class Added successfully") {
+        if (data.message == "class updated successfully") {
           setSuccess(data.message);
           setError("");
         } else {
@@ -97,7 +97,7 @@ setIsRequired(false);
     <LayoutCenter><Card>
 
 <Card.Body>
-            <h3 className="text-center mb-4">Add Class</h3>
+            <h3 className="text-center mb-4">Update Class</h3>
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
 
@@ -127,7 +127,7 @@ setIsRequired(false);
               </Container>
             
               <Button style={{marginTop:"30px"}} sm={4}  className="w-100" type="submit">
-                Add Class
+                Update Class
               </Button>
             </Form></Card.Body>
     
@@ -137,4 +137,4 @@ setIsRequired(false);
   );
 }
 
-export default AddClass;
+export default UpdateClass;

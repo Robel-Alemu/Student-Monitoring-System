@@ -38,9 +38,9 @@ function DataEncoderNavigation() {
              <li >
                 <Link className={classes.links} style={{"color":"white"}} to="/data-encoder">Home</Link>
               </li>
-              <li>
+              {/* <li>
                <Link className={classes.links} style={{"color":"white"}} to="/update-profile-d">Update Profile</Link>
-               </li>
+               </li> */}
                <li ><NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
           title="Students"
@@ -93,6 +93,21 @@ function DataEncoderNavigation() {
                <Link className={classes.links} style={{color:"black"}} to="/view-attendance">View Attendance</Link>
               </NavDropdown.Item>
           
+             
+          
+          
+        </NavDropdown></li>
+
+
+        <li ><NavDropdown  style={{color:"white"}}
+          id="nav-dropdown-dark-example"
+          title="Profile"
+          menuVariant="dark"
+        >
+         
+          <NavDropdown.Item > 
+          <Link className={classes.links} style={{"color":"black"}} to="/update-profile-d">Update Profile</Link>
+              </NavDropdown.Item>
               <NavDropdown.Item > 
               <Button variant="outline-dark" size="sm" onClick={handleLogout}>
          Log Out

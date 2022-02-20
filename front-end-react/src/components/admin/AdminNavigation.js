@@ -78,6 +78,9 @@ function Adminavigation() {
               <li>
                <Link style={{"color":"white"}} to="/add-class">Add Class</Link>
                </li>
+              <li>
+               <Link style={{"color":"white"}} to="/update-class">Update Class</Link>
+               </li>
                <li ><NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
           title="Users"
@@ -107,14 +110,26 @@ function Adminavigation() {
           <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/view-attendance-admin">View Attendance</Link>
               </NavDropdown.Item>
+          
+          
+          
+        </NavDropdown></li>
+
+        <li ><NavDropdown  style={{color:"white"}}
+          id="nav-dropdown-dark-example"
+          title="Profile"
+          menuVariant="dark"
+        >
           <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/update-profile">Update Profile</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item > 
           <Button variant="outline-dark" size="sm" onClick={handleLogout}>
           Log Out
        </Button>
               </NavDropdown.Item>
-          
-          
-        </NavDropdown></li>
+     
+          </NavDropdown></li>
                </ul>
         
       </Nav>

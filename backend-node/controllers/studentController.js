@@ -541,8 +541,8 @@ const AddMultipleStudent = async (req, res) => {
     const lastItem = data.length - 1;
 
     // const term = data[lastItem].term;
-    const grade = data[lastItem].grade;
-    const section = data[lastItem].section;
+    // const grade = data[lastItem].grade;
+    // const section = data[lastItem].section;
     // const subject = data[lastItem].subject;
     // data.pop();
     console.log(data,"after Pop")
@@ -553,10 +553,27 @@ const AddMultipleStudent = async (req, res) => {
     let canAdd = false;
 
     const defaultValue = "";
-    
+    let isGradeFormat = true
     // if (firebaseResult == true) canAdd = true;
     // console.log(firebaseResult);
-    for (let i = 0; i < excelResult.length && !hasError; i++) {
+    for (let i = 0; i < excelResult.length && isGradeFormat; i++) {
+//       let id = excelResult[i].studentId; 
+// console.log(id);
+//        hasError = await fetchStudent(id.toString()); 
+//       console.log(hasError,"lets see")
+      if (!(excelResult[i].hasOwnProperty('studentId') && excelResult[i].hasOwnProperty('firstName') && 
+      excelResult[i].hasOwnProperty('lastName')  && excelResult[i].hasOwnProperty('grade') && excelResult[i].hasOwnProperty('section')
+      && excelResult[i].hasOwnProperty('parent1Phone') &&  excelResult[i].hasOwnProperty('parent1Name'))){
+      isGradeFormat=false
+      console.log(isGradeFormat,"grade format")
+    }
+  }
+  console.log(isGradeFormat,"grade format")
+
+  if(!isGradeFormat){
+    res.status(200).send({message: "file is not correct format"})
+  }
+    else{for (let i = 0; i < excelResult.length && !hasError; i++) {
       let id = excelResult[i].studentId; 
 console.log(id);
        hasError = await fetchStudent(id.toString()); 
@@ -577,30 +594,30 @@ console.log(id);
       let hasParentName = true;
       let items = array.length;
 
-      console.log(array);
+      console.log(array,"from excel");
       for (let i = 0; i < items; i++) {
         
-        if (array[i].studentId == undefined) {
+        if (!array[i].hasOwnProperty('studentId')) {
           idExist = false;
           break;
         }
-        if (array[i].firstName == undefined || array[i].lastName == undefined ) {
+        if (!(array[i].hasOwnProperty('firstName') && array[i].hasOwnProperty('lastName'))) {
           hasName = false;
           break;
         }
-        if ((array[i].parent1Phone) == null || (array[i].parent2Phone) == null) {
+        if (!(array[i].hasOwnProperty('parent1Phone')  || array[i].hasOwnProperty('parent2Phone'))) {
           hasParentPhone = false;
           break;
         }
-        if (array[i].grade == undefined) {
+        if (!array[i].hasOwnProperty('grade')) {
           hasGrade = false;
           break;
         }
-        if (array[i].section == undefined) {
+        if (!array[i].hasOwnProperty('section')) {
           hasSection = false;
           break;
         }
-        if (array[i].parent1Name == undefined && array[i].parent2Name == undefined) {
+        if (!array[i].hasOwnProperty('parent1Name') || array[i].hasOwnProperty('parent2Name')) {
           hasParentName = false;
           break;
         }
@@ -663,7 +680,7 @@ console.log(id);
           await firestore.collection("Student-Information").doc().set(g);
           // await addGrade(g);
 
-          return true;
+          // return true;
         });
 
         res.status(200).send({ message: "Students added successfully!" });
@@ -689,7 +706,7 @@ console.log(id);
       } else if (!validate.hasSection) {
         res.status(400).send({
           message:
-            "Student grade can not be empty, please check your file again!",
+            "Student section can not be empty, please check your file again!",
         });
       } else if (!validate.hasParentName) {
         res.status(400).send({
@@ -703,7 +720,7 @@ console.log(id);
           "file contains student data  that already exist, please use update option if necessary, please check your file again!",
       });
     }
-  } catch (error) {
+  }} catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
   }

@@ -1,6 +1,7 @@
 class BroadcastMessage {
-    constructor(id, datePosted, message) {
+    constructor(id,title, datePosted, message) {
       this.id = id;
+      this.title = title;
       this.datePosted = datePosted;
       this.message = message;
       

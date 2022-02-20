@@ -193,10 +193,10 @@ console.log(grades);
                         setSuccess("");}
         document.getElementById("upload").value = null;
         setFileName("Choose File")
-        setTerm(["Select Term"])
-        setClasses(["Select Grade"])
-        setSections(["Select Section"])
-        setSubject(["Select Subject"])
+        // setTerm(["Select Term"])
+        // setClasses(["Select Grade"])
+        // setSections(["Select Section"])
+        // setSubject(["Select Subject"])
     }
 
 

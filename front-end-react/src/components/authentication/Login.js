@@ -31,7 +31,7 @@ export default function Login() {
             console.log(user);
       }
     } catch {
-      setError("Failed to log in");
+      setError("failed to log in");
     }
 
     setLoading(false);
