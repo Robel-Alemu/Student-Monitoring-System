@@ -9,7 +9,7 @@ const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
 const StudentInformation = require("../models/StudentInformation");
 
-const AddStudent = async (req, res, next) => {
+const AddStudentAndParent = async (req, res, next) => {
   try {
     const data = req.body;
     data.studentId = (data.studentId).toString()
@@ -22,7 +22,7 @@ const AddStudent = async (req, res, next) => {
   }
 };
 
-const getStudent = async (req, res, next) => {
+const SearchStudent = async (req, res, next) => {
   try {
     const studentId = req.params.studentId;
 
@@ -57,7 +57,7 @@ const getStudent = async (req, res, next) => {
   }
 };
 
-const getAllStudent = async (req, res, next) => {
+const ViewAllStudents = async (req, res, next) => {
   try {
     const student = await firestore.collection("Student-Information");
     const data = await student.get();
@@ -88,7 +88,7 @@ const getAllStudent = async (req, res, next) => {
   }
 };
 
-const updateStudent = async (req, res, next) => {
+const UpdateStudentAndParent = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
@@ -107,7 +107,7 @@ const updateStudent = async (req, res, next) => {
   }
 };
 
-const deleteStudent = async (req, res, next) => {
+const DeleteStudent = async (req, res, next) => {
   try {
     const id = req.params.id;
 
@@ -186,7 +186,7 @@ async function updateGrade(term, grade, section, subject, grades) {
   console.log("updated");
 }
 
-const UpdateGradeBulk = async (req, res) => {
+const UpdateGrades = async (req, res) => {
   try {
     const data = req.body;
 
@@ -534,7 +534,7 @@ async function fetchStudent(studentId) {
 
 
 
-const AddMultipleStudent = async (req, res) => {
+const AddMultipleStudentAndParent = async (req, res) => {
   try {
     const data = req.body;
 
@@ -1271,16 +1271,18 @@ console.log(z,"=========================")
 };
 
 module.exports = {
-  AddStudent,
-  getStudent,
-  getAllStudent,
-  updateStudent,
-  deleteStudent,
+  AddStudentAndParent,
+  AddMultipleStudentAndParent,
+  UpdateStudentAndParent,
+  SearchStudent,
+  ViewAllStudents,
+  
+  DeleteStudent,
 
   AddGrade,
   GetStudentGrade,
   filterGrades,
-  UpdateGradeBulk,
+  UpdateGrades,
 
   AddAttendance,
   UpdateAttendance,
@@ -1289,5 +1291,5 @@ module.exports = {
 
 
 
-  AddMultipleStudent
+  
 };
