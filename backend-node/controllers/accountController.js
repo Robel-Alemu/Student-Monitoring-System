@@ -50,7 +50,7 @@ const auth = firebase.auth();
 
 
 
-const registerWithEmailAndPassword = async (req, res, next) => {
+const AddUser = async (req, res, next) => {
   try {
     const data = req.body;
     const addAccount = await auth.createUserWithEmailAndPassword(data.email, data.password);
@@ -129,7 +129,7 @@ const updateAccount = async (req, res, next) => {
     }
 }
 
-const deleteAccount = async (req, res, next) => {
+const DeleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
        const toDelete = await firestore.collection('Users').where("uid", "==", id).get();
@@ -179,7 +179,7 @@ const getAllAccount = async (req, res, next) => {
 
 
 
-  const getUser = async (req, res, next) => {
+  const GetUser = async (req, res, next) => {
     try {
       
 const email = req.params.email;
@@ -214,7 +214,7 @@ const email = req.params.email;
 
 
 
-  const getAllAccounts = async (req, res, next) => {
+  const ViewUsers = async (req, res, next) => {
     try {
       
 
@@ -311,12 +311,21 @@ const email = req.params.email;
 module.exports = {
     createAccount,
     updateAccount,
-    deleteAccount,
+    
     getAllAccount,
-    getAllAccounts,
+
     getAccount,
-    registerWithEmailAndPassword,
+    
+    
+    
+    
+    AddUser,
+    DeleteUser,
+    ViewUsers,
+    GetUser,
+    
+    
     login,
     listAllUsers,
-    getUser
+    
 };

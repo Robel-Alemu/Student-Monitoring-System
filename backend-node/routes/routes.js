@@ -3,14 +3,28 @@ const express = require("express");
 const {
   createAccount,
   updateAccount,
-  deleteAccount,
+  
   getAllAccount,
   getAccount,
-  registerWithEmailAndPassword,
+  
+  
+  
+  AddUser,
+  DeleteUser,
+  ViewUsers,
+  GetUser,
+
+
+
+
   login,
   listAllUsers,
-  getAllAccounts,
-  getUser,
+  
+
+
+
+
+  
 } = require("../controllers/accountController");
 
 const {
@@ -51,17 +65,17 @@ const {
 } = require("../controllers/AdminController");
 const router = express.Router();
 
-router.post("/Users", registerWithEmailAndPassword);
+router.post("/Users", AddUser);
 router.post("/User-Accounts", createAccount);
 router.put("/User-Accounts/:id", updateAccount);
-router.delete("/User-Accounts/:id", deleteAccount);
+router.delete("/User-Accounts/:id", DeleteUser);
 router.get("/User-Accounts/:x", getAllAccount);
-router.get("/", login);
+router.get("/login", login);
 router.get("/User-Accounts/:id", getAccount);
 router.get("/account", listAllUsers);
 
-router.get("/users", getAllAccounts);
-router.get("/users/:email", getUser);
+router.get("/users", ViewUsers);
+router.get("/users/:email", GetUser);
 
 router.delete("/delete-student/:id", DeleteStudent);
 router.get("/Student-Information", ViewStudents);
@@ -98,7 +112,7 @@ router.put("/update-message/:id", updateBroadcastMessage);
 
 router.put("/update-student/:id", UpdateStudentAndParent);
 
-router.delete("/delete/:id", deleteAccount);
+router.delete("/delete/:id", DeleteUser);
 
 router.post("/add-class", AddClass);
 router.get("/get-class/:classId", GetClass);
