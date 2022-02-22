@@ -16,18 +16,23 @@ const {
 const {
   AddStudentAndParent,
   AddMultipleStudentAndParent,
-  SearchStudent,
-  ViewAllStudents,
   UpdateStudentAndParent,
+  SearchStudent,
+  ViewStudents,
   DeleteStudent,
+  AddGrades,
   UpdateGrades,
-  getAttendanceDetail,
-  getAttendanceBySection,
-  AddGrade,
-  GetStudentGrade,
-  filterGrades,
+  SearchStudentGrade,
+  ViewGrades,
   AddAttendance,
   UpdateAttendance,
+  ViewAttendance,
+  SearchStudentAttendance,
+  
+  
+  
+ 
+  
 } = require("../controllers/studentController");
 
 const {
@@ -59,7 +64,7 @@ router.get("/users", getAllAccounts);
 router.get("/users/:email", getUser);
 
 router.delete("/delete-student/:id", DeleteStudent);
-router.get("/Student-Information", ViewAllStudents);
+router.get("/Student-Information", ViewStudents);
 router.get("/Student-Information/:studentId", SearchStudent);
 router.post("/Student-Information", AddStudentAndParent);
 
@@ -67,21 +72,21 @@ router.put("/update-grade", UpdateGrades);
 
 router.post("/add-multiple-students", AddMultipleStudentAndParent);
 
-router.post("/add-grade", AddGrade);
-router.get("/filter-grades/:term/:grade/:section/:subject", filterGrades);
+router.post("/add-grade", AddGrades);
+router.get("/filter-grades/:term/:grade/:section/:subject", ViewGrades);
 router.get(
   "/get-grade/:term/:grade/:section/:subject/:studentId",
-  GetStudentGrade
+  SearchStudentGrade
 );
 router.get(
   "/get-attendance/:year/:term/:grade/:section/:studentId/:date",
-  getAttendanceDetail
+  SearchStudentAttendance
 );
 router.post("/add-attendance", AddAttendance);
 router.put("/update-attendance/:id", UpdateAttendance);
 router.get(
   "/filter-attendance/:year/:term/:grade/:section/:date",
-  getAttendanceBySection
+  ViewAttendance
 );
 
 router.get("/broadcast-messages", getBroadcastMessages);

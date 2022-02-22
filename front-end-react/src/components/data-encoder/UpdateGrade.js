@@ -181,7 +181,7 @@ console.log(grades);
             
            
            ).then((response) => {
-            console.log(grades)
+            console.log(grade)
               return response.json();
             })
             .then((data) => {

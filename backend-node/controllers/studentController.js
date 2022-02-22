@@ -57,7 +57,7 @@ const SearchStudent = async (req, res, next) => {
   }
 };
 
-const ViewAllStudents = async (req, res, next) => {
+const ViewStudents = async (req, res, next) => {
   try {
     const student = await firestore.collection("Student-Information");
     const data = await student.get();
@@ -331,7 +331,7 @@ const UpdateGrades = async (req, res) => {
   }
 };
 
-const AddGrade = async (req, res) => {
+const AddGrades = async (req, res) => {
   try {
     const data = req.body;
 
@@ -1005,7 +1005,7 @@ const UpdateAttendance = async (req, res, next) => {
 
 
 
-const GetStudentGrade = async (req, res) => {
+const SearchStudentGrade = async (req, res) => {
   const studentId = req.params.studentId;
   const term = req.params.term;
   const grade = req.params.grade;
@@ -1056,7 +1056,7 @@ const GetStudentGrade = async (req, res) => {
     res.status(400).send({ message: error.message });
   }
 };
-const filterGrades = async (req, res) => {
+const ViewGrades = async (req, res) => {
   const term = req.params.term;
   const grade = req.params.grade;
   const section = req.params.section;
@@ -1102,7 +1102,7 @@ const filterGrades = async (req, res) => {
 };
 
 
-const getAttendanceDetail = async (req, res, next) => {
+const SearchStudentAttendance = async (req, res, next) => {
   try {
     const studentId = req.params.studentId;
     const year = req.params.year;
@@ -1189,7 +1189,7 @@ const getAttendanceDetail = async (req, res, next) => {
 
 
 
-const getAttendanceBySection = async (req, res) => {
+const ViewAttendance = async (req, res) => {
   
   const year = req.params.year;
   const term = req.params.term;
@@ -1275,19 +1275,19 @@ module.exports = {
   AddMultipleStudentAndParent,
   UpdateStudentAndParent,
   SearchStudent,
-  ViewAllStudents,
+  ViewStudents,
   
   DeleteStudent,
 
-  AddGrade,
-  GetStudentGrade,
-  filterGrades,
+  AddGrades,
+  SearchStudentGrade,
+  ViewGrades,
   UpdateGrades,
 
   AddAttendance,
   UpdateAttendance,
-  getAttendanceDetail,
-  getAttendanceBySection,
+  SearchStudentAttendance,
+  ViewAttendance,
 
 
 
