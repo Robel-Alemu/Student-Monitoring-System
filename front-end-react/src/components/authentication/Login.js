@@ -23,6 +23,8 @@ export default function Login() {
         console.log(user.message);
       }
       else{
+
+
       await login(emailRef.current.value, passwordRef.current.value);
       
 

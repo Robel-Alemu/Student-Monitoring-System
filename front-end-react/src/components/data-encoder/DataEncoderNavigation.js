@@ -74,6 +74,9 @@ function DataEncoderNavigation() {
               <NavDropdown.Item > 
                <Link className={classes.links} style={{color:"black"}} to="/view-grades">View Grades</Link>
               </NavDropdown.Item>
+              <NavDropdown.Item > 
+               <Link className={classes.links} style={{color:"black"}} to="/edit-grades">edit Grades</Link>
+              </NavDropdown.Item>
           
           
         </NavDropdown></li>

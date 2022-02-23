@@ -109,7 +109,7 @@ doc.data().sections
  
 //   console.log("updated");
 // }
-const UpdateClassAndSection = async (req, res, next) => {
+const UpdateClass = async (req, res, next) => {
   try {
       
 
@@ -156,7 +156,7 @@ const UpdateClassAndSection = async (req, res, next) => {
    
 };
   module.exports = {
-      AddClass,GetClass,GetAllClass,UpdateClassAndSection
+      AddClass,GetClass,GetAllClass,UpdateClass
   };
 
 

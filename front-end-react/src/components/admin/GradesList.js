@@ -5,17 +5,17 @@ import Students from "./Students";
 // function StudentList(props) {
 //     return (
 //         <div>{props.students.map(student =>
-//             <Students
+//             <EditGrade
 //                 key={student.id}
 //                 studentId = {student.studentId}
-//                 firstName={student.firstName}
-//                 lastName={student.lastName}
+//                 studentName={student.studentName}
+//                 term={student.term}
 //                 grade={student.grade} 
 //                 section={student.section}
-//                 parent1N={student.parent1Name}
-//                 parent1P={student.parent1Phone}
-//                 parent2N={student.parent2Name}
-//                 parent2P={student.parent2Phone}
+//                 firstTest={student.firstTest}
+//                 secondTest={student.secondTest}
+//                 assessements={student.assessements}
+//                 final={student.final}
                 
                 
 //             />

@@ -112,6 +112,7 @@ import AddMultipleStudents from "./components/data-encoder/AddMultipleStudents";
 import AddStudent from "./components/data-encoder/AddStudent";
 import AddClass from "./components/admin/AddClass";
 import UpdateClass from "./components/admin/UpdateClass";
+import SearchGradePage from "./components/pages/SearchGradePage";
 
 function App() {
   let x = 4;
@@ -220,6 +221,7 @@ function App() {
                   component={EditBroadcastMessage}
                 />
                 <PrivateRoute path="/all-students" component={AllStudentList} />
+                <PrivateRoute path="/edit-grades" component={SearchGradePage} />
                 <PrivateRoute
                   path="/update-student"
                   component={EditStudentPage}

@@ -7,7 +7,7 @@ const firestore = firebase.firestore();
 
 const BroadcastMessage = require("../models/BroadcastMessage");
 
-const AddBroadcast = async (req, res, next) => {
+const BroadcastAnnouncements = async (req, res, next) => {
 
     try{
         
@@ -184,7 +184,7 @@ const getGrades = async (req, res, next) => {
 
 
 
-const getBroadcastMessages = async (req, res, next) => {
+const ViewAnnouncements = async (req, res, next) => {
     try {
      
 
@@ -218,7 +218,7 @@ const getBroadcastMessages = async (req, res, next) => {
 
 
 
-  const updateBroadcastMessage = async (req, res, next) => {
+  const UpdateAnnouncements = async (req, res, next) => {
     try {
         const id = req.params.id;
         const data = req.body;
@@ -241,9 +241,11 @@ const getBroadcastMessages = async (req, res, next) => {
 
 
 module.exports = {
-    AddBroadcast,
-    getBroadcastMessages,
-    updateBroadcastMessage,
+    BroadcastAnnouncements,
+    ViewAnnouncements,
+    UpdateAnnouncements,
+
+
     AddB,
     getB,
     getGrades,

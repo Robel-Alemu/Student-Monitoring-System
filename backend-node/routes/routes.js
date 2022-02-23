@@ -1,30 +1,20 @@
 const express = require("express");
 
 const {
-  createAccount,
+  
+    AddUser,
+    DeleteUser,
+    ViewUsers,
+    GetUser,
+  
+  
+    createAccount,
   updateAccount,
-  
-  getAllAccount,
+   getAllAccount,
   getAccount,
-  
-  
-  
-  AddUser,
-  DeleteUser,
-  ViewUsers,
-  GetUser,
-
-
-
-
   login,
   listAllUsers,
-  
 
-
-
-
-  
 } = require("../controllers/accountController");
 
 const {
@@ -36,6 +26,7 @@ const {
   DeleteStudent,
   AddGrades,
   UpdateGrades,
+  EditGrade,
   SearchStudentGrade,
   ViewGrades,
   AddAttendance,
@@ -50,18 +41,22 @@ const {
 } = require("../controllers/studentController");
 
 const {
-  AddBroadcast,
+    BroadcastAnnouncements,
+    ViewAnnouncements,
+    UpdateAnnouncements,
+
+
   AddB,
   getB,
   getGrades,
-  getBroadcastMessages,
-  updateBroadcastMessage,
+  
+  
 } = require("../controllers/broadcastMessage");
 const {
   AddClass,
   GetClass,
   GetAllClass,
-  UpdateClassAndSection,
+  UpdateClass,
 } = require("../controllers/AdminController");
 const router = express.Router();
 
@@ -92,6 +87,11 @@ router.get(
   "/get-grade/:term/:grade/:section/:subject/:studentId",
   SearchStudentGrade
 );
+router.put(
+  "/edit-grade/:term/:grade/:section/:subject/:studentId",
+  EditGrade
+);
+
 router.get(
   "/get-attendance/:year/:term/:grade/:section/:studentId/:date",
   SearchStudentAttendance
@@ -103,12 +103,12 @@ router.get(
   ViewAttendance
 );
 
-router.get("/broadcast-messages", getBroadcastMessages);
-router.post("/broadcast-message", AddBroadcast);
+router.get("/broadcast-messages", ViewAnnouncements);
+router.post("/broadcast-message", BroadcastAnnouncements);
 router.post("/Broadcast", AddB);
 router.get("/getB/:id", getB);
 router.get("/getG", getGrades);
-router.put("/update-message/:id", updateBroadcastMessage);
+router.put("/update-message/:id", UpdateAnnouncements);
 
 router.put("/update-student/:id", UpdateStudentAndParent);
 
@@ -117,7 +117,7 @@ router.delete("/delete/:id", DeleteUser);
 router.post("/add-class", AddClass);
 router.get("/get-class/:classId", GetClass);
 router.get("/get-all-class/", GetAllClass);
-router.put("/update-class/:classId", UpdateClassAndSection);
+router.put("/update-class/:classId", UpdateClass);
 
 module.exports = {
   routes: router,

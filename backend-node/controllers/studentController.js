@@ -186,6 +186,33 @@ async function updateGrade(term, grade, section, subject, grades) {
   console.log("updated");
 }
 
+
+
+
+const EditGrade = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const term = data.term
+    const grade = data.grade
+    const section = data.section
+    const subject = data.subject
+
+    // const student = await firestore
+    //   .collection("Student-Information")
+    //   .where("studentId", "==", id)
+    //   .get();
+    await updateGrade(term, grade, section, subject, data);
+
+    
+    res.status(200).send({ message: "Student Grade Updated successfuly" });
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+    res.status(400).send(error.message);
+  }
+};
+
+
 const UpdateGrades = async (req, res) => {
   try {
     const data = req.body;
@@ -1283,6 +1310,7 @@ module.exports = {
   SearchStudentGrade,
   ViewGrades,
   UpdateGrades,
+  EditGrade,
 
   AddAttendance,
   UpdateAttendance,
