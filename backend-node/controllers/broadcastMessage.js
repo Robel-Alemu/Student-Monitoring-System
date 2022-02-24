@@ -6,6 +6,7 @@ const firestore = firebase.firestore();
 
 
 const BroadcastMessage = require("../models/BroadcastMessage");
+const Message = require("../models/Message")
 
 const BroadcastAnnouncements = async (req, res, next) => {
 
@@ -15,7 +16,7 @@ const BroadcastAnnouncements = async (req, res, next) => {
         
             
         await firestore.collection("Broadcast-Messages").doc().set(data);
-        res.status(200).send({message:'data added successfully'});
+        res.status(200).send({message:'Announcement Added Successfully!'});
         
        
     } catch(error){
@@ -24,84 +25,15 @@ const BroadcastAnnouncements = async (req, res, next) => {
 };
 
 
-
-// const AddB = async (req, res, next) => {
-
-//   try{
-      
-//       const data = req.body;
-//       async function add(x){
-//         await firestore.collection("Broadcast-Messages").doc().set(x);
-//       }
-//       data.forEach((x)=>{
-//         add(x);
-        
-//         // console.log(x);
-//       }); 
-//       res.status(200).send({message:"Messag Added successfully"});
-          
-//       //  await firestore.collection("Broadcast-Messages").doc().set(data);
-//       // res.status(200).send({message:"Message Added successfully"});
-      
-     
-//   } catch(error){
-//       res.send(error.message);
-//   }
-// };
-
-const xlsx = require("node-xlsx");
-const fs = require('fs');
-const req = require("express/lib/request");
-
-
-
-
-
-
-
-
-
-const AddB = async (req, res, next) => {
+const SendMessage = async (req, res, next) => {
 
   try{
-    let data = xlsx.parse(fs.readFileSync("grade.xlsx"));
-let arrayOfData = data[0].data;
-let bigArray = [];
-for (let i = 1; i < arrayOfData.length; i++) {
-  let obj = {};
-  for (let j = 0; j < arrayOfData[i].length; j++) {
-    let key = arrayOfData[0][j];
-    let value = arrayOfData[i][j];
-    obj[key] = value;
-    // obj = {
-    //   arrayOfData[0][j]:" "
-    // }
-  }
-  bigArray.push(obj)
-}
-
-fs.writeFileSync("junk.json", JSON.stringify(bigArray))
-     
-      // const data = req.body;
-      async function add(x){
-        // console.log(x);
-        try {
+      
+      const data = req.body;
+      
           
-          await firestore.collection("Grade").doc("first-term").collection("grade-9").doc("section A").collection("maths").doc().set(x);
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      bigArray.forEach(async (x)=>{
-       await add(x);
-        // console.log(x);
-        
-        // console.log(x);
-      }); 
-      res.status(200).send({message:bigArray});
-          
-      //  await firestore.collection("Broadcast-Messages").doc().set(data);
-      // res.status(200).send({message:"Message Added successfully"});
+      await firestore.collection("Parent-Messages").doc().set(data);
+      res.status(200).send({message:'Message Sent!'});
       
      
   } catch(error){
@@ -111,76 +43,61 @@ fs.writeFileSync("junk.json", JSON.stringify(bigArray))
 
 
 
+const xlsx = require("node-xlsx");
+const fs = require('fs');
+const req = require("express/lib/request");
 
 
 
 
-const getB = async (req, res, next) => {
-  try{
-      
+const ViewMessages = async (req, res, next) => {
+  try {
+   
+
+
+    const message = await firestore.collection("Parent-Messages").orderBy("date","desc");
+    console.log(message)
+    const data = await message.get();
+    const messageArray = [];
+    if (data.empty) {
+      res.status(404).send({message: "No Message record found"});
+    } else {
+      data.forEach((doc) => {
+        const message = new Message(
+          doc.id,
+          doc.data().date,
+          doc.data().subject,
+          doc.data().parentPhone,
+          doc.data().message,
+         
+        );
+        messageArray.push(message);
+      });
+      console.log(messageArray)
+      res.send(messageArray);
+    }
+  } catch (err) {
+    res.status(400).send({message:err.message});
+    // res.status(400).send(error.message);
+  }
+};
+
+
+
+const EditMessage = async (req, res, next) => {
+  try {
       const id = req.params.id;
-
-      const student = await firestore.collection("Grade").doc("first-term").collection("grade-9").doc("section A").collection("maths").where("student-id", "==", id);
-      const data = await student.get();
-      // async function add(x){
-      //   await firestore.collection("Grade").doc("first-term").collection("grade-9").doc("maths").collection("student-grades").doc().set(x);
-      // }
-      // data.forEach((x)=>{
-      //   add(x);
-      //   console.log(x);
-        
-      //   // console.log(x);
-      data.forEach((doc) => {
-        console.log(doc.data())
-     
-          
-      })
-      // }); 
-      res.status(200).send(doc.data());
-          
-      //  await firestore.collection("Broadcast-Messages").doc().set(data);
-      // res.status(200).send({message:"Message Added successfully"});
+      const data = req.body;
+      const message =  await firestore.collection('Parent-Messages').doc(id);
+      await message.update(data);
       
+        res.status(200).send({message:'Message Updated successfuly'});
+          
+  } catch (err) {
+    res.status(400).send({message:err.message});
      
-  } catch(error){
-      res.send({message: error.message});
   }
-};
-
-const getGrades = async (req, res, next) => {
-
-  try{
-      
-      // const id = req.params.id;
-
-      const student = await firestore.collection("Grade").doc("first-term").collection("grade-9").doc("section A").collection("maths");
-      const data = await student.get();
-      // async function add(x){
-      //   await firestore.collection("Grade").doc("first-term").collection("grade-9").doc("maths").collection("student-grades").doc().set(x);
-      // }
-      // data.forEach((x)=>{
-      //   add(x);
-      //   console.log(x);
-        
-      //   // console.log(x);
-      data.forEach((doc) => {
-        console.log(doc.data())
-     
-          
-      })
-      // }); 
-      res.status(200).send(doc.data());
-          
-      //  await firestore.collection("Broadcast-Messages").doc().set(data);
-      // res.status(200).send({message:"Message Added successfully"});
-      
-     
-  } catch(error){
-      res.send({message: error.message});
-  }
-};
-
-
+}
 
 
 
@@ -224,17 +141,12 @@ const ViewAnnouncements = async (req, res, next) => {
         const data = req.body;
         const message =  await firestore.collection('Broadcast-Messages').doc(id);
         await message.update(data);
-        // const account =  await firestore.collection('User-Accounts').doc(id);
-       
-        // message.forEach((doc) => {
-        //     doc.ref.update(data);
-        //   });
+      
           res.status(200).send({message:'Message Updated successfuly'});
-        // await student.update(data);
-        // res.send('Account updated successfuly');        
+          
     } catch (err) {
       res.status(400).send({message:err.message});
-        // res.status(400).send(error.message);
+      
     }
   }
 
@@ -244,11 +156,13 @@ module.exports = {
     BroadcastAnnouncements,
     ViewAnnouncements,
     UpdateAnnouncements,
+    SendMessage,
+    ViewMessages,
+    EditMessage,
 
+  
+   
 
-    AddB,
-    getB,
-    getGrades,
 
 
 

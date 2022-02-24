@@ -44,11 +44,14 @@ const {
     BroadcastAnnouncements,
     ViewAnnouncements,
     UpdateAnnouncements,
+    SendMessage,
+    ViewMessages,
+    EditMessage,
 
 
-  AddB,
-  getB,
-  getGrades,
+
+
+ 
   
   
 } = require("../controllers/broadcastMessage");
@@ -105,10 +108,14 @@ router.get(
 
 router.get("/broadcast-messages", ViewAnnouncements);
 router.post("/broadcast-message", BroadcastAnnouncements);
-router.post("/Broadcast", AddB);
-router.get("/getB/:id", getB);
-router.get("/getG", getGrades);
+
+
+
+
 router.put("/update-message/:id", UpdateAnnouncements);
+router.post("/send-message/", SendMessage);
+router.get("/view-messages/", ViewMessages);
+router.put("/edit-message/:id", EditMessage);
 
 router.put("/update-student/:id", UpdateStudentAndParent);
 
