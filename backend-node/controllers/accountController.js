@@ -72,17 +72,40 @@ const AddUser = async (req, res, next) => {
   }
 };
 
+const jwt = require('jsonwebtoken')
 const login = async (req, res, next) => {
   try {
     const data = req.body;
+    try {
+       
+      const u = await auth.signInWithEmailAndPassword(data.email, data.password);
+      console.log(u.user.email)
+      
+    
+        const user = {
+            id: 1, 
+            uid: u.user.uid,
+            email: u.user.email
+          }
+          
+            jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
+              res.send({
+                token: token,user: u
+              });
+            });
+         
+     } catch (error) {
+         res.sendStatus(error.message);
+         
+     }
 
 
 
 
-    const account = await auth.signInWithEmailAndPassword(data.email, data.password);
-    const user = account.user;
-    if (user)
-      res.send(user);
+    
+    // const user = account.user;
+    // if (user)
+    //   res.send(user);
       console.log('logged in successfully');
     
     

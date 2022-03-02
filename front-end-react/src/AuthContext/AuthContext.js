@@ -29,6 +29,44 @@ export function AuthProvider({ children }) {
     //   console.log(result.data[0]);
     // }
     // else
+
+    const userData = {
+      email : email,
+      password: password
+    }
+
+    fetch(
+      "http://localhost:8080/api/login",
+      {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+      }
+     
+     ).then((response) => {
+        // console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        // if(data.token){
+        //   setLoggedIn(true);
+        //   console.log(loggedIn,"after success")
+        //   // alert(data.token);
+        //     console.log(data)
+        //     // return data.user; 
+        // }
+
+        console.log(data.token)
+        localStorage.setItem('token', data.token);
+       
+                         
+        })
+      
+       
+      
+
+      
+
     return auth.signInWithEmailAndPassword(email, password)
   }
 

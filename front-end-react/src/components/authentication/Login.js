@@ -11,10 +11,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+const  [loggedIn,setLoggedIn]= useState(false);
   async function handleSubmit(e) {
     e.preventDefault();
-
+    
     try {
       setError("");
       setLoading(true);
@@ -46,14 +46,22 @@ export default function Login() {
         //      res.sendStatus(403);
              
         //  }
+        
+
+        await login(emailRef.current.value, passwordRef.current.value);
+        
+          // console.log(loggedIn,"outside success")
          
-      await login(emailRef.current.value, passwordRef.current.value);
+            if (user.role === 'Admin') history.push("/");
+            else  history.push("/data-encoder");
+                  console.log(user);
+  
+          
+        }
+      
       
 
-      if (user.role === 'Admin') history.push("/");
-      else  history.push("/data-encoder");
-            console.log(user);
-      }
+     
     } catch {
       setError("failed to log in");
     }

@@ -6,14 +6,15 @@ import {Button,Spinner } from "react-bootstrap"
 function AllBroadcastMessagesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMessages, setLoadedMessages] = useState([]);
-  
+  const token = localStorage.getItem("token")
+
   useEffect(() => {
      setIsLoading(true);
     fetch(
       "http://localhost:8080/api/broadcast-messages",{
         method: "GET",
         
-        headers: { "Content-Type": "application/json" , "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1aWQiOiJvdDZHSmx6WDVoZ2U1WkoyYW5vUFc3Z0R2MkEyIiwiZW1haWwiOiJqd3RAZ21haWwuY29tIn0sImlhdCI6MTY0NjE3MjEyOCwiZXhwIjoxNjQ2MjAyMTI4fQ.-7zI_9R8ipKIEiRnamuzhbdrxvOJJZfEGQceU52IA7Y"},
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
       // "https://student-monitoring.herokuapp.com/api/broadcast-messages"
     )

@@ -73,7 +73,7 @@ router.post("/User-Accounts", createAccount);
 router.put("/User-Accounts/:id", updateAccount);
 router.delete("/User-Accounts/:id", DeleteUser);
 router.get("/User-Accounts/:x", getAllAccount);
-router.get("/login", login);
+router.post("/login", login);
 router.get("/User-Accounts/:id", getAccount);
 router.get("/account", listAllUsers);
 
