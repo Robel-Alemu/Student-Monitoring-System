@@ -5,7 +5,7 @@ const firebase = require("../connection/db");
 const Account = require("../models/UserAccounts");
 const firestore = firebase.firestore();
 const auth = firebase.auth();
-
+const jwt = require('jsonwebtoken')
 //const bcrypt = require('bcrypt');
 
 
@@ -72,7 +72,7 @@ const AddUser = async (req, res, next) => {
   }
 };
 
-const jwt = require('jsonwebtoken')
+
 const login = async (req, res, next) => {
   try {
     const data = req.body;
