@@ -23,14 +23,14 @@ function UpdateAttendancePage() {
   const [error,setError]= useState();
 
   const id = useRef();
-  const termRef = useRef();
+  // const termRef = useRef();
   const gradeRef = useRef();
   const sectionRef = useRef();
   const dateRef = useRef();
   const date = new Date();
 
   const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-  const year =`${date.getFullYear()}`;
+  // const year =`${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
 const [termBar,setTermBar] = useState("choose term");
 const [gradeBar,setGradeBar] = useState("choose grade");
@@ -38,7 +38,7 @@ const [sectionBar,setSectionBar] = useState("choose section");
   
 
 
-const [term, setTerm] = useState(["Select Term"])
+// const [term, setTerm] = useState(["Select Term"])
 const [sections,setSections]=useState(["Select Section"]);
 const [classes,setClasses] = useState(["Select Grade"]);
 const terms = ["first-term", "second-term", "third-term", "fourth-term"];
@@ -84,13 +84,7 @@ function termHandler(e){
     });
     console.log(numberGrade)
       setClasses(numberGrade)
-      // setClasses(gradesArray)
-      // console.log(grades);
-      // // setSubject(subjects)
-      // console.log(grades,"****Grades*****");
-      // grades.forEach(element => {
-      //   console.log(element)
-      // });
+     
 
 })
 
@@ -102,7 +96,7 @@ fetch(
   
   )
   .then((response) => {
-    // console.log(response);
+    
     return response.json();
   })
   .then((data) => {
@@ -114,44 +108,28 @@ fetch(
         ...data[key],
       };
       classArray.push(classData);}
-    // alert(data.message);
+    
     console.log(sections,"before******************")
     setSections(classArray[0].section)
-    // if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
-    //   setSubject(subjectsOf9And10)
-    // }
-    // else setSubject(subjectsOf11And12)
-    // console.log(classArray[0].section);
-    // console.log(sections,"*********");
-    // sections.forEach(element => {
-    //   console.log(element)
-    // });
-    
-    // setResponse(data.message);
+   
 
   });
-  setTerm(terms)
+  // setTerm(terms)
 }
 
   function  searchHandler(){
     const enteredId = id.current.value;
-  const enteredTerm = termRef.current.value;
+  // const enteredTerm = termRef.current.value;
   const enteredGrade = gradeRef.current.value;
   const enteredSection = sectionRef.current.value;
   const enteredDate = dateRef.current.value;
   console.log(startDate)
-// const searchDate = {
-//     date :enteredDate
-// };
+
     setIsLoading(true);
     fetch(
      
-        "http://localhost:8080/api/get-attendance/"+year+"/"+enteredTerm+"/"+enteredGrade+"/"+enteredSection+"/"+enteredId+"/"+startDate
-        // {
-        //     method: "GET",
-        //     body: JSON.stringify(searchDate),
-        //     // headers: { "Content-Type": "application/json" },
-        //   }
+        "http://localhost:8080/api/get-attendance/"+enteredGrade+"/"+enteredSection+"/"+enteredId+"/"+startDate
+     
     )
       .then((response) => {
         console.log(response.body);
@@ -172,7 +150,7 @@ fetch(
         }
         setIsLoading(false);
         setLoadedStudent(student);
-        setTerm([enteredTerm])
+        // setTerm([enteredTerm])
         setClasses([enteredGrade])
         setSections([enteredSection])
         // console.log(loadedStudent[0]);
@@ -209,31 +187,26 @@ fetch(
   return (
     <section >
        <DataEncoderCenterLayout >  <Container  style={ {marginBottom:"30px"}}>
-       <h1>Update Attendance</h1>
+       <h1>Search and Update Attendance</h1>
        {error && <Alert variant="danger">{error}</Alert>}
        <Form  onSubmit= {searchHandler}>
        <Row>
       
               <Col sm = {9}><Row>
-             
-         <Form.Group id="term" style={{marginLeft:"30px"}}>
+              {/* <Form.Group id="term" style={{marginLeft:"30px"}}>
                        <Form.Label>Term</Form.Label>
-                       {/* <Form.Label htmlFor="inputTerm">Color picker</Form.Label> */}
+                      
                        
                          <Form.Control id="inputTerm" size="sm" as="select" onClick={termHandler} ref={termRef} required >
                          
-                           {/* <option>first-term</option>
-                           <option>sescond-term</option>
-                           <option>third-term</option>
-                           <option>fourth-term</option> */}
+                          
 
 {term.map(item => {
       return (<option  >{item}</option>);})}
                          </Form.Control>
-                         {/* <label id = "fileName" className="custom-file-label" htmlFor="inputTerm"  >
-   
-                         {termBar}</label> */}
-                       </Form.Group>
+                      
+                       </Form.Group> */}
+
                        <Form.Group id="grade" style={{marginLeft:"30px"}}>
                        <Form.Label>Grade</Form.Label>
                          <Form.Control size="sm" as="select" ref={gradeRef} defaultValue={gradeBar} required onClick={termHandler}>
@@ -250,10 +223,7 @@ fetch(
                        <Form.Group id="section" style={{marginLeft:"30px"}}>
                        <Form.Label>Section</Form.Label>
                          <Form.Control size="sm" as="select" ref={sectionRef} defaultValue={sectionBar} required>
-                           {/* <option>A</option>
-                           <option>B</option>
-                           <option>C</option>
-                           <option>D</option> */}
+                          
 
                                                           
 {sections.map(item => {

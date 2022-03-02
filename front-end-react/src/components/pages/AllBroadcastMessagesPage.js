@@ -10,7 +10,11 @@ function AllBroadcastMessagesPage() {
   useEffect(() => {
      setIsLoading(true);
     fetch(
-      "http://localhost:8080/api/broadcast-messages"
+      "http://localhost:8080/api/broadcast-messages",{
+        method: "GET",
+        
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1aWQiOiJvdDZHSmx6WDVoZ2U1WkoyYW5vUFc3Z0R2MkEyIiwiZW1haWwiOiJqd3RAZ21haWwuY29tIn0sImlhdCI6MTY0NjE3MjEyOCwiZXhwIjoxNjQ2MjAyMTI4fQ.-7zI_9R8ipKIEiRnamuzhbdrxvOJJZfEGQceU52IA7Y"},
+      }
       // "https://student-monitoring.herokuapp.com/api/broadcast-messages"
     )
       .then((response) => {
@@ -52,7 +56,7 @@ function AllBroadcastMessagesPage() {
 
   return (
     <section >
-      <h1>All Messages</h1>
+      <h1>All Announcements</h1>
 
       
       <MessageList  messages = {loadedMessages} />

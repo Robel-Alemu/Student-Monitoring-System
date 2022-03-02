@@ -344,7 +344,7 @@ else{
           <Form onSubmit= {searchHandler}>
           <Row>
             <Col sm={8}>
-              <h1>Search Student Grade</h1>
+              <h1>Search and Edit Student Grade</h1>
               {error && <Alert variant="danger">{error}</Alert>}
             </Col>
           </Row>

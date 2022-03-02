@@ -171,24 +171,98 @@ function fieldHandler(e){
     const enteredParent2Name = parent2NameRef.current.value;
     const enteredParent2Phone = parent2PhoneRef.current.value;
    
-    const studentData = {
-      studentId: enteredStudentId,
-      firstName: enteredFirstName,
-      lastName: enteredLastName,
-      grade: enteredGrade,
-      section: enteredSection,
-      parent1Name: enteredParent1Name,
-      parent1Phone: enteredParent1Phone,
-      parent2Name: enteredParent2Name,
-      parent2Phone: enteredParent2Phone,
-      field : field
-    };
-
+    // const studentData = {
+    //   studentId: enteredStudentId,
+    //   firstName: enteredFirstName,
+    //   lastName: enteredLastName,
+    //   grade: enteredGrade,
+    //   section: enteredSection,
+    //   parent1Name: enteredParent1Name,
+    //   parent1Phone: enteredParent1Phone,
+    //   parent2Name: enteredParent2Name,
+    //   parent2Phone: enteredParent2Phone,
+    //   field : field
+    // };
+    const parent = [];
+    const parentPhone = [];
+    if(enteredParent1Name && enteredParent1Phone && enteredParent2Name && enteredParent2Phone ){
+      
+      parent.push({
+        parentName: enteredParent1Name,
+        parentPhone : enteredParent1Phone
+      },{
+        parentName: enteredParent2Name,
+        parentPhone : enteredParent2Phone
+      })
+      parentPhone.push(enteredParent1Phone,enteredParent2Phone)
+      
+      // const parent=[
+      //   {
+      //     parentName: enteredParent1Name,
+      //     parentPhone : enteredParent1Phone
+      //   },
+      //   {
+      //     parentName: enteredParent2Name,
+      //     parentPhone : enteredParent2Phone
+      //   }
+      // ]
+      // const pPhones = [enteredParent1Phone,enteredParent2Phone]
+      // setParentPhones(pPhones);
+      // setParent(parent);
+      
+    }
+    else if(enteredParent1Name && enteredParent1Phone ){
+      // const parent=[
+      //   {
+      //     parentName: enteredParent1Name,
+      //     parentPhone : enteredParent1Phone
+      //   }]
+      //   const pPhones = [enteredParent1Phone]
+      //   setParent(parent);
+        
+      //   setParentPhones(pPhones);
+      parent.push({
+        parentName: enteredParent1Name,
+        parentPhone : enteredParent1Phone
+      })
+      parentPhone.push(enteredParent1Phone)
+      
+    }
+    // else if(enteredParent2Name && enteredParent2Phone ){
+    //   const parent=[
+    //     {
+    //       parentName: enteredParent2Name,
+    //       parentPhone : enteredParent2Phone
+    //     }]
+    //     const pPhones = [enteredParent2Phone]
+    //     setParent(parent);
+        
+    //     setParentPhones(pPhones);
+    // }
+    
+        const studentData = {
+          studentId: enteredStudentId,
+          firstName: enteredFirstName,
+          lastName: enteredLastName,
+          grade: enteredGrade,
+          section: enteredSection,
+          // parent1Name: enteredParent1Name,
+          // parent1Phone: enteredParent1Phone,
+          // parent2Name: enteredParent2Name,
+          // parent2Phone: enteredParent2Phone,
+          parentPhones: parentPhone,
+          field: field,
+        };
+    
+    
+        const FinaStudentData = [studentData, parent];
+    
+    
     //   props.onUpdateStudent(studentData);
     fetch(
       "http://localhost:8080/api/update-student/" + enteredStudentId, {
-      method: "PUT",
-      body: JSON.stringify(studentData),
+      method: "PUT", 
+      body: JSON.stringify(FinaStudentData),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
@@ -210,9 +284,6 @@ function fieldHandler(e){
 
 
 
-  // function onLoadHandler(e){e.preventDefault()
-  
-  // document.getElementById("gradeSelect").value="choose grade"}
 
   function deleteHandler(event) {
     event.preventDefault();
@@ -319,10 +390,7 @@ function fieldHandler(e){
                 defaultValue={props.grade}
              id="greadeSelect"
               >
-                {/* <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option> */}
+              
                 
                 {grades.map(item => {
       return (<option  >{item}</option>);
@@ -339,10 +407,7 @@ function fieldHandler(e){
                 required
                 defaultValue={props.section}
               >
-                {/* <option>A</option>
-                <option>B</option>
-                <option>C</option>
-                <option>D</option> */}
+              
 
 {sections.map(item => {
       return (<option  >{item}</option>);
@@ -414,20 +479,10 @@ function fieldHandler(e){
                   </Button>
                 </Col>
               </Row>
-              {/* <Col sm={3}><Button  className="w-100" type="submit">
-              Update
-              </Button></Col>
-    <Col sm={3}>
-     
-    <Button variant="primary" onClick={deleteHandler}>Delette</Button >
- </Col>
-  </Row> */}
+            
             </Container>
 
-            {/* <Button  className="w-100" type="submit">
-              Update
-              </Button> */}
-            {/* <Button variant="primary" onClick={deleteHandler}>Delette</Button > */}
+            
           </Form>
         </Card.Body>
       </Card>

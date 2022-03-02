@@ -75,6 +75,10 @@ const AddUser = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const data = req.body;
+
+
+
+
     const account = await auth.signInWithEmailAndPassword(data.email, data.password);
     const user = account.user;
     if (user)

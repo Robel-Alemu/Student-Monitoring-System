@@ -21,9 +21,7 @@ function BroadcastMessages(props) {
     };
 
     setLoading(false);
-    // React.render(<Example />);
-    // props.onEdit(editMessage);
-    // history.push("/edit-broadcast-message");
+    
   }
   const [error,setError] = useState();
   const [success,setSuccess] = useState();
@@ -66,9 +64,7 @@ function BroadcastMessages(props) {
       });
 
     setLoading(true);
-    // React.render(<Example />);
-    // props.onEdit(editMessage);
-    // history.push("/edit-broadcast-message");
+
   }
 
   return (
@@ -110,14 +106,7 @@ function BroadcastMessages(props) {
                 </Button>
               </Col>
             </Row>
-            {/* <Col sm={3}><Button  className="w-100" type="submit">
-              Update
-              </Button></Col>
-    <Col sm={3}>
-     
-    <Button variant="primary" onClick={deleteHandler}>Delette</Button >
- </Col>
-  </Row> */}
+         
           </Container>
         </Card.Body>
       </Card>

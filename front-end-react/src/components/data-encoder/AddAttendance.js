@@ -146,12 +146,12 @@ function AddAttendance() {
     
 
     function clickHandler(e) {
-      const enteredTerm = termRef.current.value;
+      // const enteredTerm = termRef.current.value;
       const enteredGrade = gradeRef.current.value;
       const enteredSection = sectionRef.current.value;
 
       const AttendanceEntryData = {
-        term: enteredTerm,
+        // term: enteredTerm,
         grade: enteredGrade,
         section: enteredSection,
         datePosted: currentDate,
@@ -191,7 +191,7 @@ function AddAttendance() {
           // alert(data.message);
           document.getElementById("upload").value = null;
           setFileName("Choose File")
-          setTerm(["Select Term"])
+          // setTerm(["Select Term"])
           setClasses(["Select Grade"])
           setSections(["Select Section"])
         });
@@ -208,24 +208,18 @@ function AddAttendance() {
               {error && <Alert variant="danger">{error}</Alert>}
               {success && <Alert variant="success">{success}</Alert>}
               <Form onSubmit={clickHandler}>
-                <Form.Group id="term">
+                {/* <Form.Group id="term">
                   <Form.Label>Term</Form.Label>
                   <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                    {/* <option>first-term</option>
-                    <option>sescond-term</option>
-                    <option>third-term</option>
-                    <option>fourth-term</option> */}
+             
                     {term.map(item => {
       return (<option  >{item}</option>);})}
                   </Form.Control>
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group id="grade">
                   <Form.Label>Grade</Form.Label>
                   <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
-                    {/* <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option> */}
+                
                     
 {classes.map(item => {
       return (<option  >{item}</option>);
@@ -235,10 +229,7 @@ function AddAttendance() {
                 <Form.Group id="section">
                   <Form.Label>Section</Form.Label>
                   <Form.Control size="sm" as="select" ref={sectionRef} required>
-                    {/* <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                    <option>D</option> */}
+                 
                                                    
 {sections.map(item => {
       return (<option  >{item}</option>);
@@ -247,21 +238,9 @@ function AddAttendance() {
                 </Form.Group>
 
                 <Form.Group id="file">
-                  {/* <label htmlFor="upload">Upload File</label>
-        <input
-        type="file"
-        name="upload"
-        id="upload"
-        required
-        onChange={readUploadFile}
-        
-    /> */}
+                 
                   <div className="input-group">
-                    {/* <div className="input-group-prepend">
-    <span className="input-group-text" id="inputGroupFileAddon01">
-      Upload
-    </span>
-  </div> */}
+                   
                     <div className="custom-file">
                       <input
                         type="file"

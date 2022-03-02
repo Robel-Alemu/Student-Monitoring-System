@@ -37,8 +37,8 @@ function UpdateAttendance(props) {
 
   const studentIdRef = useRef();
   const studentNameRef = useRef();
-  const yearRef = useRef();
-  const termRef = useRef();
+  // const yearRef = useRef();
+  // const termRef = useRef();
   const gradeRef = useRef();
   const sectionRef = useRef();
 
@@ -50,7 +50,7 @@ function UpdateAttendance(props) {
   
 
   
-  const [term, setTerm] = useState(["Select Term"])
+  // const [term, setTerm] = useState(["Select Term"])
   const [sections,setSections]=useState(["Select Section"]);
   const [classes,setClasses] = useState(["Select Grade"]);
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
@@ -66,7 +66,7 @@ function UpdateAttendance(props) {
     const enteredStudentId = studentIdRef.current.value;
     const enteredStudentName = studentNameRef.current.value;
     // const enteredYear = yearRef.current.value;
-    const enteredTerm = termRef.current.value;
+    // const enteredTerm = termRef.current.value;
     const enteredGrade = gradeRef.current.value;
     const enteredSection = sectionRef.current.value;
     const enteredStatus = statusRef.current.value;
@@ -77,7 +77,7 @@ function UpdateAttendance(props) {
       studentId: enteredStudentId,
       studentName: enteredStudentName,
      
-      term: enteredTerm,
+      // term: enteredTerm,
       grade: enteredGrade,
       section: enteredSection,
       status: enteredStatus,
@@ -170,21 +170,11 @@ function UpdateAttendance(props) {
                 defaultValue={props.studentName}
               />
             </Form.Group>
-            {/* <Form.Group id="year">
-              <Form.Label>Year</Form.Label>
-              <Form.Control
-                type="text"
-                ref={yearRef}
-                disabled={true}
-                size="sm"
-                required
-                defaultValue={props.year}
-              />
-</Form.Group> */}
+        
               </Col>
               <Col sm = {4}>
             
-            <Form.Group id="term">
+            {/* <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control
                 type="text"
@@ -195,7 +185,7 @@ function UpdateAttendance(props) {
                 defaultValue={props.term}
               />
             </Form.Group>
-                 
+                  */}
                  
                   <Form.Group id="grade">
               <Form.Label>Grade</Form.Label>
@@ -253,10 +243,7 @@ function UpdateAttendance(props) {
 
             
 
-            {/* <Button  className="w-100" type="submit">
-              Update
-              </Button> */}
-            {/* <Button variant="primary" onClick={deleteHandler}>Delette</Button > */}
+            
           </Form>
         </Card.Body>
       </Card>

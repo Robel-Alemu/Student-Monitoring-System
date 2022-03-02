@@ -54,24 +54,10 @@ function AddMultipleStudents() {
   };
 
   function clickHandler(e) {
-    // const enteredSubject = subjectRef.current.value;
-    // const enteredTerm = termRef.current.value;
-    // const enteredGrade = gradeRef.current.value;
-    // const enteredSection = sectionRef.current.value;
-
-    // const studentsEntryData = {
-    // //   term: enteredTerm,
-    //   grade: enteredGrade,
-    //   section: enteredSection,
-    // //   subject: enteredSubject,
-    // };
-    // students.push(studentsEntryData);
+   
 
     console.log(students);
-    // let x = grades.length-1;
-    // grades.forEach(x=>{
-    //  y= x.studentId.to
-    // })
+   
 
     e.preventDefault();
 
@@ -108,69 +94,17 @@ function AddMultipleStudents() {
       <DataEncoderCenterLayout>
         <Card>
           <Card.Body>
-            <h3 className="text-center mb-4">Add Students</h3>
+            <h3 className="text-center mb-4">Add Multiple Students and Parents</h3>
 
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={clickHandler}>
-              {/* <Form.Group id="term">
-                <Form.Label>Term</Form.Label>
-                <Form.Control size="sm" as="select" ref={termRef} required>
-                  <option>first-term</option>
-                  <option>sescond-term</option>
-                  <option>third-term</option>
-                  <option>fourth-term</option>
-                </Form.Control>
-              </Form.Group> */}
-              {/* <Form.Group id="grade">
-                <Form.Label>Grade</Form.Label>
-                <Form.Control size="sm" as="select" ref={gradeRef} required>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group id="section">
-                <Form.Label>Section</Form.Label>
-                <Form.Control size="sm" as="select" ref={sectionRef} required>
-                  <option>A</option>
-                  <option>B</option>
-                  <option>C</option>
-                  <option>D</option>
-                </Form.Control>
-              </Form.Group> */}
-              {/* <Form.Group id="subject">
-                <Form.Label>Subject</Form.Label>
-                <Form.Control size="sm" as="select" ref={subjectRef} required>
-                  <option>Maths</option>
-                  <option>Physics</option>
-                  <option>English</option>
-                  <option>Biology</option>
-                  <option>Chemistry</option>
-                  <option>Amharic</option>
-                  <option>Physical Education</option>
-                  <option>IT</option>
-                  
-                  
-                </Form.Control>
-              </Form.Group> */}
+          
 
               <Form.Group id="file">
-                {/* <label htmlFor="upload">Upload File</label>
-                <input
-                  type="file"
-                  name="upload"
-                  id="upload"
-                  required
-                  onChange={readUploadFile}
-                /> */}
+           
                 <div className="input-group">
-  {/* <div className="input-group-prepend">
-    <span className="input-group-text" id="inputGroupFileAddon01">
-      Choose file 
-    </span>
-  </div> */}
+ 
   <div className="custom-file">
   
     <input
@@ -193,7 +127,7 @@ function AddMultipleStudents() {
 </div>
               </Form.Group>
               <Button className="w-100" type="submit">
-                Add Students
+                Add
               </Button>
             </Form>
           </Card.Body>

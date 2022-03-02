@@ -4,6 +4,7 @@
 const firebase = require("../connection/db");
 const firestore = firebase.firestore();
 
+const jwt = require('jsonwebtoken')
 
 const BroadcastMessage = require("../models/BroadcastMessage");
 const Message = require("../models/Message")
@@ -30,9 +31,11 @@ const SendMessage = async (req, res, next) => {
   try{
       
       const data = req.body;
+      console.log(data);
+          data.forEach( async x=>{
+            await firestore.collection("Parent-Messages").doc().set(x);
+          })
       
-          
-      await firestore.collection("Parent-Messages").doc().set(data);
       res.status(200).send({message:'Message Sent!'});
       
      
@@ -110,6 +113,10 @@ const ViewAnnouncements = async (req, res, next) => {
       console.log(message)
       const data = await message.get();
       const messageArray = [];
+      jwt.verify(req.token, 'secretkey', (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else {
       if (data.empty) {
         res.status(404).send({message: "No Message record found"});
       } else {
@@ -126,6 +133,9 @@ const ViewAnnouncements = async (req, res, next) => {
         console.log(messageArray)
         res.send(messageArray);
       }
+        }
+      })
+    
     } catch (err) {
       res.status(400).send({message:err.message});
       // res.status(400).send(error.message);

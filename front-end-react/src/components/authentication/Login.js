@@ -24,7 +24,29 @@ export default function Login() {
       }
       else{
 
-
+        // try {
+       
+        //   const u = await auth.signInWithEmailAndPassword('jwt@gmail.com', '123456')
+        //   console.log(u.user.email)
+          
+        
+        //     const user = {
+        //         id: 1, 
+        //         uid: u.user.uid,
+        //         email: u.user.email
+        //       }
+              
+        //         jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
+        //           res.json({
+        //             token
+        //           });
+        //         });
+             
+        //  } catch (error) {
+        //      res.sendStatus(403);
+             
+        //  }
+         
       await login(emailRef.current.value, passwordRef.current.value);
       
 

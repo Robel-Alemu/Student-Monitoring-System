@@ -82,15 +82,6 @@ setIsRequired(false);
 
 
 
-//   function loadHandler(event){
-//     event.preventDefault();
-//     var email = document.getElementById("email");
-//     email.value = " ";
-//     var password = document.getElementById("password");
-//     password.value = " ";
-
-//   }
-
   
 
   return (

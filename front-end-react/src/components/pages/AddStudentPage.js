@@ -36,9 +36,7 @@ function AddStudentPage() {
 
       });
      
-    // ).then(() => {
-    //   history("/");
-    // });
+    
     
   }
  

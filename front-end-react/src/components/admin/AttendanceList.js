@@ -37,7 +37,7 @@ function AttendanceList(props){
             
               <td>{info.studentId}</td>
               <td>{info.studentName}</td>
-              <td>{info.term}</td>
+              {/* <td>{info.term}</td> */}
               <td>{info.grade}</td>
               <td>{info.section}</td>
               <td>{info.date}</td>
@@ -58,7 +58,7 @@ function AttendanceList(props){
                     <th>ID</th>
                    
               <th>Student Name</th>
-              <th>Term</th>
+              {/* <th>Term</th> */}
               <th>Grade</th>
               <th>Section</th>
               <th>date</th>

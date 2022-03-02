@@ -113,6 +113,7 @@ import AddStudent from "./components/data-encoder/AddStudent";
 import AddClass from "./components/admin/AddClass";
 import UpdateClass from "./components/admin/UpdateClass";
 import SearchGradePage from "./components/pages/SearchGradePage";
+import SendMessage from "./components/admin/SendMessage";
 
 function App() {
   let x = 4;
@@ -208,6 +209,9 @@ function App() {
                 
                 {/* <PrivateRoute path="/add-student" component={AddStudentPage} /> */}
                 <PrivateRoute path="/add-student" component={AddStudent} />
+               
+               
+                <PrivateRoute path="/send-message" component={SendMessage} />
 
 
 

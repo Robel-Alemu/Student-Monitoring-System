@@ -259,20 +259,10 @@ function EditGrade(props) {
                 </Col>
                 
               </Row>
-              {/* <Col sm={3}><Button  className="w-100" type="submit">
-              Update
-              </Button></Col>
-    <Col sm={3}>
-     
-    <Button variant="primary" onClick={deleteHandler}>Delette</Button >
- </Col>
-  </Row> */}
+            
             </Container>
 
-            {/* <Button  className="w-100" type="submit">
-              Update
-              </Button> */}
-            {/* <Button variant="primary" onClick={deleteHandler}>Delette</Button > */}
+           
           </Form>
         </Card.Body>
       </Card>

@@ -82,9 +82,7 @@ function onLoadHandler(e){
       });
   
   
-    // if (gradeRef.current.value == 11 || gradeRef.current.value == 12)
-    //   setFieldIsVisible(false);
-    // else setFieldIsVisible(true);
+    
   }
 
   function termHandler(e){
@@ -214,35 +212,11 @@ function onLoadHandler(e){
           setTerm([term])
         if (data.message == "No student record found") setError(data.message);
         else setError("");
-                
-        // console.log(loadedStudent[0]);
-        // alert(data.message);
+               
       });
   }
   useEffect(() => {}, []);
 
-//   if (isLoading) {
-//     return (
-//       <section>
-//         <LayoutCenter>
-//           {/* <p>Loading...</p> */}
-//           <>
-//   <Button variant="primary" disabled>
-//     <Spinner
-//       as="span"
-//       animation="border"
-//       size="sm"
-//       role="status"
-//       aria-hidden="true"
-//     />
-//     <span className="visually-hidden">Loading...please wait</span>
-  
-//   </Button>
-// </>
-//         </LayoutCenter>
-//       </section>
-//     );
-//   }
 
 
 if (isLoading) {
@@ -289,18 +263,7 @@ return (
 if (x.title == "admin") {
   return (
     <section>
-      {/* <DataEncoderLayout><Container>
-  <Row>
-    <Col sm={8}><h1>Student</h1></Col>
-    <Col sm={4}>
-     
-    <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"30px"}}/>
-    <Button  className="w-100" onClick = {searchHandler}>
-                Search
-              </Button>
- </Col>
-  </Row>
-</Container> */}
+      
       <Layout>
         <Container style={{marginBottom:"30px"}}>
           <Row>
@@ -315,10 +278,7 @@ if (x.title == "admin") {
             <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                {/* <option>first-term</option>
-                <option>sescond-term</option>
-                <option>third-term</option>
-                <option>fourth-term</option> */}
+             
                 {term.map(item => {
       return (<option  >{item}</option>);
   })}
@@ -328,10 +288,7 @@ if (x.title == "admin") {
               <Form.Label>Grade</Form.Label>
               <Form.Control size="sm" as="select" ref={gradeRef} required 
               onClick={termHandler}>
-                {/* <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option> */}
+                
 
                 {grades.map(item => {
       return (<option  >{item}</option>);
@@ -341,10 +298,7 @@ if (x.title == "admin") {
             <Form.Group id="section" style={{marginLeft:"30px"}}>
               <Form.Label>Section</Form.Label>
               <Form.Control size="sm" as="select" ref={sectionRef} required>
-                {/* <option>A</option>
-                <option>B</option>
-                <option>C</option>
-                <option>D</option> */}
+               
                 
 {sections.map(item => {
       return (<option  >{item}</option>);
@@ -357,10 +311,7 @@ if (x.title == "admin") {
               {subject.map(item => {
       return (<option  >{item}</option>);
   })}
-                {/* <option>Maths</option>
-                <option>physics</option>
-                <option>english</option>
-                <option>amharic</option> */}
+               
               </Form.Control>
             </Form.Group>
 
@@ -372,13 +323,7 @@ if (x.title == "admin") {
           
           
 
-          {/* <Row><Col sm={4}>
-     
-   
-     <Button  className="w-50" onClick = {searchHandler}>
-                 Search
-               </Button>
-  </Col></Row> */}
+          
         </Container>
         <GradesList students={loadedStudent} />
      
@@ -391,18 +336,7 @@ if (x.title == "admin") {
 else{
   return (
     <section>
-      {/* <DataEncoderLayout><Container>
-  <Row>
-    <Col sm={8}><h1>Student</h1></Col>
-    <Col sm={4}>
-     
-    <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"30px"}}/>
-    <Button  className="w-100" onClick = {searchHandler}>
-                Search
-              </Button>
- </Col>
-  </Row>
-</Container> */}
+      
       <DataEncoderLayout>
         <Container style={{marginBottom:"30px"}}>
           <Row>
@@ -417,10 +351,7 @@ else{
             <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                {/* <option>first-term</option>
-                <option>sescond-term</option>
-                <option>third-term</option>
-                <option>fourth-term</option> */}
+                
               {term.map(item => {
       return (<option  >{item}</option>);
   })}
@@ -430,10 +361,7 @@ else{
               <Form.Label>Grade</Form.Label>
               <Form.Control size="sm" as="select" ref={gradeRef} required 
               onClick={termHandler}>
-                {/* <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option> */}
+             
 
 {grades.map(item => {
       return (<option  >{item}</option>);
@@ -443,10 +371,7 @@ else{
             <Form.Group id="section" style={{marginLeft:"30px"}}>
               <Form.Label>Section</Form.Label>
               <Form.Control size="sm" as="select" ref={sectionRef} required>
-                {/* <option>A</option>
-                <option>B</option>
-                <option>C</option>
-                <option>D</option> */}
+           
                 
 {sections.map(item => {
       return (<option  >{item}</option>);
@@ -456,10 +381,7 @@ else{
             <Form.Group id="subject" style={{marginLeft:"30px"}}>
               <Form.Label>Subject</Form.Label>
               <Form.Control size="sm" as="select" ref={subjectRef} required>
-                {/* <option>Maths</option>
-                <option>physics</option>
-                <option>english</option>
-                <option>amharic</option> */}
+       
 
 {subject.map(item => {
       return (<option  >{item}</option>);
@@ -475,13 +397,7 @@ else{
           
           
 
-          {/* <Row><Col sm={4}>
-     
-   
-     <Button  className="w-50" onClick = {searchHandler}>
-                 Search
-               </Button>
-  </Col></Row> */}
+    
         </Container>
         <GradesList students={loadedStudent} />
      

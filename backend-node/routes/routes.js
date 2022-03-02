@@ -1,5 +1,10 @@
 const express = require("express");
 
+const jwt = require('jsonwebtoken')
+const firebase = require("../connection/db");
+
+const firestore = firebase.firestore();
+const auth = firebase.auth();
 const {
   
     AddUser,
@@ -96,17 +101,17 @@ router.put(
 );
 
 router.get(
-  "/get-attendance/:year/:term/:grade/:section/:studentId/:date",
+  "/get-attendance/:grade/:section/:studentId/:date",
   SearchStudentAttendance
 );
 router.post("/add-attendance", AddAttendance);
 router.put("/update-attendance/:id", UpdateAttendance);
 router.get(
-  "/filter-attendance/:year/:term/:grade/:section/:date",
+  "/filter-attendance/:grade/:section/:date",
   ViewAttendance
 );
 
-router.get("/broadcast-messages", ViewAnnouncements);
+// router.get("/broadcast-messages", ViewAnnouncements);
 router.post("/broadcast-message", BroadcastAnnouncements);
 
 
@@ -125,6 +130,59 @@ router.post("/add-class", AddClass);
 router.get("/get-class/:classId", GetClass);
 router.get("/get-all-class/", GetAllClass);
 router.put("/update-class/:classId", UpdateClass);
+
+router.get("/broadcast-messages",verifyToken,  ViewAnnouncements);
+
+
+router.post('/loginn',async  (req, res) => {
+  // Mock user
+ 
+ try {
+     
+  const u = await auth.signInWithEmailAndPassword('jwt@gmail.com', '123456')
+  console.log(u.user.email)
+  
+
+    const user = {
+        id: 1, 
+        uid: u.user.uid,
+        email: u.user.email
+      }
+      
+        jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
+          res.json({
+            token
+          });
+        });
+     
+ } catch (error) {
+     res.sendStatus(403);
+     
+ }
+ 
+
+});
+
+function verifyToken(req, res, next) {
+  // Get auth header value
+  const bearerHeader = req.headers['authorization'];
+  // Check if bearer is undefined
+  if(typeof bearerHeader !== 'undefined') {
+    // Split at the space
+    const bearer = bearerHeader.split(' ');
+    // Get token from array
+    const bearerToken = bearer[1];
+    // Set the token
+    req.token = bearerToken;
+    // Next middleware
+    next();
+  } else {
+    // Forbidden
+    res.sendStatus(403);
+  }
+}
+
+
 
 module.exports = {
   routes: router,

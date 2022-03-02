@@ -25,17 +25,7 @@ function AddGrade() {
   
   
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
-  // let subjectNormal = ['maths','physics','chemistry'];
-  // let subjectArt = ['history','business','art'];
-
-  // let selectedSubjects =[];
-
-  // if(gradeRef.current.value == 9 && gradeRef.current.value == 10 && gradeRef.current.value == 11){
-  //     selectedSubjects = [...subjectNormal];
-
-  // }
-  // else
-  // selectedSubjects = [...subjectArt];
+  
   const [fileName, setFileName]= useState("Choose File");
   const[grade,setGrade] = useState();
 
@@ -63,10 +53,7 @@ function AddGrade() {
         console.log(grade,"use state");
         
        
-        // let fName = (document.getElementById("upload").value)
-        // console.log(fName)
        
-        // setFileName(fName.split("\\").pop()) 
       };
       reader.readAsArrayBuffer(e.target.files[0]);
       

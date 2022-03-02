@@ -55,17 +55,7 @@ function ViewAttendancePage({ title }) {
       setUser(data[0].role)
     });
       
-  //  getUser(email).then((result) => {
-  //   // if (error) return;
-    
-  //   userRole = result.role;
-    
-    
-  // });
  
-  // let u =  getUserRole(email);
-  // console.log("-----------------------")
-  //     console.log(userr,u,"mukera");
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadedStudent, setLoadedStudent] = useState([]);
@@ -80,7 +70,7 @@ function ViewAttendancePage({ title }) {
   const [term, setTerm] = useState(["Select Term"])
   const [sections,setSections]=useState(["Select Section"]);
   const [classes,setClasses] = useState(["Select Grade"]);
-  const terms = ["first-term", "second-term", "third-term", "fourth-term"];
+  // const terms = ["first-term", "second-term", "third-term", "fourth-term"];
 
   const date = new Date();
   let x = { title };
@@ -89,7 +79,7 @@ function ViewAttendancePage({ title }) {
   const currentDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
-  const year = `${date.getFullYear()}`;
+  // const year = `${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
 
 
@@ -130,13 +120,7 @@ function ViewAttendancePage({ title }) {
       });
       console.log(numberGrade)
         setClasses(numberGrade)
-        // setClasses(gradesArray)
-        // console.log(grades);
-        // // setSubject(subjects)
-        // console.log(grades,"****Grades*****");
-        // grades.forEach(element => {
-        //   console.log(element)
-        // });
+     
   
   })
   
@@ -163,25 +147,15 @@ function ViewAttendancePage({ title }) {
       // alert(data.message);
       console.log(sections,"before******************")
       setSections(classArray[0].section)
-      // if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
-      //   setSubject(subjectsOf9And10)
-      // }
-      // else setSubject(subjectsOf11And12)
-      // console.log(classArray[0].section);
-      // console.log(sections,"*********");
-      // sections.forEach(element => {
-      //   console.log(element)
-      // });
-      
-      // setResponse(data.message);
+    
   
     });
-    setTerm(terms)
+    // setTerm(terms)
   }
 
   function searchHandler() {
     // const enteredId = id.current.value;
-    const term = termRef.current.value;
+    // const term = termRef.current.value;
     const grade = gradeRef.current.value;
     const section = sectionRef.current.value;
 
@@ -189,10 +163,10 @@ function ViewAttendancePage({ title }) {
     fetch(
       // "https://student-monitoring.herokuapp.com/filter-attendance/year/term/grade/section
       "http://localhost:8080/api/filter-attendance/" +
-        year +
-        "/" +
-        term +
-        "/" +
+        // year +
+        // "/" +
+        // term +
+        // "/" +
         grade +
         "/" +
         section +
@@ -221,11 +195,10 @@ function ViewAttendancePage({ title }) {
         if (data.message == "No attendance record found")
           setError(data.message);
         else setError("");
-        setTerm([term])
+        // setTerm([term])
         setClasses([grade])
         setSections([section])
-        // console.log(loadedStudent[0]);
-        // alert(data.message);
+       
       });
   }
   useEffect(() => {}, []);
@@ -279,25 +252,18 @@ function ViewAttendancePage({ title }) {
             <Row>
               <Col sm={8}>
                 <Row>
-                  <Form.Group id="term" style={{ marginLeft: "30px" }}>
+                  {/* <Form.Group id="term" style={{ marginLeft: "30px" }}>
                     <Form.Label>Term</Form.Label>
                     <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                      {/* <option>first-term</option>
-                      <option>sescond-term</option>
-                      <option>third-term</option>
-                      <option>fourth-term</option> */}
+
                       {term.map(item => {
       return (<option  >{item}</option>);})}
                     </Form.Control>
-                  </Form.Group>
+                  </Form.Group> */}
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
                     <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
-                      {/* <option disabled="true">select grade</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option> */}
+                  
                                                  
 {classes.map(item => {
       return (<option  >{item}</option>);
@@ -312,10 +278,7 @@ function ViewAttendancePage({ title }) {
                       ref={sectionRef}
                       required
                     >
-                      {/* <option>A</option>
-                      <option>B</option>
-                      <option>C</option>
-                      <option>D</option> */}
+                   
                       {sections.map(item => {
       return (<option  >{item}</option>);
   })}
@@ -330,9 +293,7 @@ function ViewAttendancePage({ title }) {
                     />
                   </Form.Group>
 
-                  {/* <Col sm={4}>
-              
-          </Col> */}
+         
                 </Row>
               </Col>
               <Col sm={4}>
@@ -362,25 +323,19 @@ function ViewAttendancePage({ title }) {
             <Row>
               <Col sm={8}>
                 <Row>
-                  <Form.Group id="term" style={{ marginLeft: "30px" }}>
+                  {/* <Form.Group id="term" style={{ marginLeft: "30px" }}>
                     <Form.Label>Term</Form.Label>
                     <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                      {/* <option>first-term</option>
-                      <option>sescond-term</option>
-                      <option>third-term</option>
-                      <option>fourth-term</option> */}
+                  
                       {term.map(item => {
       return (<option  >{item}</option>);})}
                     </Form.Control>
-                  </Form.Group>
+                  </Form.Group> */}
                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
                     <Form.Label>Grade</Form.Label>
                     <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
                    
-                      {/* <option> 9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option> */}
+                   
                                                  
 {classes.map(item => {
       return (<option  >{item}</option>);
@@ -396,10 +351,7 @@ function ViewAttendancePage({ title }) {
                       required
                       
                     >
-                      {/* <option>A</option>
-                      <option>B</option>
-                      <option>C</option>
-                      <option>D</option> */}
+                
 
 {sections.map(item => {
       return (<option  >{item}</option>);
@@ -415,9 +367,7 @@ function ViewAttendancePage({ title }) {
                     />
                   </Form.Group>
 
-                  {/* <Col sm={4}>
-              
-          </Col> */}
+            
                 </Row>
               </Col>
               <Col sm={4}>

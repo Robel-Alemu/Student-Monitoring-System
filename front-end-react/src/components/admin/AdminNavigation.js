@@ -73,15 +73,16 @@ function Adminavigation() {
                 <Link className={classes.links} style={{"color":"white"}} to="/">Home</Link>
               </li>
               <li>
-               <Link style={{"color":"white"}} to="/broadcast-message">Broadcast Message</Link>
+               <Link style={{"color":"white"}} to="/broadcast-message">Broadcast Announcement</Link>
                </li>
-              <li>
+              {/* <li>
                <Link style={{"color":"white"}} to="/add-class">Add Class</Link>
                </li>
               <li>
                <Link style={{"color":"white"}} to="/update-class">Update Class</Link>
-               </li>
-               <li ><NavDropdown  style={{color:"white"}}
+               </li> */}
+               <li >
+                 <NavDropdown  style={{color:"white"}}
           id="nav-dropdown-dark-example"
           title="Users"
           menuVariant="dark"
@@ -91,6 +92,35 @@ function Adminavigation() {
               </NavDropdown.Item>
           <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/users">View Users</Link>
+              </NavDropdown.Item>
+     
+          </NavDropdown></li>
+               <li >
+                 <NavDropdown  style={{color:"white"}}
+          id="nav-dropdown-dark-example"
+          title="Class"
+          menuVariant="dark"
+        >
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/add-class">Add Class</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/update-class">Update Class</Link>
+              </NavDropdown.Item>
+     
+          </NavDropdown></li>
+              
+               <li >
+                 <NavDropdown  style={{color:"white"}}
+          id="nav-dropdown-dark-example"
+          title="Message"
+          menuVariant="dark"
+        >
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/send-message">Send Message</Link>
+              </NavDropdown.Item>
+          <NavDropdown.Item > 
+               <Link style={{color:"black"}} to="/users">Sent Messages</Link>
               </NavDropdown.Item>
      
           </NavDropdown></li>
@@ -137,76 +167,6 @@ function Adminavigation() {
   </Container>
 </Navbar>
 
-
-// <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-//   <Container>
-
-//   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-//   <Navbar.Collapse id="responsive-navbar-nav">
-//     <Nav className="me-auto">
-//     <Nav.Link color="white"> </Nav.Link>
-//     <Nav.Link > <Link to="/users">
-//                 <Button color="white" variant="dark" style={{border: "0px"}} size="sm">
-//                   My Account
-//                 </Button></Link></Nav.Link>
-//                 <Nav.Link ></Nav.Link>
-//       <NavDropdown title="User" id="collasible-nav-dropdown" variant="dark" color="white">
-      
-//         <NavDropdown.Item> <Link style={{color: 'white'}, {textDecoration: "none"}} to="/add-user">Add User</Link></NavDropdown.Item>
-//         <NavDropdown.Item color="black"> <Link style={{color: 'white'}, {textDecoration: "none"}} to="/users">Users</Link></NavDropdown.Item>
-//         <NavDropdown.Item color="black"><Link style={{color: 'white'}, {textDecoration: "none"}} to="/update-profile">Update Profile</Link></NavDropdown.Item>
-//         <NavDropdown.Item color="black"><Button variant="outline-dark" style={{border: "0px"}} size="sm" onClick={handleLogout}>
-//            Log Out
-//          </Button></NavDropdown.Item>
-//         <NavDropdown.Item color="black"> <Link to="/users">
-//                 <Button color="white" variant="outline-dark" style={{border: "0px"}} size="sm">
-//                   <span>My Account</span>
-//                 </Button></Link></NavDropdown.Item>
-       
-//       </NavDropdown>
-//     </Nav>
-   
-//   </Navbar.Collapse>
-//   </Container>
-// </Navbar>
-
-    // <header className={classes.header}>
-    //   <div className={classes.logo}>
-    //   <Button variant="outline-dark" size="sm" onClick={handleLogout}>
-    //       Log Out
-    //     </Button>
-    //     {error && <Alert variant="danger">{error}</Alert>}
-    //   </div>
-      
-    //       <nav>
-    //         <ul>
-    //           <li>
-    //             <Link to="/">Home</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/add-user">Add User</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/users">Users</Link>
-    //           </li>
-    //           {/* <li>
-    //             <Link to="/add-student">Add Student</Link>
-    //           </li> */}
-    //           <li>
-    //             <Link to="/broadcast-message">Broadcast Message</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/all-students">Students</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/update-profile">Update Profile</Link>
-    //           </li>
-
-    //         </ul>
-    //       </nav>
-       
-    
-    // </header>
   );
 }
 

@@ -126,52 +126,7 @@ function DataEncoderNavigation() {
   </Container>
 </Navbar>
 
-    // <header className={classes.header}>
-    //   <div className={classes.logo}>
-    //   <Button variant="outline-dark" size="sm" onClick={handleLogout}>
-    //       Log Out
-    //     </Button>
-    //     {error && <Alert variant="danger">{error}</Alert>}
-    //   </div>
-      
-    //       <nav>
-    //         <ul>
-    //           <li>
-    //             <Link to="/data-encoder">Home</Link>
-    //           </li>
-             
-    //           <li>
-    //             <Link to="/add-student">Add Student</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/update-student">Update Student</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/update-attendance">Update Attendance</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/view-attendance">View Attendance</Link>
-    //           </li>
-              
-              
-    //           <li>
-    //             <Link to="/update-profile-d">Update Profile</Link>
-    //           </li>
-    //           <li >
-    //             <Link style={{"color":"white"}} to="/add-grade">Add Grades</Link>
-    //           </li>
-    //           <li >
-    //             <Link style={{"color":"white"}} to="/update-grade">Update Grades</Link>
-    //           </li>
-    //           <li >
-    //             <Link style={{"color":"white"}} to="/add-attendance">Add Attendance</Link>
-    //           </li>
-
-    //         </ul>
-    //       </nav>
-       
-    
-    // </header>
+   
   );
 }
 

@@ -45,8 +45,7 @@ function EditStudentPage() {
         }
         setIsLoading(false);
         setLoadedStudent(student);
-        // console.log(loadedStudent[0]);
-        // alert(data.message);
+        
         if (data.message == "No student record found") {setError(data.message);
           }
   
@@ -83,7 +82,7 @@ function EditStudentPage() {
     <section >
         <DataEncoderLayout><Container>
   <Row>
-    <Col sm={8}><h2>Update Student </h2>
+    <Col sm={8}><h2>Search and Update Student</h2>
       {error && <Alert variant="danger">{error}</Alert>}
             </Col>
     <Col sm={4}>

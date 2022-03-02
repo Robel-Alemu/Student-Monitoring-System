@@ -9,8 +9,8 @@ function AttendanceList(props) {
                 key={attendance.id}
                 studentId = {attendance.studentId}
                 studentName={attendance.studentName}
-                year={attendance.year}
-                term={attendance.term}
+                // year={attendance.year}
+                // term={attendance.term}
                 grade={attendance.grade} 
                 section={attendance.section}
                 status={attendance.status}

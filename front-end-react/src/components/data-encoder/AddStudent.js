@@ -34,6 +34,9 @@ function AddStudent(props) {
   const history = useHistory();
   const [fieldIsVisible, setFieldIsVisible] = useState(true);
   const [field, setField] = useState();
+
+  // const [parent,setParent] = useState();
+  // const [parentPhones,setParentPhones] = useState()
   function gradeChangeHandler(e) {
     e.preventDefault();
 
@@ -182,6 +185,62 @@ else setFieldIsVisible(true);
     const enteredParent1Phone = parent1PhoneRef.current.value;
     const enteredParent2Name = parent2NameRef.current.value;
     const enteredParent2Phone = parent2PhoneRef.current.value;
+const parent = [];
+const parentPhone = [];
+if(enteredParent1Name && enteredParent1Phone && enteredParent2Name && enteredParent2Phone ){
+  
+  parent.push({
+    parentName: enteredParent1Name,
+    parentPhone : enteredParent1Phone
+  },{
+    parentName: enteredParent2Name,
+    parentPhone : enteredParent2Phone
+  })
+  parentPhone.push(enteredParent1Phone,enteredParent2Phone)
+  
+  // const parent=[
+  //   {
+  //     parentName: enteredParent1Name,
+  //     parentPhone : enteredParent1Phone
+  //   },
+  //   {
+  //     parentName: enteredParent2Name,
+  //     parentPhone : enteredParent2Phone
+  //   }
+  // ]
+  // const pPhones = [enteredParent1Phone,enteredParent2Phone]
+  // setParentPhones(pPhones);
+  // setParent(parent);
+  
+}
+else if(enteredParent1Name && enteredParent1Phone ){
+  // const parent=[
+  //   {
+  //     parentName: enteredParent1Name,
+  //     parentPhone : enteredParent1Phone
+  //   }]
+  //   const pPhones = [enteredParent1Phone]
+  //   setParent(parent);
+    
+  //   setParentPhones(pPhones);
+  parent.push({
+    parentName: enteredParent1Name,
+    parentPhone : enteredParent1Phone
+  })
+  parentPhone.push(enteredParent1Phone)
+  
+}
+// else if(enteredParent2Name && enteredParent2Phone ){
+//   const parent=[
+//     {
+//       parentName: enteredParent2Name,
+//       parentPhone : enteredParent2Phone
+//     }]
+//     const pPhones = [enteredParent2Phone]
+//     setParent(parent);
+    
+//     setParentPhones(pPhones);
+// }
 
     const studentData = {
       studentId: enteredStudentId,
@@ -189,12 +248,19 @@ else setFieldIsVisible(true);
       lastName: enteredLastName,
       grade: enteredGrade,
       section: enteredSection,
-      parent1Name: enteredParent1Name,
-      parent1Phone: enteredParent1Phone,
-      parent2Name: enteredParent2Name,
-      parent2Phone: enteredParent2Phone,
+      // parent1Name: enteredParent1Name,
+      // parent1Phone: enteredParent1Phone,
+      // parent2Name: enteredParent2Name,
+      // parent2Phone: enteredParent2Phone,
+      parentPhones: parentPhone,
       field: field,
     };
+
+
+    const FinaStudentData = [studentData, parent];
+
+
+
     console.log(field);
     event.preventDefault();
     fetch(
@@ -202,7 +268,7 @@ else setFieldIsVisible(true);
       // "https://student-monitoring.herokuapp.com/api/Student-Information",
       {
         method: "POST",
-        body: JSON.stringify(studentData),
+        body: JSON.stringify(FinaStudentData),
         headers: { "Content-Type": "application/json" },
       }
     )
@@ -236,7 +302,7 @@ else setFieldIsVisible(true);
       <DataEncoderCenterLayout>
         <Card>
           <Card.Body>
-            <h3 className="text-center mb-4">Add Student Detail</h3>
+            <h3 className="text-center mb-4">Add Student and Parent</h3>
 
             {/* {error && <Alert variant="danger">{error}</Alert>} */}
             {error && <Alert variant="danger">{error}</Alert>}
@@ -305,11 +371,7 @@ else setFieldIsVisible(true);
                        {grades.map(item => {
       return (<option  >{item}</option>);
   })}
-{/*                         
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option> */}
+
                       </Form.Control>
                     </Form.Group>
                     <Form.Group id="section">

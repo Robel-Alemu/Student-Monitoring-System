@@ -46,13 +46,6 @@ const [isLoading, setIsLoading] = useState(true);
       });
     }
 
-//   if (isLoading) {
-//     return (
-//       <section>
-//         <p>Loading...</p>
-//       </section>
-//     );
-//   }
 
   return (
       <section>
@@ -60,7 +53,7 @@ const [isLoading, setIsLoading] = useState(true);
 
           <Container>
   <Row>
-    <Col sm={8}><h1>Update Student</h1></Col>
+    <Col sm={8}><h1>Search and Update Student</h1></Col>
     <Col sm={4}>
      
     <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" />
@@ -73,7 +66,6 @@ const [isLoading, setIsLoading] = useState(true);
         
 
 
-        {/* <StudentList studentData = {loadedStudent}  /> */}
         
       
       
@@ -83,49 +75,3 @@ const [isLoading, setIsLoading] = useState(true);
 }
 
 export default UpdateStudentPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     const [isLoading, setIsLoading] = useState(true);
-//     const [loadedStudent, setLoadedStudent] = useState([]);
-
-// const id = useRef();
-// const enteredId = id.current.value;
-
-
-
-// //   const history = useHistory();
-// // function searchHandler(event){
-// //   event.preventDefault();
-// //   history.push("/update-student");
-
-// // }
-
-// const {getStudent} = useAuth();
-
-//       const student =  getStudent(enteredId);
-//       console.log(student)
-
-//   useEffect(() => {
-//     setIsLoading(true);
-//     const student =  getStudent(enteredId);
-//     console.log(student)
-//   }, []);
-
-//   if (isLoading) {
-//     return (
-//       <section>
-//         <p>Loading...</p>
-//       </section>
-//     );
-//   }

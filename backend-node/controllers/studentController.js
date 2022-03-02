@@ -12,9 +12,27 @@ const StudentInformation = require("../models/StudentInformation");
 const AddStudentAndParent = async (req, res, next) => {
   try {
     const data = req.body;
-    data.studentId = (data.studentId).toString()
+    const student = data[0];
+    const parent = data[1];
+    console.log(student, parent, "/////////////");
+    // data.studentId = (data.studentId).toString()
 
-    await firestore.collection("Student-Information").doc().set(data);
+    await firestore.collection("Student-Information").doc().set(student);
+    parent.forEach(async (g) => {
+     
+      // if (g.firstTest == undefined) g.firstTest = defaultValue;
+      // if (g.secondTest == undefined) g.secondtTest = defaultValue;
+
+      // if (g.final == undefined) g.final = defaultValue;
+      // if (g.assessements == undefined) g.assessements = defaultValue;
+      await firestore.collection("Parent-Information").doc().set(g);
+      
+      // await addGrade(g);
+
+      // return true;
+    })
+   
+    
 
     res.status(200).send({ message: "Student Added successfully" });
   } catch (err) {
@@ -43,10 +61,7 @@ const SearchStudent = async (req, res, next) => {
           doc.data().grade,
           doc.data().section,
           doc.data().field,
-          doc.data().parent1Name,
-          doc.data().parent1Phone,
-          doc.data().parent2Name,
-          doc.data().parent2Phone
+          doc.data().parentPhones
         );
         studentArray.push(student);
       });
@@ -92,13 +107,16 @@ const UpdateStudentAndParent = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
+    const student_ = data[0];
+    const parent = data[1];
+    console.log(student_, parent, "/////////////");
     const student = await firestore
       .collection("Student-Information")
       .where("studentId", "==", id)
       .get();
 
     student.forEach((doc) => {
-      doc.ref.update(data);
+      doc.ref.update(student_);
     });
     res.status(200).send({ message: "Student Updated successfuly" });
   } catch (err) {
@@ -186,17 +204,14 @@ async function updateGrade(term, grade, section, subject, grades) {
   console.log("updated");
 }
 
-
-
-
 const EditGrade = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const term = data.term
-    const grade = data.grade
-    const section = data.section
-    const subject = data.subject
+    const term = data.term;
+    const grade = data.grade;
+    const section = data.section;
+    const subject = data.subject;
 
     // const student = await firestore
     //   .collection("Student-Information")
@@ -204,14 +219,12 @@ const EditGrade = async (req, res, next) => {
     //   .get();
     await updateGrade(term, grade, section, subject, data);
 
-    
     res.status(200).send({ message: "Student Grade Updated successfuly" });
   } catch (err) {
     res.status(400).send({ message: err.message });
     res.status(400).send(error.message);
   }
 };
-
 
 const UpdateGrades = async (req, res) => {
   try {
@@ -304,12 +317,11 @@ const UpdateGrades = async (req, res) => {
       validate.subjectMatched
     ) {
       data.forEach(async (g) => {
-        
-        g.studentId = (g.studentId).toString();
+        g.studentId = g.studentId.toString();
         if (g.firstTest == undefined) g.firstTest = defaultValue;
         if (g.secondTest == undefined) g.secondTest = defaultValue;
         if (g.final == undefined) g.final = defaultValue;
-       
+
         if (g.assessements == undefined) g.assessements = defaultValue;
 
         await updateGrade(term, grade, section, subject, g);
@@ -470,7 +482,7 @@ const AddGrades = async (req, res) => {
         validate.subjectMatched
       ) {
         data.forEach(async (g) => {
-          g.studentId = (g.studentId).toString();
+          g.studentId = g.studentId.toString();
           if (g.firstTest == undefined) g.firstTest = defaultValue;
           if (g.secondTest == undefined) g.secondtTest = defaultValue;
 
@@ -525,12 +537,11 @@ const AddGrades = async (req, res) => {
   }
 };
 
-
 async function fetchStudent(studentId) {
   const studentData = await firestore
-  .collection("Student-Information")
-  .where("studentId", "==", studentId);
-   
+    .collection("Student-Information")
+    .where("studentId", "==", studentId);
+
   const data = await studentData.get();
 
   let studentGradeArray = [];
@@ -558,21 +569,79 @@ async function fetchStudent(studentId) {
   }
 }
 
-
-
-
 const AddMultipleStudentAndParent = async (req, res) => {
   try {
     const data = req.body;
 
     const lastItem = data.length - 1;
 
+    const validStudentData = [];
+    const parentData = [];
+
+    data.forEach((x) => {
+      if (x.parent1Name && x.parent1Phone && x.parent2Name && x.parent2Phone) {
+        parentData.push(
+          {
+            parentName: x.parent1Name,
+            parentPhone: x.parent1Phone,
+          },
+          {
+            parentName: x.parent2Name,
+            parentPhone: x.parent2Phone,
+          }
+        );
+        let newStudentData = {};
+        let parentPhone = [];
+        parentPhone.push(x.parent1Phone, x.parent2Phone);
+
+        newStudentData = { ...x };
+        delete newStudentData.parent1Name;
+        delete newStudentData.parent1Phone;
+        delete newStudentData.parent2Name;
+        delete newStudentData.parent2Phone;
+
+        newStudentData.parentPhones = parentPhone;
+        validStudentData.push(newStudentData);
+      } else if (x.parent1Name && x.parent1Phone) {
+        parentData.push({
+          parentName: x.parent1Name,
+          parentPhone: x.parent1Phone,
+        });
+        let newStudentData = {};
+        let parentPhone = [];
+        parentPhone.push(x.parent1Phone);
+
+        newStudentData = { ...x };
+        delete newStudentData.parent1Name;
+        delete newStudentData.parent1Phone;
+
+        newStudentData.parentPhones = parentPhone;
+        validStudentData.push(newStudentData);
+      } else if (x.parent2Name && x.parent2Phone) {
+        parentData.push({
+          parentName: x.parent2Name,
+          parentPhone: x.parent2Phone,
+        });
+        let newStudentData = {};
+        let parentPhone = [];
+        parentPhone.push(x.parent2Phone);
+
+        newStudentData = { ...x };
+        delete newStudentData.parent2Name;
+        delete newStudentData.parent2Phone;
+        newStudentData.parentPhones = parentPhone;
+        validStudentData.push(newStudentData);
+      }
+    });
+    console.log(validStudentData, "***********");
+    console.log(parentData, "***********");
+
     // const term = data[lastItem].term;
     // const grade = data[lastItem].grade;
     // const section = data[lastItem].section;
     // const subject = data[lastItem].subject;
     // data.pop();
-    console.log(data,"after Pop")
+    console.log(data, "after Pop");
 
     let excelResult = data;
     let hasError = false;
@@ -580,186 +649,215 @@ const AddMultipleStudentAndParent = async (req, res) => {
     let canAdd = false;
 
     const defaultValue = "";
-    let isGradeFormat = true
+    let isGradeFormat = true;
     // if (firebaseResult == true) canAdd = true;
     // console.log(firebaseResult);
     for (let i = 0; i < excelResult.length && isGradeFormat; i++) {
-//       let id = excelResult[i].studentId; 
-// console.log(id);
-//        hasError = await fetchStudent(id.toString()); 
-//       console.log(hasError,"lets see")
-      if (!(excelResult[i].hasOwnProperty('studentId') && excelResult[i].hasOwnProperty('firstName') && 
-      excelResult[i].hasOwnProperty('lastName')  && excelResult[i].hasOwnProperty('grade') && excelResult[i].hasOwnProperty('section')
-      && excelResult[i].hasOwnProperty('parent1Phone') &&  excelResult[i].hasOwnProperty('parent1Name'))){
-      isGradeFormat=false
-      console.log(isGradeFormat,"grade format")
-    }
-  }
-  console.log(isGradeFormat,"grade format")
-
-  if(!isGradeFormat){
-    res.status(200).send({message: "file is not correct format"})
-  }
-    else{for (let i = 0; i < excelResult.length && !hasError; i++) {
-      let id = excelResult[i].studentId; 
-console.log(id);
-       hasError = await fetchStudent(id.toString()); 
-      console.log(hasError,"lets see")
-      
-      }
-    
-  
-    function checkUniqueStudentId(array) {
-      let isUnique = true;
-      let idExist = true;
-      let hasName = true;
-
-      let hasGrade = true;
-      let hasSection = true;
-      let hasParentPhone = true;
-
-      let hasParentName = true;
-      let items = array.length;
-
-      console.log(array,"from excel");
-      for (let i = 0; i < items; i++) {
-        
-        if (!array[i].hasOwnProperty('studentId')) {
-          idExist = false;
-          break;
-        }
-        if (!(array[i].hasOwnProperty('firstName') && array[i].hasOwnProperty('lastName'))) {
-          hasName = false;
-          break;
-        }
-        if (!(array[i].hasOwnProperty('parent1Phone')  || array[i].hasOwnProperty('parent2Phone'))) {
-          hasParentPhone = false;
-          break;
-        }
-        if (!array[i].hasOwnProperty('grade')) {
-          hasGrade = false;
-          break;
-        }
-        if (!array[i].hasOwnProperty('section')) {
-          hasSection = false;
-          break;
-        }
-        if (!array[i].hasOwnProperty('parent1Name') || array[i].hasOwnProperty('parent2Name')) {
-          hasParentName = false;
-          break;
-        }
-
-        for (let j = i + 1; j < items; j++) {
-          console.log(array[j].studentId);
-          if (array[i].studentId == array[j].studentId) isUnique = false;
-          console.log(isUnique);
-          break;
-        }
-        if (isUnique == false) break;
-      }
-      console.log(
-        isUnique,
-        idExist,
-        hasName,
-        
-        hasGrade,
-        hasSection,
-        hasParentName,
-        hasParentPhone,
-        hasError
-      );
-      const result = {
-        studentIdExist: idExist,
-        studentIsUnique: isUnique,
-        hasName: hasName,
-        hasParentPhone: hasParentPhone,
-        hasGrade: hasGrade,
-        hasSection: hasSection,
-        hasParentName: hasParentName,
-      };
-      return result;
-    }
-
-    let validate = checkUniqueStudentId(data);
-
-    if (!validate.hasName) {
-      res.status(400).send({
-        message: "File may not be a correct grade format , please try again",
-      });
-    } else if (!hasError) {
+      //       let id = excelResult[i].studentId;
+      // console.log(id);
+      //        hasError = await fetchStudent(id.toString());
+      //       console.log(hasError,"lets see")
       if (
-        validate.studentIdExist &&
-        validate.studentIsUnique &&
-        validate.hasName &&
-        validate.hasParentPhone &&
-        validate.hasGrade &&
-        validate.hasSection &&
-        validate.hasParentName
-      
+        !(
+          excelResult[i].hasOwnProperty("studentId") &&
+          excelResult[i].hasOwnProperty("firstName") &&
+          excelResult[i].hasOwnProperty("lastName") &&
+          excelResult[i].hasOwnProperty("grade") &&
+          excelResult[i].hasOwnProperty("section") &&
+          ((excelResult[i].hasOwnProperty("parent1Phone") &&
+            excelResult[i].hasOwnProperty("parent1Name")) ||
+            (excelResult[i].hasOwnProperty("parent2Phone") &&
+              excelResult[i].hasOwnProperty("parent2Name")))
+        )
       ) {
-        data.forEach(async (g) => {
-          g.studentId = (g.studentId).toString();
-          // if (g.firstTest == undefined) g.firstTest = defaultValue;
-          // if (g.secondTest == undefined) g.secondtTest = defaultValue;
+        isGradeFormat = false;
+        console.log(isGradeFormat, "grade format");
+      }
+    }
+    console.log(isGradeFormat, "grade format");
 
-          // if (g.final == undefined) g.final = defaultValue;
-          // if (g.assessements == undefined) g.assessements = defaultValue;
-          await firestore.collection("Student-Information").doc().set(g);
-          // await addGrade(g);
+    if (!isGradeFormat) {
+      res.status(200).send({ message: "file is not correct format" });
+    } else {
+      for (let i = 0; i < excelResult.length && !hasError; i++) {
+        let id = excelResult[i].studentId;
+        console.log(id);
+        hasError = await fetchStudent(id.toString());
+        console.log(hasError, "lets see");
+      }
 
-          // return true;
-        });
+      function checkUniqueStudentId(array) {
+        let isUnique = true;
+        let idExist = true;
+        let hasName = true;
 
-        res.status(200).send({ message: "Students added successfully!" });
-      } else if (!validate.studentIdExist) {
+        let hasGrade = true;
+        let hasSection = true;
+        let hasParentPhone = true;
+
+        let hasParentName = true;
+        let items = array.length;
+
+        console.log(array, "from excel");
+        for (let i = 0; i < items; i++) {
+          if (!array[i].hasOwnProperty("studentId")) {
+            idExist = false;
+            break;
+          }
+          if (
+            !(
+              array[i].hasOwnProperty("firstName") &&
+              array[i].hasOwnProperty("lastName")
+            )
+          ) {
+            hasName = false;
+            break;
+          }
+          if (
+            !(
+              array[i].hasOwnProperty("parent1Phone") ||
+              array[i].hasOwnProperty("parent2Phone")
+            )
+          ) {
+            hasParentPhone = false;
+            break;
+          }
+          if (!array[i].hasOwnProperty("grade")) {
+            hasGrade = false;
+            break;
+          }
+          if (!array[i].hasOwnProperty("section")) {
+            hasSection = false;
+            break;
+          }
+          if (
+            !(
+              array[i].hasOwnProperty("parent1Name") ||
+              array[i].hasOwnProperty("parent2Name")
+            )
+          ) {
+            hasParentName = false;
+            break;
+          }
+          if (!array[i].hasOwnProperty("field")) {
+            hasParentName = false;
+            break;
+          }
+
+          for (let j = i + 1; j < items; j++) {
+            console.log(array[j].studentId);
+            if (array[i].studentId == array[j].studentId) isUnique = false;
+            console.log(isUnique);
+            break;
+          }
+          if (isUnique == false) break;
+        }
+        console.log(
+          isUnique,
+          idExist,
+          hasName,
+
+          hasGrade,
+          hasSection,
+          hasParentName,
+          hasParentPhone,
+          hasError
+        );
+        const result = {
+          studentIdExist: idExist,
+          studentIsUnique: isUnique,
+          hasName: hasName,
+          hasParentPhone: hasParentPhone,
+          hasGrade: hasGrade,
+          hasSection: hasSection,
+          hasParentName: hasParentName,
+        };
+        return result;
+      }
+
+      let validate = checkUniqueStudentId(data);
+
+      if (!validate.hasName) {
+        res.status(400).send({
+          message: "File may not be a correct grade format , please try again",
+        });
+      } else if (!hasError) {
+        if (
+          validate.studentIdExist &&
+          validate.studentIsUnique &&
+          validate.hasName &&
+          validate.hasParentPhone &&
+          validate.hasGrade &&
+          validate.hasSection &&
+          validate.hasParentName
+        ) {
+          validStudentData.forEach(async (g) => {
+            g.studentId = g.studentId.toString();
+            // if (g.firstTest == undefined) g.firstTest = defaultValue;
+            // if (g.secondTest == undefined) g.secondtTest = defaultValue;
+
+            // if (g.final == undefined) g.final = defaultValue;
+            // if (g.assessements == undefined) g.assessements = defaultValue;
+            await firestore.collection("Student-Information").doc().set(g);
+
+            // await addGrade(g);
+
+            // return true;
+          });
+          parentData.forEach(async (g) => {
+            await firestore.collection("Parent-Information").doc().set(g);
+          });
+
+          res.status(200).send({ message: "Students added successfully!" });
+        } else if (!validate.studentIdExist) {
+          res.status(400).send({
+            message:
+              "Student id must not be empty among the data, please try again",
+          });
+        } else if (!validate.studentIsUnique) {
+          res.status(400).send({
+            message:
+              "Student id is not unique among the data, please try again",
+          });
+        } else if (!validate.hasParentPhone) {
+          res.status(400).send({
+            message:
+              "Atleast one parent phone should exist, please check your file again!",
+          });
+        } else if (!validate.hasGrade) {
+          res.status(400).send({
+            message:
+              "Student grade can not be empty, please check your file again!",
+          });
+        } else if (!validate.hasSection) {
+          res.status(400).send({
+            message:
+              "Student section can not be empty, please check your file again!",
+          });
+        } else if (!validate.hasParentName) {
+          res.status(400).send({
+            message:
+              "Atleast one parent phone should exist, please check your file again!",
+          });
+        }
+      } else if (hasError) {
         res.status(400).send({
           message:
-            "Student id must not be empty among the data, please try again",
-        });
-      } else if (!validate.studentIsUnique) {
-        res.status(400).send({
-          message: "Student id is not unique among the data, please try again",
-        });
-      } else if (!validate.hasParentPhone) {
-        res.status(400).send({
-          message:
-            "Atleast one parent phone should exist, please check your file again!",
-        });
-      } else if (!validate.hasGrade) {
-        res.status(400).send({
-          message:
-            "Student grade can not be empty, please check your file again!",
-        });
-      } else if (!validate.hasSection) {
-        res.status(400).send({
-          message:
-            "Student section can not be empty, please check your file again!",
-        });
-      } else if (!validate.hasParentName) {
-        res.status(400).send({
-          message:
-            "Atleast one parent phone should exist, please check your file again!",
+            "file contains student data  that already exist, please use update option if necessary, please check your file again!",
         });
       }
-    } else if (hasError) {
-      res.status(400).send({
-        message:
-          "file contains student data  that already exist, please use update option if necessary, please check your file again!",
-      });
     }
-  }} catch (error) {
+  } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
   }
 };
 
-
-
-async function fetch_firebaseAttendance(year, term, grade, section) {
+async function fetch_firebaseAttendance(grade, section) {
   const studentGrade = await firestore
     .collection("Attendance")
-    .doc(year)
-    .collection(term)
+    // .doc(year)
+    // .collection(term)
     .doc("grade-" + grade)
     .collection("section " + section);
 
@@ -775,7 +873,7 @@ async function fetch_firebaseAttendance(year, term, grade, section) {
         doc.data().studentId,
         doc.data().studentName,
         // doc.data().year,
-        doc.data().term,
+        // doc.data().term,
         doc.data().grade,
         doc.data().section,
         doc.data().status,
@@ -787,11 +885,11 @@ async function fetch_firebaseAttendance(year, term, grade, section) {
   }
 }
 
-async function addAttendance(year, term, grade, section, attendance) {
+async function addAttendance(grade, section, attendance) {
   await firestore
     .collection("Attendance")
-    .doc(year)
-    .collection(term)
+    // .doc(year)
+    // .collection(term)
     .doc("grade-" + grade)
     .collection("section " + section)
     .doc()
@@ -805,12 +903,12 @@ const AddAttendance = async (req, res) => {
 
     const grade = data[lastItem].grade;
 
-    const term = data[lastItem].term;
+    // const term = data[lastItem].term;
 
     const section = data[lastItem].section;
 
     const datePosted = data[lastItem].datePosted;
-    const year = data[lastItem].year;
+    // const year = data[lastItem].year;
 
     const defaultDate = datePosted;
     data.pop();
@@ -822,24 +920,27 @@ const AddAttendance = async (req, res) => {
 
     const defaultValue = "";
     let firebaseResult = await fetch_firebaseAttendance(
-      year,
-      term,
+      // year,
+      // term,
       grade,
       section
     );
     if (firebaseResult == true) canAdd = true;
-    console.log(firebaseResult, "firebase result ****************************************")
+    console.log(
+      firebaseResult,
+      "firebase result ****************************************"
+    );
 
     for (let i = 0; i < excelResult.length && !hasError; i++) {
       if (excelResult[i].date == undefined) excelResult[i].date = datePosted;
-      let id = (excelResult[i].studentId).toString();
+      let id = excelResult[i].studentId.toString();
       let date = excelResult[i].date;
       console.log(date);
       for (let j = 0; j < firebaseResult.length && !hasError; j++) {
-        console.log(firebaseResult[j].studentId,"from database")
-        console.log(id,"from excel")
-        console.log(firebaseResult[j].date,"from firebase date")
-        console.log(date, "from excel date")
+        console.log(firebaseResult[j].studentId, "from database");
+        console.log(id, "from excel");
+        console.log(firebaseResult[j].date, "from firebase date");
+        console.log(date, "from excel date");
         if (firebaseResult[j].studentId == id && firebaseResult[j].date == date)
           hasError = true;
       }
@@ -873,10 +974,10 @@ const AddAttendance = async (req, res) => {
           statusIsValid = false;
           break;
         }
-        if (array[i].term != term) {
-          termMatch = false;
-          break;
-        }
+        // if (array[i].term != term) {
+        //   termMatch = false;
+        //   break;
+        // }
         if (array[i].grade != grade) {
           gradeMatch = false;
           break;
@@ -898,7 +999,7 @@ const AddAttendance = async (req, res) => {
         idExist,
         statusExist,
         statusIsValid,
-        termMatch,
+        // termMatch,
         gradeMatch,
         sectionMatch
       );
@@ -907,7 +1008,7 @@ const AddAttendance = async (req, res) => {
         studentIsUnique: isUnique,
         attendanceStatusExist: statusExist,
         statusIsValid: statusIsValid,
-        termMatched: termMatch,
+        // termMatched: termMatch,
         gradeMatched: gradeMatch,
         sectionMatched: sectionMatch,
       };
@@ -927,18 +1028,18 @@ const AddAttendance = async (req, res) => {
         validate.studentIsUnique &&
         validate.attendanceStatusExist &&
         validate.statusIsValid &&
-        validate.termMatched &&
+        // validate.termMatched &&
         validate.gradeMatched &&
         validate.sectionMatched
       ) {
         data.forEach(async (g) => {
-          g.studentId = (g.studentId).toString();
-          if (g.term == undefined) g.term = term;
+          g.studentId = g.studentId.toString();
+          // if (g.term == undefined) g.term = term;
           if (g.grade == undefined) g.grade = grade;
           if (g.section == undefined) g.section = section;
           if (g.date == undefined) g.date = defaultDate;
 
-          await addAttendance(year, term, grade, section, g);
+          await addAttendance(grade, section, g);
 
           return true;
         });
@@ -959,12 +1060,12 @@ const AddAttendance = async (req, res) => {
           message:
             "Student attendance status must only be (P, A, and Permission) values, please check your file again!",
         });
-      } else if (!validate.termMatched) {
-        res.status(400).send({
-          message:
-            "Term selected and Term value in file did not match, please check your file again!",
-        });
-      } else if (!validate.gradeMatched) {
+      // } else if (!validate.termMatched) {
+      //   res.status(400).send({
+      //     message:
+      //       "Term selected and Term value in file did not match, please check your file again!",
+      //   });
+      // } else if (!validate.gradeMatched) {
         res.status(400).send({
           message:
             "Grade selected and Grade value in file did not match, please check your file again!",
@@ -987,12 +1088,6 @@ const AddAttendance = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
 const UpdateAttendance = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -1000,26 +1095,27 @@ const UpdateAttendance = async (req, res, next) => {
     console.log(data.date);
     // const date = req.params.date;
     const getDate = new Date();
-    const year =`${getDate.getFullYear()}`;
-    const term = data.term;
+    // const year = `${getDate.getFullYear()}`;
+    // const term = data.term;
     const grade = data.grade;
     const section = data.section;
-    console.log(data.date)
+    console.log(data.date);
     const g = await firestore
-  .collection("Attendance")
-  .doc(year)
-  .collection(term)
-  .doc("grade-" + grade)
-  .collection("section " + section).where("studentId", "==", id).where("date", "==",data.date );
-  let x = await g.get();
+      .collection("Attendance")
+      // .doc(year)
+      // .collection(term)
+      .doc("grade-" + grade)
+      .collection("section " + section)
+      .where("studentId", "==", id)
+      .where("date", "==", data.date);
+    let x = await g.get();
 
     console.log(x);
 
     x.forEach((doc) => {
-    doc.ref.update(data);
-  });
-  console.log("updated");
- 
+      doc.ref.update(data);
+    });
+    console.log("updated");
 
     res.status(200).send({ message: "Attendance Updated successfuly" });
   } catch (err) {
@@ -1027,10 +1123,6 @@ const UpdateAttendance = async (req, res, next) => {
     // res.status(400).send(error.message);
   }
 };
-
-
-
-
 
 const SearchStudentGrade = async (req, res) => {
   const studentId = req.params.studentId;
@@ -1115,7 +1207,7 @@ const ViewGrades = async (req, res) => {
           doc.data().secondTest,
           doc.data().assessements,
           doc.data().final,
-          
+
           doc.data().term
         );
         studentGradeArray.push(studentGrade);
@@ -1128,55 +1220,52 @@ const ViewGrades = async (req, res) => {
   }
 };
 
-
 const SearchStudentAttendance = async (req, res, next) => {
   try {
     const studentId = req.params.studentId;
-    const year = req.params.year;
+    // const year = req.params.year;
     const date = req.params.date;
-    
-    let date_ = new Date(date).toLocaleDateString('zh-Hans-CN', {
-      year: 'numeric',month: '2-digit',day: '2-digit',});
-// console.log(y);
-// y.split('T')[0]
-//    console.log(y);
-    const term = req.params.term;
+
+    let date_ = new Date(date).toLocaleDateString("zh-Hans-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    // console.log(y);
+    // y.split('T')[0]
+    //    console.log(y);
+    // const term = req.params.term;
     const grade = req.params.grade;
     const section = req.params.section;
-  
+
     let ch = [];
     let x = date_.length;
-    for(let i=0; i<x; i++){
-      if(date_[i] == "/")
-      ch.push("-")
-      else
-      ch.push(date_[i]);
-      
+    for (let i = 0; i < x; i++) {
+      if (date_[i] == "/") ch.push("-");
+      else ch.push(date_[i]);
     }
-    // let z = ch.reverse().toString().replace(/,/, ''); 
-    console.log(ch,"last mukera")
-    let z = ch.toString()
-    console.log(z)
-    let check = ""
-    for(let i=0; i<z.length; i++){
-      if(z[i] == ",")
-      console.log("j")
-      else
-      check+=z[i];
-      
+    // let z = ch.reverse().toString().replace(/,/, '');
+    console.log(ch, "last mukera");
+    let z = ch.toString();
+    console.log(z);
+    let check = "";
+    for (let i = 0; i < z.length; i++) {
+      if (z[i] == ",") console.log("j");
+      else check += z[i];
     }
-    let dateAdded = check.toString()
-    console.log(dateAdded,"===")
+    let dateAdded = check.toString();
+    console.log(dateAdded, "===");
 
     const attendance = await firestore
-    .collection("Attendance")
-    .doc(year)
-    .collection(term)
-    .doc("grade-" + grade)
-    .collection("section " + section).where("studentId", "==", studentId);
+      .collection("Attendance")
+      // .doc(year)
+      // .collection(term)
+      .doc("grade-" + grade)
+      .collection("section " + section)
+      .where("studentId", "==", studentId);
     // let x = await attendance.get();
     const data = await attendance.get();
-    console.log(data,"fetched atendancce********************************")
+    console.log(data, "fetched atendancce********************************");
     const attendanceArray = [];
     if (data.empty) {
       res.status(404).send({ message: "No student record found" });
@@ -1187,83 +1276,75 @@ const SearchStudentAttendance = async (req, res, next) => {
           doc.data().studentId,
           doc.data().studentName,
           // doc.data().year,
-          doc.data().term,
+          // doc.data().term,
           doc.data().grade,
           doc.data().section,
           doc.data().status,
           doc.data().date
-          
         );
         attendanceArray.push(attendance);
       });
       let filteredArray = [];
-      attendanceArray.forEach(x=>{
-        if(x.date == dateAdded)
-          filteredArray.push(x);
-      })
+      attendanceArray.forEach((x) => {
+        if (x.date == dateAdded) filteredArray.push(x);
+      });
       if (filteredArray.length == 0) {
         res.status(404).send({ message: "No student record found" });
+      } else {
+        console.log(filteredArray, "**************/////////////");
+        res.send(filteredArray);
       }
-      else {console.log(filteredArray,"**************/////////////");
-        res.send(filteredArray);}
-      
     }
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
 };
 
-
-
-
 const ViewAttendance = async (req, res) => {
-  
-  const year = req.params.year;
-  const term = req.params.term;
+  // const year = req.params.year;
+  // const term = req.params.term;
   const grade = req.params.grade;
   const section = req.params.section;
   const date = req.params.date;
- 
-  let date_ = new Date(date).toLocaleDateString('zh-Hans-CN', {
-    year: 'numeric',month: '2-digit',day: '2-digit',});
+
+  let date_ = new Date(date).toLocaleDateString("zh-Hans-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
   // console.log(
   //   `ID:- ${studentId}\nTerm:- ${term} \nGrade:- ${grade} \nSection:- ${section} \nSubject:- ${subject}`
   // );
-  console.log(date_)
+  console.log(date_);
   // let check =  date_.replace("/", "-")
   let ch = [];
-let x = date_.length;
-for(let i=0; i<x; i++){
-  if(date_[i] == "/")
-  ch.push("-")
-  else
-  ch.push(date_[i]);
-  
-}
-// let z = ch.reverse().toString().replace(/,/, ''); 
-console.log(ch,"last mukera")
-let z = ch.toString()
-console.log(z)
-let check = ""
-for(let i=0; i<z.length; i++){
-  if(z[i] == ",")
-  console.log("j")
-  else
-  check+=z[i];
-  
-}
-let dateAdded = check.toString()
-console.log(check.toString())
+  let x = date_.length;
+  for (let i = 0; i < x; i++) {
+    if (date_[i] == "/") ch.push("-");
+    else ch.push(date_[i]);
+  }
+  // let z = ch.reverse().toString().replace(/,/, '');
+  console.log(ch, "last mukera");
+  let z = ch.toString();
+  console.log(z);
+  let check = "";
+  for (let i = 0; i < z.length; i++) {
+    if (z[i] == ",") console.log("j");
+    else check += z[i];
+  }
+  let dateAdded = check.toString();
+  console.log(check.toString());
 
-console.log(z,"=========================")
-// console.log(check,"------------------")
+  console.log(z, "=========================");
+  // console.log(check,"------------------")
   try {
     const attendance = await firestore
-  .collection("Attendance")
-  .doc(year)
-  .collection(term)
-  .doc("grade-" + grade)
-  .collection("section " + section).where("date", "==", dateAdded);
+      .collection("Attendance")
+      // .doc(year)
+      // .collection(term)
+      .doc("grade-" + grade)
+      .collection("section " + section)
+      .where("date", "==", dateAdded);
 
     const data = await attendance.get();
 
@@ -1277,7 +1358,7 @@ console.log(z,"=========================")
           doc.data().studentId,
           doc.data().studentName,
           // doc.data().year,
-          doc.data().term,
+          // doc.data().term,
           doc.data().grade,
           doc.data().section,
           doc.data().status,
@@ -1303,7 +1384,7 @@ module.exports = {
   UpdateStudentAndParent,
   SearchStudent,
   ViewStudents,
-  
+
   DeleteStudent,
 
   AddGrades,
@@ -1316,8 +1397,4 @@ module.exports = {
   UpdateAttendance,
   SearchStudentAttendance,
   ViewAttendance,
-
-
-
-  
 };

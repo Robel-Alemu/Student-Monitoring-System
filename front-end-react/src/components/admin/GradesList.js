@@ -2,29 +2,6 @@ import Layout from "../layout/Layout";
 import Students from "./Students";
 
 
-// function StudentList(props) {
-//     return (
-//         <div>{props.students.map(student =>
-//             <EditGrade
-//                 key={student.id}
-//                 studentId = {student.studentId}
-//                 studentName={student.studentName}
-//                 term={student.term}
-//                 grade={student.grade} 
-//                 section={student.section}
-//                 firstTest={student.firstTest}
-//                 secondTest={student.secondTest}
-//                 assessements={student.assessements}
-//                 final={student.final}
-                
-                
-//             />
-//         )}</div>
-       
-            
-       
-//     );
-// }
 
 
 
