@@ -1,6 +1,6 @@
 const express = require("express");
 
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 const firebase = require("../connection/db");
 
 const firestore = firebase.firestore();
@@ -134,34 +134,34 @@ router.put("/update-class/:classId", UpdateClass);
 router.get("/broadcast-messages",verifyToken,  ViewAnnouncements);
 
 
-router.post('/loginn',async  (req, res) => {
-  // Mock user
+// router.post('/loginn',async  (req, res) => {
+//   // Mock user
  
- try {
+//  try {
      
-  const u = await auth.signInWithEmailAndPassword('jwt@gmail.com', '123456')
-  console.log(u.user.email)
+//   const u = await auth.signInWithEmailAndPassword('jwt@gmail.com', '123456')
+//   console.log(u.user.email)
   
 
-    const user = {
-        id: 1, 
-        uid: u.user.uid,
-        email: u.user.email
-      }
+//     const user = {
+//         id: 1, 
+//         uid: u.user.uid,
+//         email: u.user.email
+//       }
       
-        jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
-          res.json({
-            token
-          });
-        });
+//         jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
+//           res.json({
+//             token
+//           });
+//         });
      
- } catch (error) {
-     res.sendStatus(403);
+//  } catch (error) {
+//      res.sendStatus(403);
      
- }
+//  }
  
 
-});
+// });
 
 function verifyToken(req, res, next) {
   // Get auth header value
