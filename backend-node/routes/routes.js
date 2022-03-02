@@ -68,17 +68,23 @@ const {
 } = require("../controllers/AdminController");
 const router = express.Router();
 
-router.post("/Users", AddUser);
+// USED ROUTES ***********FROM ACCOUNT CONTROLER***************
+
+router.post("/login", login);
+router.post("/Users",verifyToken, AddUser);
+router.delete("/User-Accounts/:id", DeleteUser);
+router.get("/users",verifyToken, ViewUsers);
+router.get("/users/:email", GetUser);
+
+// USED ROUTES ***********FROM ACCOUNT CONTROLER***************
+
+
 router.post("/User-Accounts", createAccount);
 router.put("/User-Accounts/:id", updateAccount);
-router.delete("/User-Accounts/:id", DeleteUser);
 router.get("/User-Accounts/:x", getAllAccount);
-router.post("/login", login);
 router.get("/User-Accounts/:id", getAccount);
 router.get("/account", listAllUsers);
 
-router.get("/users",verifyToken, ViewUsers);
-router.get("/users/:email", GetUser);
 
 router.delete("/delete-student/:id", DeleteStudent);
 router.get("/Student-Information", ViewStudents);
