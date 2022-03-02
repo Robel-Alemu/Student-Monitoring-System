@@ -77,7 +77,7 @@ router.post("/login", login);
 router.get("/User-Accounts/:id", getAccount);
 router.get("/account", listAllUsers);
 
-router.get("/users", ViewUsers);
+router.get("/users",verifyToken, ViewUsers);
 router.get("/users/:email", GetUser);
 
 router.delete("/delete-student/:id", DeleteStudent);

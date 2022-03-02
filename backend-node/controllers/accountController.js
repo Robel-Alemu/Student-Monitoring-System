@@ -6,48 +6,6 @@ const Account = require("../models/UserAccounts");
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 const jwt = require('jsonwebtoken')
-//const bcrypt = require('bcrypt');
-
-
-// async function checkAccount (phone) {
-//     const account = await firestore.collection().get();
-
-//     const query = await firestore.collection("User-Accounts").where("phone", "==", "09").get();
-//     if(query)
-//        console.log(query);
-//     console.log(account.doc().data);
-//     // const d = await account.get();
-   
-//     let status = 0;
-//     try{
-        
-//         // db.collection("users").get().then((querySnapshot) => {
-//         //     querySnapshot.forEach((doc) => {
-//         //         console.log(`${doc.id} => ${doc.data()}`);
-//         //     });
-       
-//         data.forEach((doc) => {
-           
-// console.log(doc().data());
-//               if((doc.data().phone) === phone) {
-//               status = 1;
-//             //   throw 'Break';
-             
-              
-//               }
-
-
-              
-//             })
-
-           
-//             }
-//     catch(error){
-//        res.send(error.message);
-//     }
-    
-// }
-
 
 
 const AddUser = async (req, res, next) => {
@@ -120,22 +78,11 @@ const createAccount = async (req, res, next) => {
     try{
         
         const data = req.body;
-        // console.log(data);
-        // let check = data.phone;
-        
-        // let status = await checkAccount(check);
-
-        // if(status == 0){
+       
             
          await firestore.collection("User-Accounts").doc().set(data);
         res.send("User Account created successfully");
-         // }
-        
-        // else if (status == 1){
-        //     res.status(400).send('user with the given phone exists!');
-        // }
-        // else
-        //     res.send("Error");
+  
        
     } catch(error){
         res.status(400).send(error.message);
@@ -250,6 +197,10 @@ const email = req.params.email;
       
       const data = await account.get();
       const accountArray = [];
+      jwt.verify(req.token, 'secretkey', (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else {
       if (data.empty) {
         res.status(404).send({message: "No Account record found"});
       } else {
@@ -267,6 +218,9 @@ const email = req.params.email;
         });
         res.send(accountArray);
       }
+
+    }
+  })
     } catch (err) {
       res.status(400).send({message:err.message});
       
@@ -319,20 +273,6 @@ const email = req.params.email;
 
 
 
-// const deleteAccount = async (req, res, next) => {
-//   try {
-//       const id = req.params.id;
-//      const toDelete = await firestore.collection('Users').where("uid", "==", id).get();
-
-//      toDelete.forEach((doc) => {
-//         doc.ref.delete();
-//       });
-//       res.status(200).send({message:'Account deleted successfuly'});
-//   } catch (err) {
-//     res.status(400).send({message:err.message});
-     
-//   }
-// }
 
 
 module.exports = {

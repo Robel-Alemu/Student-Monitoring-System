@@ -9,11 +9,15 @@ import LayoutCenter from "../layout/LayoutCenter";
 function AllUsersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUsers, setLoadedUsers] = useState([]);
-
+  const token = localStorage.getItem("token")
    
   useEffect(() => {
     setIsLoading(true);
-    fetch("https://student-monitoring.herokuapp.com/api/users")
+    fetch("https://student-monitoring.herokuapp.com/api/users", {
+      method: "GET",
+      
+      headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
+    })
       .then((response) => {
         console.log(response.body);
         return response.json();
