@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const routes = require('./routes/routes');
-
+const jwt = require('jsonwebtoken')
 const Endpoint = express();
 
 Endpoint.use(express.json());
