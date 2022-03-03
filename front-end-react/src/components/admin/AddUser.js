@@ -16,7 +16,7 @@ function AddUser(props) {
 
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
-
+  const token = localStorage.getItem("token")
   function submitHandler(event) {
    
     
@@ -37,11 +37,12 @@ function AddUser(props) {
     event.preventDefault();
 
     fetch(
-      "https://student-monitoring.herokuapp.com/api/Users",
+      "http://localhost:8080/api/Users",
+      // "https://student-monitoring.herokuapp.com/api/Users",
       {
         method: "POST",
         body: JSON.stringify(userData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token },
       }
      
      ).then((response) => {

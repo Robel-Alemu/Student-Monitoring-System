@@ -28,6 +28,7 @@ function ViewAttendancePage({ title }) {
   let userRole = "";
   const { currentUser, getUser } = useAuth();
   const email = currentUser.email;
+  console.log(email);
   const [userr, setUser] = useState();
    async function getUserRole(email){
     let  us = "";
@@ -40,21 +41,7 @@ function ViewAttendancePage({ title }) {
       console.log(user.role, "--------------------")
        return us;
   }
-  
-  fetch(
-    // "https://student-monitoring.herokuapp.com
-    "http://localhost:8080/api/users/"+email 
-     
-  )
-    .then((response) => {
-      
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data[0].role)
-      setUser(data[0].role)
-    });
-      
+
  
 
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +69,24 @@ function ViewAttendancePage({ title }) {
   // const year = `${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
 
-
+    
+  fetch(
+    // "https://student-monitoring.herokuapp.com
+    "http://localhost:8080/api/users/"+email 
+     
+  )
+    .then((response) => {
+      
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data[0].role)
+      setUser(data[0].role)
+     
+    });
+ 
+    
+      
   function termHandler(e){
     e.preventDefault();
     fetch(
@@ -240,7 +244,7 @@ function ViewAttendancePage({ title }) {
       );
     }
   }
-  if (x.title == "Admin") {
+  if (x.title == "Admin" && userr == "Admin") {
   // if (x.title == "Admin" && userr == "Admin") {
     
     return (
@@ -312,7 +316,7 @@ function ViewAttendancePage({ title }) {
       </section>
     );
   } 
-  else if( x.title == "Data Encoder") {
+  else if( x.title == "Data Encoder" && userr == "Data Encoder") {
   // else if( x.title == "Data Encoder" && userr == "Data Encoder") {
     return (
       <section>
@@ -387,9 +391,59 @@ function ViewAttendancePage({ title }) {
     );
   }
   else{
+    // return (
+    //   <Login/>
+    // )
+    if (x.title == "Admin") {
     return (
-      <Login/>
-    )
+      
+      <section>
+       
+          <Button variant="primary" disabled>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            <span className="visually-hidden">Loading...please wait</span>
+          </Button>
+       
+      </section>
+    
+    );
+    }
+    else if (x.title == "Data Encoder") {
+      if (x.title == "Data Encoder") {
+      return (
+        
+        <section>
+        <div >
+        {/* <Button variant="primary" disabled>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Loading...please wait</span>
+            </Button> */}
+            
+<h6>Loading Please Wait...</h6>
+<Spinner animation="border" />
+        </div>
+           
+         
+        </section>
+      
+      );
+      }
+      else {
+        return(<Login/>)
+      }
+      }
   }
 }
 

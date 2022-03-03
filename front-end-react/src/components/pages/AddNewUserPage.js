@@ -74,7 +74,8 @@ function AddNewUserPage() {
   const history = useHistory();
   function addUserHandler(userData) {
     fetch(
-      "https://student-monitoring.herokuapp.com/api/Users",
+      "http://localhost:8080/api/Users",
+      // "https://student-monitoring.herokuapp.com/api/Users",
       {
         method: "POST",
         body: JSON.stringify(userData),
