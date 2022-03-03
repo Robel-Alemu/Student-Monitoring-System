@@ -11,7 +11,7 @@ function DataEncoderNavigation() {
     const [error, setError] = useState("")
     const { currentUser, logout } = useAuth()
     const history = useHistory()
-  
+  let name = localStorage.getItem("name")
     async function handleLogout() {
       setError("")
   
@@ -30,7 +30,7 @@ function DataEncoderNavigation() {
 
 <Navbar variant="dark" bg="dark" expand="lg">
   <Container fluid>
-    <Navbar.Brand href="#home">{currentUser.email}</Navbar.Brand>
+    <Navbar.Brand style={{"color":"white"}} href="#home">{name}</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbar-dark-example" />
     <Navbar.Collapse id="navbar-dark-example">
       <Nav className={classes.nav}>

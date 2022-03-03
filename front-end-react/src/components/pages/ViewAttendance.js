@@ -25,22 +25,22 @@ import { useAuth } from "../../AuthContext/AuthContext";
 import Login from "../authentication/Login";
 
 function ViewAttendancePage({ title }) {
-  let userRole = "";
+  
   const { currentUser, getUser } = useAuth();
-  const email = currentUser.email;
-  console.log(email);
-  const [userr, setUser] = useState();
-   async function getUserRole(email){
-    let  us = "";
-      let user = await getUser(email);
-      if (user.message === 'Account does not exist!'){
-        console.log(user.message);
-      }
-      else
-      us = user.role;
-      console.log(user.role, "--------------------")
-       return us;
-  }
+  // const email = currentUser.email;
+  // console.log(email);
+  // const [userr, setUser] = useState();
+  //  async function getUserRole(email){
+  //   let  us = "";
+  //     let user = await getUser(email);
+  //     if (user.message === 'Account does not exist!'){
+  //       console.log(user.message);
+  //     }
+  //     else
+  //     us = user.role;
+  //     console.log(user.role, "--------------------")
+  //      return us;
+  // }
 
  
 
@@ -69,21 +69,21 @@ function ViewAttendancePage({ title }) {
   // const year = `${date.getFullYear()}`;
   const [startDate, setStartDate] = useState(new Date());
 
-    
-  fetch(
-    // "https://student-monitoring.herokuapp.com
-    "http://localhost:8080/api/users/"+email 
+    let userRole= localStorage.getItem("role")
+  // fetch(
+  //   // "https://student-monitoring.herokuapp.com
+  //   "http://localhost:8080/api/users/"+email 
      
-  )
-    .then((response) => {
+  // )
+  //   .then((response) => {
       
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data[0].role)
-      setUser(data[0].role)
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     console.log(data[0].role)
+  //     setUser(data[0].role)
      
-    });
+  //   });
  
     
       
@@ -208,243 +208,302 @@ function ViewAttendancePage({ title }) {
   useEffect(() => {}, []);
 
   if (isLoading) {
-    if (x.title == "Admin") {
-      return (
-        <section>
-          <Layout>
-            <Button variant="primary" disabled>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span className="visually-hidden">Loading...please wait</span>
-            </Button>
-          </Layout>
-        </section>
-      );
-    } else {
-      return (
-        <section>
-          <DataEncoderCenterLayout>
-            <Button variant="primary" disabled>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span className="visually-hidden">Loading...please wait</span>
-            </Button>
-          </DataEncoderCenterLayout>
-        </section>
-      );
-    }
-  }
-  if (x.title == "Admin" && userr == "Admin") {
-  // if (x.title == "Admin" && userr == "Admin") {
-    
-    return (
-      <section>
-        <Layout>
-          <Container>
-          <h1>View Attendance</h1>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Row>
-              <Col sm={8}>
-                <Row>
-                  {/* <Form.Group id="term" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Term</Form.Label>
-                    <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-
-                      {term.map(item => {
-      return (<option  >{item}</option>);})}
-                    </Form.Control>
-                  </Form.Group> */}
-                  <Form.Group id="grade" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Grade</Form.Label>
-                    <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
-                  
-                                                 
-{classes.map(item => {
-      return (<option  >{item}</option>);
-  })}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group id="section" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Section</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      as="select"
-                      ref={sectionRef}
-                      required
-                    >
-                   
-                      {sections.map(item => {
-      return (<option  >{item}</option>);
-  })}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group id="date" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Date</Form.Label>
-                    <DatePicker
-                      dateFormat={"dd-MM-yyyy"}
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                    />
-                  </Form.Group>
-
-         
-                </Row>
-              </Col>
-              <Col sm={4}>
-                <Button
-                  style={{ marginTop: "20px" }}
-                  className="w-100"
-                  onClick={searchHandler}
-                >
-                  Search
-                </Button>
-              </Col>
-            </Row>
-          </Container>
-          <AttendanceList students={loadedStudent} />
-        </Layout>
-      </section>
-    );
-  } 
-  else if( x.title == "Data Encoder" && userr == "Data Encoder") {
-  // else if( x.title == "Data Encoder" && userr == "Data Encoder") {
-    return (
-      <section>
-        <DataEncoderLayout>
-          <Container>
-          <h1>View Attendance</h1>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Row>
-              <Col sm={8}>
-                <Row>
-                  {/* <Form.Group id="term" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Term</Form.Label>
-                    <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-                  
-                      {term.map(item => {
-      return (<option  >{item}</option>);})}
-                    </Form.Control>
-                  </Form.Group> */}
-                  <Form.Group id="grade" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Grade</Form.Label>
-                    <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
-                   
-                   
-                                                 
-{classes.map(item => {
-      return (<option  >{item}</option>);
-  })}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group id="section" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Section</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      as="select"
-                      ref={sectionRef}
-                      required
-                      
-                    >
-                
-
-{sections.map(item => {
-      return (<option  >{item}</option>);
-  })}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group id="date" style={{ marginLeft: "30px" }}>
-                    <Form.Label>Date</Form.Label>
-                    <DatePicker
-                      dateFormat={"yyyy-MM-dd"}
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                    />
-                  </Form.Group>
-
-            
-                </Row>
-              </Col>
-              <Col sm={4}>
-                <Button
-                  style={{ marginTop: "20px" }}
-                  className="w-100"
-                  onClick={searchHandler}
-                >
-                  Search
-                </Button>
-              </Col>
-            </Row>
-          </Container>
-          <AttendanceList students={loadedStudent} />
-        </DataEncoderLayout>
-      </section>
-    );
-  }
-  else{
-    // return (
-    //   <Login/>
-    // )
-    if (x.title == "Admin") {
-    return (
+//     if (x.title == "Admin") {
+//       return (
+//         <section>
+//           <Layout>
+//           <section>
+//         <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
       
-      <section>
-       
-          <Button variant="primary" disabled>
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Loading...please wait</span>
-          </Button>
-       
-      </section>
-    
-    );
-    }
-    else if (x.title == "Data Encoder") {
-      if (x.title == "Data Encoder") {
-      return (
-        
-        <section>
-        <div >
-        {/* <Button variant="primary" disabled>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span className="visually-hidden">Loading...please wait</span>
-            </Button> */}
             
-<h6>Loading Please Wait...</h6>
-<Spinner animation="border" />
-        </div>
+// <h5 style={{color:"black"}}>Loading Please Wait...</h5>
+// <Spinner style={{color:"black"}} animation="border" />
+//         </div>
            
          
-        </section>
+//         </section>
+//           </Layout>
+//         </section>
+//       );
+//     } else {
+//       return (
+//         <section>
+//           <DataEncoderCenterLayout>
+//           <section>
+//         <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
       
-      );
-      }
-      else {
-        return(<Login/>)
-      }
-      }
+            
+// <h5 style={{color:"black"}}>Loading Please Wait...</h5>
+// <Spinner style={{color:"black"}} animation="border" />
+//         </div>
+           
+         
+//         </section>
+//           </DataEncoderCenterLayout>
+//         </section>
+//       );
+//     }
+return(
+
+
+<section>
+<div >
+
+  
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+
+</div>
+
+ 
+
+
+
+</section>
+);
   }
-}
+//   if (x.title == "Admin" && userRole == "Admin") {
+//   // if (x.title == "Admin" && userr == "Admin") {
+    
+//     return (
+//       <section>
+//         <Layout>
+//           <Container>
+//           <h1>View Attendance</h1>
+//             {error && <Alert variant="danger">{error}</Alert>}
+//             <Row>
+//               <Col sm={8}>
+//                 <Row>
+               
+//                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Grade</Form.Label>
+//                     <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
+                  
+                                                 
+// {classes.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//                     </Form.Control>
+//                   </Form.Group>
+//                   <Form.Group id="section" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Section</Form.Label>
+//                     <Form.Control
+//                       size="sm"
+//                       as="select"
+//                       ref={sectionRef}
+//                       required
+//                     >
+                   
+//                       {sections.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//                     </Form.Control>
+//                   </Form.Group>
+//                   <Form.Group id="date" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Date</Form.Label>
+//                     <DatePicker
+//                       dateFormat={"dd-MM-yyyy"}
+//                       selected={startDate}
+//                       onChange={(date) => setStartDate(date)}
+//                     />
+//                   </Form.Group>
+
+         
+//                 </Row>
+//               </Col>
+//               <Col sm={4}>
+//                 <Button
+//                   style={{ marginTop: "20px" }}
+//                   className="w-100"
+//                   onClick={searchHandler}
+//                 >
+//                   Search
+//                 </Button>
+//               </Col>
+//             </Row>
+//           </Container>
+//           <AttendanceList students={loadedStudent} />
+//         </Layout>
+//       </section>
+//     );
+//   } 
+//   else if( x.title == "Data Encoder" && userRole == "Data Encoder") {
+//   // else if( x.title == "Data Encoder" && userr == "Data Encoder") {
+//     return (
+//       <section>
+//         <DataEncoderLayout>
+//           <Container>
+//           <h1>View Attendance</h1>
+//             {error && <Alert variant="danger">{error}</Alert>}
+//             <Row>
+//               <Col sm={8}>
+//                 <Row>
+             
+//                   <Form.Group id="grade" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Grade</Form.Label>
+//                     <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
+                   
+                   
+                                                 
+// {classes.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//                     </Form.Control>
+//                   </Form.Group>
+//                   <Form.Group id="section" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Section</Form.Label>
+//                     <Form.Control
+//                       size="sm"
+//                       as="select"
+//                       ref={sectionRef}
+//                       required
+                      
+//                     >
+                
+
+// {sections.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//                     </Form.Control>
+//                   </Form.Group>
+//                   <Form.Group id="date" style={{ marginLeft: "30px" }}>
+//                     <Form.Label>Date</Form.Label>
+//                     <DatePicker
+//                       dateFormat={"yyyy-MM-dd"}
+//                       selected={startDate}
+//                       onChange={(date) => setStartDate(date)}
+//                     />
+//                   </Form.Group>
+
+            
+//                 </Row>
+//               </Col>
+//               <Col sm={4}>
+//                 <Button
+//                   style={{ marginTop: "20px" }}
+//                   className="w-100"
+//                   onClick={searchHandler}
+//                 >
+//                   Search
+//                 </Button>
+//               </Col>
+//             </Row>
+//           </Container>
+//           <AttendanceList students={loadedStudent} />
+//         </DataEncoderLayout>
+//       </section>
+//     );
+//   }
+
+// if(userRole == Admin ){
+  
+// }
+
+
+//   else{
+//     return (
+//       <Login/>
+//     )
+//     if (x.title == "Admin") {
+//     return (
+      
+//       <section>
+//         <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+      
+            
+// <h5 style={{color:"black"}}>Loading Please Wait...</h5>
+// <Spinner style={{color:"black"}} animation="border" />
+//         </div>
+           
+         
+//         </section>
+//     );
+//     }
+//     else if (x.title == "Data Encoder") {
+//       if (x.title == "Data Encoder") {
+//       return (
+        
+//         <section>
+//         <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+      
+            
+// <h5 style={{color:"black"}}>Loading Please Wait...</h5>
+// <Spinner style={{color:"black"}} animation="border" />
+//         </div>
+           
+         
+//         </section>
+      
+//       );
+//       }
+//       else {
+//         return(<Login/>)
+//       }
+//       }
+
+return (
+  <section style={ { margin:"auto"}}>
+    {/* <Layout> */}
+      <Container>
+      <h1>View Attendance</h1>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Row>
+          <Col sm={8}>
+            <Row>
+           
+              <Form.Group id="grade" style={{ marginLeft: "30px" }}>
+                <Form.Label>Grade</Form.Label>
+                <Form.Control size="sm" as="select" ref={gradeRef} required onClick={termHandler}>
+              
+                                             
+{classes.map(item => {
+  return (<option  >{item}</option>);
+})}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group id="section" style={{ marginLeft: "30px" }}>
+                <Form.Label>Section</Form.Label>
+                <Form.Control
+                  size="sm"
+                  as="select"
+                  ref={sectionRef}
+                  required
+                >
+               
+                  {sections.map(item => {
+  return (<option  >{item}</option>);
+})}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group id="date" style={{ marginLeft: "30px" }}>
+                <Form.Label>Date</Form.Label>
+                <DatePicker
+                  dateFormat={"dd-MM-yyyy"}
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </Form.Group>
+
+     
+            </Row>
+          </Col>
+          <Col sm={4}>
+            <Button
+              style={{ marginTop: "20px" }}
+              className="w-100"
+              onClick={searchHandler}
+            >
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+      <AttendanceList students={loadedStudent} />
+    {/* </Layout> */}
+  </section>
+);
+
+  }
+
 
 export default ViewAttendancePage;

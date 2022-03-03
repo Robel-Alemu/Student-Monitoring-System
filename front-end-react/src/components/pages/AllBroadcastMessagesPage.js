@@ -3,67 +3,153 @@ import MessageList from "../admin/MessageList";
 
 import { useState, useEffect } from "react";
 import {Button,Spinner } from "react-bootstrap"
-function AllBroadcastMessagesPage() {
+import LayoutCenter from "../layout/LayoutCenter";
+
+import { useAuth } from "../../AuthContext/AuthContext";
+import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
+import Layout from "../layout/Layout";
+import Login from "../authentication/Login";
+
+function AllBroadcastMessagesPage({title}) {
+
+ 
+  let x = { title };
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMessages, setLoadedMessages] = useState([]);
   const token = localStorage.getItem("token")
+  
+  
+     let userRole = localStorage.getItem("role");
+     
+  console.log(userRole,x)
+
+
 
   useEffect(() => {
-     setIsLoading(true);
-    fetch(
-      "http://localhost:8080/api/broadcast-messages",{
-        method: "GET",
-        
-        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
-      }
-      // "https://student-monitoring.herokuapp.com/api/broadcast-messages"
-    )
-      .then((response) => {
-        console.log(response.body);
-        return response.json();
-      })
-      .then((data) => {
-        const messages = [];
 
-        for (const key in data) {
-          const message = {
-            id: key,
-            ...data[key],
-          };
-          messages.push(message);
+     setIsLoading(true);
+      
+    //  fetch(
+    
+    //   // "https://student-monitoring.herokuapp.com
+    //   "http://localhost:8080/api/users/"+email 
+       
+    // )
+    //   .then((response) => {
+        
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data[0].role)
+    //     setUser(data[0].role)
+      
+
+        
+    //   })
+
+      fetch(
+        "http://localhost:8080/api/broadcast-messages",{
+          method: "GET",
+          
+          headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
         }
-        setIsLoading(false);
-        setLoadedMessages(messages);
-      });
+        // "https://student-monitoring.herokuapp.com/api/broadcast-messages"
+      )
+        .then((response) => {
+          console.log(response.body);
+          return response.json();
+        })
+        .then((data) => {
+          const messages = [];
+  
+          for (const key in data) {
+            const message = {
+              id: key,
+              ...data[key],
+            };
+            messages.push(message);
+          }
+          setIsLoading(false);
+          setLoadedMessages(messages);
+        });
+     
+    
   },[]);
 
   if (isLoading) {
-    return (
-      <section>
-          <Button variant="primary" disabled>
-    <Spinner
-      as="span"
-      animation="border"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-    />
-    <span className="visually-hidden">Loading...please wait</span>
+    if(userRole == "Admin"){
+      return (
+        <section>
+          <Layout>
+          <section>
+        <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+      
+            
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+        </div>
+           
+         
+        </section>
+          </Layout>
+        </section>
+      );
+    }
+    else{
+      return (
+        <section>
+        
+          <section>
+        <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+      
+            
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+        </div>
+           
+         
+        </section>
+         
+        </section>
+      );
+    }
+     
+    } 
   
-  </Button>
-      </section>
-    );
-  }
 
+  else if (x.title == "Admin" && userRole == "Admin") {
   return (
-    <section >
-      <h1>All Announcements</h1>
+    <LayoutCenter><h1>All Announcements</h1>
 
       
-      <MessageList  messages = {loadedMessages} />
+    <MessageList  messages = {loadedMessages} /></LayoutCenter>
+      
 
-    </section>
+  
   );
+  }
+
+  else{
+    return (
+      <Login/>
+    )
+    
+//     return (
+      
+//       <section>
+//         <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+      
+            
+// <h5 style={{color:"black"}}>Loading Please Wait...</h5>
+// <Spinner style={{color:"black"}} animation="border" />
+//         </div>
+           
+         
+//         </section>
+//     );
+    }
+
+
 }
 
 export default AllBroadcastMessagesPage;

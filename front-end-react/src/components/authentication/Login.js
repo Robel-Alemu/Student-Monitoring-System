@@ -51,9 +51,13 @@ const  [loggedIn,setLoggedIn]= useState(false);
         await login(emailRef.current.value, passwordRef.current.value);
         
           // console.log(loggedIn,"outside success")
-         
+          localStorage.setItem('name', user.name)
+          localStorage.setItem('role', user.role)
+        
+         localStorage.setItem('email',user.email)
             if (user.role === 'Admin') history.push("/");
             else  history.push("/data-encoder");
+            
                   console.log(user);
   
           

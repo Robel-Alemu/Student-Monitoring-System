@@ -64,7 +64,7 @@ function Adminavigation() {
 
 <Navbar variant="dark" bg="dark" expand="lg">
   <Container fluid>
-    <Navbar.Brand href="#home">{currentUser.email}</Navbar.Brand>
+    <Navbar.Brand href="#home">Deborah School</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbar-dark-example" />
     <Navbar.Collapse id="navbar-dark-example">
       <Nav className={classes.nav} style={{textDecoration: "none"}}>
@@ -138,7 +138,7 @@ function Adminavigation() {
                <Link style={{color:"black"}} to="/view-grades-admin">View Grade</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/view-attendance-admin">View Attendance</Link>
+               <Link style={{color:"black"}} to="/view-attendance">View Attendance</Link>
               </NavDropdown.Item>
           
           

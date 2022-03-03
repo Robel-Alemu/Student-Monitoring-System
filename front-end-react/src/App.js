@@ -114,6 +114,8 @@ import AddClass from "./components/admin/AddClass";
 import UpdateClass from "./components/admin/UpdateClass";
 import SearchGradePage from "./components/pages/SearchGradePage";
 import SendMessage from "./components/admin/SendMessage";
+import AllBroadcastMessagesPage from "./components/pages/AllBroadcastMessagesPage";
+import ViewAttendance from "./components/pages/ViewAttendanceCommon";
 
 function App() {
   let x = 4;
@@ -181,12 +183,28 @@ function App() {
              
               <PrivateRoute path ="/add-student" component={AddStudentPage}/> */}
 
-                <PrivateRoute
-                  exact
-                  path="/data-encoder"
-                  component={DataEncoderNavigation}
-                />
-                <PrivateRoute exact path="/" component={Dashboard} />
+
+{/* <PrivateRoute path="/view-attendance-admin"  >
+                  <ViewAttendance title={"Admin"}/>
+                </PrivateRoute> */}
+
+                
+                <PrivateRoute path="/view-attendance">
+                  <ViewAttendance  />
+                </PrivateRoute>
+{/* ************************************************************************* */}
+                
+                <PrivateRoute path="/data-encoder">
+                  <DataEncoderNavigation title={"Data Encoder"}/>
+                  </PrivateRoute>
+                  
+                  
+                
+                <PrivateRoute exact path="/">
+                  <AllBroadcastMessagesPage title={"Admin"} />
+                </PrivateRoute>
+
+
                 <PrivateRoute
                   path="/update-profile"
                   component={UpdateProfile}
@@ -246,14 +264,7 @@ function App() {
                   component={UpdateAttendance}
                 />
                 {/* <PrivateRoute path ="/view-attendance" component={ViewAttendancePage  {...title}="admin"} /> */}
-                <PrivateRoute path="/view-attendance-admin"  >
-                  <ViewAttendancePage title={"Admin"}/>
-                </PrivateRoute>
-
-                
-                <PrivateRoute path="/view-attendance">
-                  <ViewAttendancePage title={"Data Encoder"} />
-                </PrivateRoute>
+               
 
                 <PrivateRoute path="/view-grades-admin">
                   <ViewGradePage title={"admin"}/>

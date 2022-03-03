@@ -13,7 +13,7 @@ import AllBroadcastMessagesPage from "../pages/AllBroadcastMessagesPage"
 import LayoutCenter from "../layout/LayoutCenter"
 
 
-export default function Dashboard() {
+export default function Dashboard({title}) {
 
 
   return (
