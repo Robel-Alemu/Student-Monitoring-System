@@ -192,17 +192,18 @@ function App() {
                 <PrivateRoute path="/view-attendance">
                   <ViewAttendance  />
                 </PrivateRoute>
+                <PrivateRoute exact path="/">
+                  <AllBroadcastMessagesPage title={"Admin"} />
+                </PrivateRoute>
 {/* ************************************************************************* */}
                 
                 <PrivateRoute path="/data-encoder">
-                  <DataEncoderNavigation title={"Data Encoder"}/>
+                  <DataEncoderDashboard />
                   </PrivateRoute>
                   
                   
                 
-                <PrivateRoute exact path="/">
-                  <AllBroadcastMessagesPage title={"Admin"} />
-                </PrivateRoute>
+               
 
 
                 <PrivateRoute

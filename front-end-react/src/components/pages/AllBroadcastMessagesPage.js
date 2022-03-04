@@ -10,10 +10,10 @@ import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 import Layout from "../layout/Layout";
 import Login from "../authentication/Login";
 
-function AllBroadcastMessagesPage({title}) {
+function AllBroadcastMessagesPage() {
 
  
-  let x = { title };
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMessages, setLoadedMessages] = useState([]);
   const token = localStorage.getItem("token")
@@ -21,7 +21,7 @@ function AllBroadcastMessagesPage({title}) {
   
      let userRole = localStorage.getItem("role");
      
-  console.log(userRole,x)
+ 
 
 
 
@@ -82,7 +82,7 @@ function AllBroadcastMessagesPage({title}) {
         <section>
           <Layout>
           <section>
-        <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+        <div >
       
             
 <h5 style={{color:"black"}}>Loading Please Wait...</h5>
@@ -100,9 +100,9 @@ function AllBroadcastMessagesPage({title}) {
         <section>
         
           <section>
-        <div style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}>
+        <div >
       
-            
+        {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
 <h5 style={{color:"black"}}>Loading Please Wait...</h5>
 <Spinner style={{color:"black"}} animation="border" />
         </div>
@@ -117,7 +117,7 @@ function AllBroadcastMessagesPage({title}) {
     } 
   
 
-  else if (x.title == "Admin" && userRole == "Admin") {
+  else if (userRole == "Admin") {
   return (
     <LayoutCenter><h1>All Announcements</h1>
 
