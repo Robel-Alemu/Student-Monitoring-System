@@ -208,7 +208,11 @@ function App() {
                  <PrivateRoute path="/add-class" component={AddClass} />
                  <PrivateRoute path="/update-class" component={UpdateClass} />
                  <PrivateRoute path="/add-student" component={AddStudent} />
-               
+                 <PrivateRoute path="/add-multiple-students" component={AddMultipleStudents} />
+                 <PrivateRoute path="/send-message" component={SendMessage} />
+
+
+
 {/* ************************************************************************* */}
                 
                
@@ -236,11 +240,10 @@ function App() {
                 
                 {/* <PrivateRoute path="/add-student" component={AddStudentPage} /> */}
                
-                <PrivateRoute path="/send-message" component={SendMessage} />
+               
 
 
-
-                <PrivateRoute path="/add-multiple-students" component={AddMultipleStudents} />
+               
                 <PrivateRoute
                   path="/broadcast-message"
                   component={AddBroadcastPage}

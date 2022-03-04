@@ -4,24 +4,17 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import Broadcast from "../admin/Broadcast";
+import Login from "../authentication/Login";
 
 function AddBroadcastPage() {
   const history = useHistory();
+  let userRole = localStorage.getItem("role")
 //   const [responses, setResponse] = useState();
   function addBroadcaastHandler(message) {
-
-
-
-
-
-
-
-
-
-
-
+    
     fetch(
-      "https://student-monitoring.herokuapp.com/api/broadcast-message",
+      "http://localhost:8080/api/broadcast-message",
+      // "https://student-monitoring.herokuapp.com/api/broadcast-message",
       {
         method: "POST",
         body: JSON.stringify(message),
@@ -47,12 +40,19 @@ function AddBroadcastPage() {
     
   }
  
+  if (userRole == "Admin"){
   return (
     <section>
       
       <Broadcast onAddBroadcastMessage = {addBroadcaastHandler} />
     </section>
   );
+  }
+  else{
+    return(
+      <Login/>
+    )
+  }
 }
 
 export default AddBroadcastPage;

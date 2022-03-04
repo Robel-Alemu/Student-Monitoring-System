@@ -3,8 +3,10 @@ import Layout from "../layout/Layout";
 import Card from "../ui/Card";
 import { Form, Button } from "react-bootstrap"
 import LayoutCenter from "../layout/LayoutCenter";
+import Login from "../authentication/Login";
 function EditBroadcastMessage(props) {
   const broadcastRef = useRef();
+  let userRole = localStorage.getItem("role")
   function submitHandler(event) {
     event.preventDefault();
 
@@ -24,6 +26,7 @@ function EditBroadcastMessage(props) {
     props.onAddBroadcastMessage(message);
 
 }
+if (userRole == "Admin"){
     return (
      <LayoutCenter><Card>
      <Form onSubmit={submitHandler}>
@@ -45,6 +48,12 @@ function EditBroadcastMessage(props) {
         
       
     );
+}
+else{
+  return(
+    <Login/>
+  )
+}
   }
 
 export default EditBroadcastMessage;
