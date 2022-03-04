@@ -3,6 +3,7 @@ import Layout from "../layout/Layout";
 import Card from "../ui/Card";
 import { Form, Button,FormControl,Row,Spinner } from "react-bootstrap"
 import LayoutCenter from "../layout/LayoutCenter";
+import Login from "../authentication/Login";
 function SendMessage() {
     const id = useRef();
     const phone1 = useRef();
@@ -13,6 +14,8 @@ const [message,setMessage] = useState()
   const messageRef = useRef();
   const subjectRef = useRef();
 const [parentPhones,setParentPhones] = useState()
+
+let userRole = localStorage.getItem("role")
   function searchHandler(){
 
     setIsLoading(true);
@@ -130,21 +133,19 @@ if (isLoading) {
 return (
   <section>
     <Layout>
-    <Button variant="primary" disabled>
-<Spinner
-  as="span"
-  animation="border"
-  size="sm"
-  role="status"
-  aria-hidden="true"
-/>
-<span className="visually-hidden">Loading...please wait</span>
+    <div >
 
-</Button>
+  
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+
+</div>
     </Layout>
   </section>
 );
   }
+
+  if (userRole == "Admin"){
 
     return (
      <LayoutCenter>
@@ -192,6 +193,12 @@ return (
         
       
     );
+  }
+  else {
+    return(
+      <Login/>
+    )
+  }
   }
 
 export default SendMessage;
