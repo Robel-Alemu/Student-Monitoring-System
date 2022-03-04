@@ -199,6 +199,11 @@ function App() {
                 <PrivateRoute path="/data-encoder">
                   <DataEncoderDashboard />
                   </PrivateRoute>
+                  <PrivateRoute
+                  path="/update-profile"
+                  component={UpdateProfilePage}
+                />
+                 <PrivateRoute path="/add-user" component={AddUser} />
 {/* ************************************************************************* */}
                 
                
@@ -208,16 +213,13 @@ function App() {
                
 
 
-                <PrivateRoute
-                  path="/update-profile"
-                  component={UpdateProfilePage}
-                />
+            
                 <PrivateRoute
                   path="/update-profile-d"
                   component={DataEncoderUpdatePassword}
                 />
                 {/* <PrivateRoute path="/add-user" component={AddNewUserPage} /> */}
-                <PrivateRoute path="/add-user" component={AddUser} />
+               
                 
                 
                 <PrivateRoute path="/add-class" component={AddClass} />

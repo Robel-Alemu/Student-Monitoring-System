@@ -6,11 +6,13 @@ import { Form, FormControl, Button, Container, Row, Col,Spinner} from "react-boo
 import AllUsersList from "../admin/AllUsersList";
 import DataEncoderLayout from "../layout/DataEncoderLayout";
 import LayoutCenter from "../layout/LayoutCenter";
+import Login from "../authentication/Login";
 function AllUsersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUsers, setLoadedUsers] = useState([]);
   const token = localStorage.getItem("token")
-   
+  let userRole = localStorage.getItem("role")
+
   useEffect(() => {
     setIsLoading(true);
     fetch(
@@ -42,22 +44,39 @@ function AllUsersPage() {
 
   if (isLoading) {
     return (
-      <section>
-          <LayoutCenter>  <Button variant="primary" disabled>
-    <Spinner
-      as="span"
-      animation="border"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-    />
-    <span className="visually-hidden">Loading...please wait</span>
+  //     <section>
+  //         <LayoutCenter>  <Button variant="primary" disabled>
+  //   <Spinner
+  //     as="span"
+  //     animation="border"
+  //     size="sm"
+  //     role="status"
+  //     aria-hidden="true"
+  //   />
+  //   <span className="visually-hidden">Loading...please wait</span>
   
-  </Button></LayoutCenter>
+  // </Button></LayoutCenter>
         
-      </section>
+  //     </section>
+  
+<section>
+<div >
+
+  
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+
+</div>
+
+ 
+
+
+
+</section>
     );
   }
+
+  if (userRole == "Admin"){
 
   return (
       <section>
@@ -79,6 +98,12 @@ function AllUsersPage() {
       </section>
 
   );
+  }
+  else {
+    return(
+      <Login />
+    )
+  }
 }
 
 export default AllUsersPage;
