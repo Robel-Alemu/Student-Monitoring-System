@@ -16,6 +16,7 @@ export default function UpdateProfile() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  let userRole = localStorage.getItem("role")
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -86,9 +87,9 @@ export default function UpdateProfile() {
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
+      {/* <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
-      </div>
+      </div> */}
     
     
      

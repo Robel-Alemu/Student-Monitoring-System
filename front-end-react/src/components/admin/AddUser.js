@@ -5,7 +5,7 @@ import { Form, Button, Card, Alert, Container, Row, Col } from "react-bootstrap"
 import Adminavigation from "./AdminNavigation";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
-
+import Login from "../authentication/Login";
 import { useState } from "react";
 function AddUser(props) {
   const nameInputRef = useRef();
@@ -13,6 +13,7 @@ function AddUser(props) {
   const roleInputRef = useRef();
   const emailInputRef = useRef("");
   const passwordInputRef = useRef("");
+  let userRole = localStorage.getItem("role")
 
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
@@ -75,7 +76,7 @@ function AddUser(props) {
 
   }
 
-  
+  if (userRole == "Admin"){
 
   return (
     <LayoutCenter><Card>
@@ -134,6 +135,12 @@ function AddUser(props) {
       
     
   );
+  }
+  else {
+    return(
+      <Login />
+  )
+  }
 }
 
 export default AddUser;
