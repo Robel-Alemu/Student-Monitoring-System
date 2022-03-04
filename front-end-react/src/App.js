@@ -116,6 +116,7 @@ import SearchGradePage from "./components/pages/SearchGradePage";
 import SendMessage from "./components/admin/SendMessage";
 import AllBroadcastMessagesPage from "./components/pages/AllBroadcastMessagesPage";
 import ViewAttendance from "./components/pages/ViewAttendanceCommon";
+import UpdateProfilePage from "./components/pages/UpdateProfilePage";
 
 function App() {
   let x = 4;
@@ -195,11 +196,12 @@ function App() {
                 <PrivateRoute exact path="/">
                   <AllBroadcastMessagesPage title={"Admin"} />
                 </PrivateRoute>
-{/* ************************************************************************* */}
-                
                 <PrivateRoute path="/data-encoder">
                   <DataEncoderDashboard />
                   </PrivateRoute>
+{/* ************************************************************************* */}
+                
+               
                   
                   
                 
@@ -208,7 +210,7 @@ function App() {
 
                 <PrivateRoute
                   path="/update-profile"
-                  component={UpdateProfile}
+                  component={UpdateProfilePage}
                 />
                 <PrivateRoute
                   path="/update-profile-d"

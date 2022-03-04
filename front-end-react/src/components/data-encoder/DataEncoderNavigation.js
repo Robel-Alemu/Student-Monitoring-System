@@ -109,7 +109,7 @@ function DataEncoderNavigation() {
         >
          
           <NavDropdown.Item > 
-          <Link className={classes.links} style={{"color":"black"}} to="/update-profile-d">Update Profile</Link>
+          <Link className={classes.links} style={{"color":"black"}} to="/update-profile">Update Profile</Link>
               </NavDropdown.Item>
               <NavDropdown.Item > 
               <Button variant="outline-dark" size="sm" onClick={handleLogout}>

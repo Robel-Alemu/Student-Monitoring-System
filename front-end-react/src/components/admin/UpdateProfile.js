@@ -48,7 +48,7 @@ export default function UpdateProfile() {
 
   return (
     <>
-    <LayoutCenter> <Card>
+    <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -88,7 +88,7 @@ export default function UpdateProfile() {
       </Card>
       <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
-      </div></LayoutCenter>
+      </div>
     
     
      
