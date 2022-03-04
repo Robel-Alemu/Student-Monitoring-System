@@ -43,40 +43,46 @@ function AllUsersPage() {
   }, []);
 
   if (isLoading) {
-    return (
-  //     <section>
-  //         <LayoutCenter>  <Button variant="primary" disabled>
-  //   <Spinner
-  //     as="span"
-  //     animation="border"
-  //     size="sm"
-  //     role="status"
-  //     aria-hidden="true"
-  //   />
-  //   <span className="visually-hidden">Loading...please wait</span>
-  
-  // </Button></LayoutCenter>
-        
-  //     </section>
-  
-<section>
-<div >
-
-  
+    if(userRole == "Admin"){
+      return (
+        <section>
+          <LayoutCenter>
+          <section>
+        <div >
+      
+            
 <h5 style={{color:"black"}}>Loading Please Wait...</h5>
 <Spinner style={{color:"black"}} animation="border" />
-
-</div>
-
- 
-
-
-
-</section>
-    );
+        </div>
+           
+         
+        </section>
+          </LayoutCenter>
+        </section>
+      );
+    }
+    else{
+      return (
+        <section>
+        
+          
+        <div >
+      
+        {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+        </div>
+           
+         
+       
+         
+        </section>
+      );
+    }
+   
   }
 
-  if (userRole == "Admin"){
+  else if (userRole == "Admin"){
 
   return (
       <section>

@@ -99,7 +99,7 @@ function AllBroadcastMessagesPage() {
       return (
         <section>
         
-          <section>
+          
         <div >
       
         {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
@@ -108,7 +108,7 @@ function AllBroadcastMessagesPage() {
         </div>
            
          
-        </section>
+       
          
         </section>
       );
