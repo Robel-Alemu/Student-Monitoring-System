@@ -7,13 +7,14 @@ import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
 import { useState } from "react";
+import Login from "../authentication/Login";
 function UpdateClass() {
   const classInputRef = useRef();
   const sectionInputRef = useRef();
 //   const roleInputRef = useRef();
 //   const emailInputRef = useRef("");
 //   const passwordInputRef = useRef("");
-
+let userRole = localStorage.getItem("role")
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
     const [sections,setSections] = useState();
@@ -82,7 +83,7 @@ setIsRequired(false);
 
 
 
-  
+  if (userRole == "Admin"){
 
   return (
     <LayoutCenter><Card>
@@ -126,6 +127,12 @@ setIsRequired(false);
       
     
   );
+  }
+  else {
+    return(
+      <Login/>
+    )
+  }
 }
 
 export default UpdateClass;

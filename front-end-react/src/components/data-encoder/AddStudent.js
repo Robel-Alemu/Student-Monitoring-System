@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
+import Login from "../authentication/Login";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
@@ -34,6 +35,8 @@ function AddStudent(props) {
   const history = useHistory();
   const [fieldIsVisible, setFieldIsVisible] = useState(true);
   const [field, setField] = useState();
+
+  let userRole = localStorage.getItem("role")
 
   // const [parent,setParent] = useState();
   // const [parentPhones,setParentPhones] = useState()
@@ -296,7 +299,7 @@ else if(enteredParent1Name && enteredParent1Phone ){
     // console.log(props.responses,"***********");
     // setError(props.x);
   }
-
+  if (userRole == "Data Encoder"){
   return (
     <>
       <DataEncoderCenterLayout>
@@ -442,6 +445,12 @@ else if(enteredParent1Name && enteredParent1Phone ){
       </DataEncoderCenterLayout>
     </>
   );
+}
+else {
+  return(
+    <Login/>
+  )
+}
 }
 
 export default AddStudent;
