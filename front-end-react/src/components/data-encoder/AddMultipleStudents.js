@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
-
+import Login from "../authentication/Login"
 import xlsx from "xlsx";
 
 function AddMultipleStudents() {
@@ -15,6 +15,7 @@ function AddMultipleStudents() {
 //   const sectionRef = useRef();
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
+  let userRole = localStorage.getItem("role")
   // let subjectNormal = ['maths','physics','chemistry'];
   // let subjectArt = ['history','business','art'];
 
@@ -89,6 +90,8 @@ function AddMultipleStudents() {
 
   }
 
+  if (userRole == "Data Encoder"){
+
   return (
     <>
       <DataEncoderCenterLayout>
@@ -135,6 +138,12 @@ function AddMultipleStudents() {
       </DataEncoderCenterLayout>
     </>
   );
+  }
+  else {
+    return(
+      <Login/>
+    )
+  }
 }
 
 export default AddMultipleStudents;

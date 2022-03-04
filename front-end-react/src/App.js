@@ -207,6 +207,8 @@ function App() {
                  <PrivateRoute path="/users" component={AllUsersPage} />
                  <PrivateRoute path="/add-class" component={AddClass} />
                  <PrivateRoute path="/update-class" component={UpdateClass} />
+                 <PrivateRoute path="/add-student" component={AddStudent} />
+               
 {/* ************************************************************************* */}
                 
                
@@ -233,8 +235,6 @@ function App() {
                 
                 
                 {/* <PrivateRoute path="/add-student" component={AddStudentPage} /> */}
-                <PrivateRoute path="/add-student" component={AddStudent} />
-               
                
                 <PrivateRoute path="/send-message" component={SendMessage} />
 
