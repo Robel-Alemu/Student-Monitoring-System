@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
+import Login from "../authentication/Login";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 
 function EditGrade(props) {
@@ -38,7 +39,7 @@ function EditGrade(props) {
   const [error,setError] = useState();
   const [success,setSuccess] = useState();
   const history = useHistory();
-
+  let userRole = localStorage.getItem("role")
 
   function submitHandler(event) {
     event.preventDefault();
@@ -52,7 +53,7 @@ function EditGrade(props) {
     const secondTest = secondTestRef.current.value;
     const assessements = assessementsRef.current.value;
     const final = finalRef.current.value;
-   
+    let userRole = localStorage.getItem("role")
     const studentData = {
       studentId: enteredStudentId,
       studentName: studentName,
@@ -97,7 +98,7 @@ function EditGrade(props) {
   // document.getElementById("gradeSelect").value="choose grade"}
 
  
-
+  if (userRole == "Data Encoder"){
   return (
     <>
     <Card style={{marginTop:"30px"}}>
@@ -152,7 +153,7 @@ function EditGrade(props) {
                 defaultValue={props.studentName}
               />
             </Form.Group>
-            <Form.Group id="lastName">
+            <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control
                 type="text"
@@ -269,6 +270,12 @@ function EditGrade(props) {
       
     </>
   );
+  }
+  else {
+    return(
+      <Login/>
+    )
+  }
 }
 
 export default EditGrade;

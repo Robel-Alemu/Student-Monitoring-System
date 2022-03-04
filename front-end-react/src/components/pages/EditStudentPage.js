@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRef } from "react";
 import StudentList from "../data-encoder/StudentList";
 import DataEncoderLayout from "../layout/DataEncoderLayout";
+import Login from "../authentication/Login";
 
 function EditStudentPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ function EditStudentPage() {
 
   const id = useRef();
    
-
+  let userRole = localStorage.getItem("role")
   
 
 
@@ -60,23 +61,61 @@ function EditStudentPage() {
   },[]);
 
   if (isLoading) {
+  //   return (
+  //     <section>
+  //         <DataEncoderLayout>  <Button variant="primary" disabled>
+  //   <Spinner
+  //     as="span"
+  //     animation="border"
+  //     size="sm"
+  //     role="status"
+  //     aria-hidden="true"
+  //   />
+  //   <span className="visually-hidden">Loading...please wait</span>
+  
+  // </Button></DataEncoderLayout>
+        
+  //     </section>
+  //   );
+  if(userRole == "Data Encoder"){
     return (
       <section>
-          <DataEncoderLayout>  <Button variant="primary" disabled>
-    <Spinner
-      as="span"
-      animation="border"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-    />
-    <span className="visually-hidden">Loading...please wait</span>
-  
-  </Button></DataEncoderLayout>
-        
+        <DataEncoderLayout>
+        <section>
+      <div >
+    
+          
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+      </div>
+         
+       
+      </section>
+        </DataEncoderLayout>
       </section>
     );
   }
+  else{
+    return (
+      <section>
+      
+        
+      <div >
+    
+      {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+      </div>
+         
+       
+     
+       
+      </section>
+    );
+  }
+  }
+
+  else if (userRole == "Data Encoder"){
 
   return (
     <section >
@@ -102,6 +141,12 @@ function EditStudentPage() {
 
     </section>
   );
+  }
+  else {
+    return(
+      <Login/>
+    )
+  }
 }
 
 export default EditStudentPage;

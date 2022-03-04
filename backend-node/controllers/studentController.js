@@ -1158,8 +1158,8 @@ const SearchStudentGrade = async (req, res) => {
           doc.data().subject,
           doc.data().firstTest,
           doc.data().secondTest,
-          doc.data().final,
           doc.data().assessements,
+          doc.data().final,
           doc.data().term
         );
         studentGradeArray.push(studentGrade);

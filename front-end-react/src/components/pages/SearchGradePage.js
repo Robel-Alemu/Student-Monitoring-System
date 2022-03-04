@@ -21,6 +21,7 @@ import GradesList from "../admin/GradesList";
 import Layout from "../layout/Layout";
 
 import StudentGrade from "../data-encoder/StudentGrade";
+import Login from "../authentication/Login";
 
 function SearchGradePage({ title }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,7 @@ function SearchGradePage({ title }) {
   
   const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT", "Geography", "History", "Economics" ];
   const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT"];
-  
+  let userRole = localStorage.getItem("role")
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
 function onLoadHandler(e){
   e.preventDefault();
@@ -224,118 +225,154 @@ function onLoadHandler(e){
 
 
 if (isLoading) {
-  if(x.title == 'admin'){
-return (
-  <section>
-    <Layout>
-    <Button variant="primary" disabled>
-<Spinner
-  as="span"
-  animation="border"
-  size="sm"
-  role="status"
-  aria-hidden="true"
-/>
-<span className="visually-hidden">Loading...please wait</span>
+//   if(x.title == 'admin'){
+// return (
+//   <section>
+//     <Layout>
+//     <Button variant="primary" disabled>
+// <Spinner
+//   as="span"
+//   animation="border"
+//   size="sm"
+//   role="status"
+//   aria-hidden="true"
+// />
+// <span className="visually-hidden">Loading...please wait</span>
 
-</Button>
-    </Layout>
-  </section>
-);
-  }
-  else{
-      return (
-    <section>
-      <DataEncoderCenterLayout>
-      <Button variant="primary" disabled>
-<Spinner
-  as="span"
-  animation="border"
-  size="sm"
-  role="status"
-  aria-hidden="true"
-/>
-<span className="visually-hidden">Loading...please wait</span>
+// </Button>
+//     </Layout>
+//   </section>
+// );
+//   }
+//   else{
+//       return (
+//     <section>
+//       <DataEncoderCenterLayout>
+//       <Button variant="primary" disabled>
+// <Spinner
+//   as="span"
+//   animation="border"
+//   size="sm"
+//   role="status"
+//   aria-hidden="true"
+// />
+// <span className="visually-hidden">Loading...please wait</span>
 
-</Button>
-      </DataEncoderCenterLayout>
-    </section>
-  );
-    }
-}
-
-if (x.title == "admin") {
+// </Button>
+//       </DataEncoderCenterLayout>
+//     </section>
+//   );
+//     }
+if(userRole == "Data Encoder"){
   return (
     <section>
-
-      <Layout>
-        <Container style={{marginBottom:"30px"}}>
-          <Row>
-            <Col sm={8}>
-              <h1>View Grade</h1>
-              {error && <Alert variant="danger">{error}</Alert>}
-            </Col>
-          </Row>
-
-          <Row></Row>
-          <Row >
-            <Form.Group id="term">
-              <Form.Label>Term</Form.Label>
-              <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
-            
-                {term.map(item => {
-      return (<option  >{item}</option>);
-  })}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group id="grade" style={{marginLeft:"30px"}}>
-              <Form.Label>Grade</Form.Label>
-              <Form.Control size="sm" as="select" ref={gradeRef} required 
-              onClick={termHandler}>
-         
-
-                {grades.map(item => {
-      return (<option  >{item}</option>);
-  })}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group id="section" style={{marginLeft:"30px"}}>
-              <Form.Label>Section</Form.Label>
-              <Form.Control size="sm" as="select" ref={sectionRef} required>
+      <DataEncoderLayout>
+      <section>
+    <div >
+  
         
-                
-{sections.map(item => {
-      return (<option  >{item}</option>);
-  })}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group id="subject" style={{marginLeft:"30px"}}>
-              <Form.Label>Subject</Form.Label>
-              <Form.Control size="sm" as="select" ref={subjectRef} required>
-              {subject.map(item => {
-      return (<option  >{item}</option>);
-  })}
-          
-              </Form.Control>
-            </Form.Group>
-
-            </Row>
-            <Row >   <Button className="w-25" onClick={searchHandler}>
-                Search
-              </Button>
-           </Row>
-          
-      
-        </Container>
-        <GradesList students={loadedStudent} />
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+    </div>
+       
      
-      
-      </Layout>
+    </section>
+      </DataEncoderLayout>
     </section>
   );
 }
-
 else{
+  return (
+    <section>
+    
+      
+    <div >
+  
+    {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+    </div>
+       
+     
+   
+     
+    </section>
+  );
+}
+}
+
+// else if(userRole == "Data Encoder"){
+//   return (
+//     <section>
+
+//       <Layout>
+//         <Container style={{marginBottom:"30px"}}>
+//           <Row>
+//             <Col sm={8}>
+//               <h1>View Grade</h1>
+//               {error && <Alert variant="danger">{error}</Alert>}
+//             </Col>
+//           </Row>
+
+//           <Row></Row>
+//           <Row >
+//             <Form.Group id="term">
+//               <Form.Label>Term</Form.Label>
+//               <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
+            
+//                 {term.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//               </Form.Control>
+//             </Form.Group>
+//             <Form.Group id="grade" style={{marginLeft:"30px"}}>
+//               <Form.Label>Grade</Form.Label>
+//               <Form.Control size="sm" as="select" ref={gradeRef} required 
+//               onClick={termHandler}>
+         
+
+//                 {grades.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//               </Form.Control>
+//             </Form.Group>
+//             <Form.Group id="section" style={{marginLeft:"30px"}}>
+//               <Form.Label>Section</Form.Label>
+//               <Form.Control size="sm" as="select" ref={sectionRef} required>
+        
+                
+// {sections.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+//               </Form.Control>
+//             </Form.Group>
+//             <Form.Group id="subject" style={{marginLeft:"30px"}}>
+//               <Form.Label>Subject</Form.Label>
+//               <Form.Control size="sm" as="select" ref={subjectRef} required>
+//               {subject.map(item => {
+//       return (<option  >{item}</option>);
+//   })}
+          
+//               </Form.Control>
+//             </Form.Group>
+
+//             </Row>
+//             <Row >   <Button className="w-25" onClick={searchHandler}>
+//                 Search
+//               </Button>
+//            </Row>
+          
+      
+//         </Container>
+//         <GradesList students={loadedStudent} />
+     
+      
+//       </Layout>
+//     </section>
+//   );
+// }
+
+else if(userRole == "Data Encoder"){
   return (
     <section>
     
@@ -416,5 +453,12 @@ else{
       </DataEncoderLayout>
     </section>);
 }
+else{
+  return(
+    <Login/>
+  )
+}
+  
+
 }
 export default SearchGradePage;
