@@ -4,6 +4,7 @@ const req = require("express/lib/request");
 const res = require("express/lib/response");
 
 const firebase = require("../connection/db");
+const ParentInformation = require("../models/ParentInformation");
 const StudentAttendance = require("../models/StudentAttendance");
 const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
@@ -49,6 +50,8 @@ const SearchStudent = async (req, res, next) => {
       .where("studentId", "==", studentId);
     const data = await student.get();
     const studentArray = [];
+    const returnedData =[]
+    const parentNames =[]
     if (data.empty) {
       res.status(404).send({ message: "No student record found" });
     } else {
@@ -65,7 +68,61 @@ const SearchStudent = async (req, res, next) => {
         );
         studentArray.push(student);
       });
-      res.send(studentArray);
+      returnedData.push(studentArray);
+      const parent =studentArray[0].parentPhones;
+      console.log(parent)
+    
+      
+      if(parent.length > 1){
+        for (let x=0;x<parent.length;x++){
+          const P = await firestore
+          .collection("Parent-Information")
+          .where("parentPhone", "==", parent[x]);
+          const data = await P.get();
+          data.forEach((doc)=>{
+            const parentInfo = new ParentInformation(
+              doc.id,
+              doc.data().parentPhone,
+              doc.data().parentName
+            )
+            parentNames.push(parentInfo)
+            returnedData[0].push(parentInfo)
+          })
+         
+            
+        console.log(parentNames,"*****")
+      }
+      }
+      else if(parent.length == 1){
+        const P = await firestore
+          .collection("Parent-Information")
+          .where("parentPhone", "==", parent[0]);
+          const data = await P.get();
+          data.forEach((doc)=>{
+            const parentInfo = new ParentInformation(
+              doc.id,
+              doc.data().parentPhone,
+              doc.data().parentName
+            )
+            parentNames.push(parentInfo)
+            returnedData[0].push(parentInfo)
+          })
+          returnedData[0].push({
+            parentName:"",
+            parentPhone:""
+          });
+      }
+      
+   
+        
+        
+       
+        
+        
+        
+       
+      // }
+      res.send(returnedData);
     }
   } catch (err) {
     res.status(400).send({ message: err.message });
@@ -115,9 +172,27 @@ const UpdateStudentAndParent = async (req, res, next) => {
       .where("studentId", "==", id)
       .get();
 
+
     student.forEach((doc) => {
       doc.ref.update(student_);
     });
+
+    for(let x=0;x<parent.length;x++){
+      const p =  await firestore
+      .collection("Parent-Information")
+      .where("parentPhone", "==", parent[x].parentPhone)
+      .get();
+      if(p.empty){
+        await firestore
+      .collection("Parent-Information").doc().set(parent[x])
+      }
+      else{
+        p.forEach((doc) => {
+          doc.ref.update(parent[x]);
+        });
+      }
+      
+    }
     res.status(200).send({ message: "Student Updated successfuly" });
   } catch (err) {
     res.status(400).send({ message: err.message });

@@ -42,6 +42,7 @@ function EditStudentPage() {
             ...data[key],
           };
           student.push(studentData);
+          console.log(studentData)
         //   alert(data.message);
         }
         setIsLoading(false);

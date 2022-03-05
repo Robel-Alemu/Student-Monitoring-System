@@ -6,17 +6,17 @@ function StudentList(props) {
     return (
         <div>{props.student.map(student =>
             <UpdateStudent
-                key={student.id}
-                studentId = {student.studentId}
-                firstName={student.firstName}
-                lastName={student.lastName}
-                grade={student.grade} 
-                section={student.section}
-                parent1N={student.parentPhones[0]}
-                parent1P={student.parentPhones[1]}
-                parent2N={student.parent2Name}
-                parent2P={student.parent2Phone}
-                field = {student.field}
+                key={student[0].id}
+                studentId = {student[0].studentId}
+                firstName={student[0].firstName}
+                lastName={student[0].lastName}
+                grade={student[0].grade} 
+                section={student[0].section}
+                parent1N={student[1].parentName}
+                parent1P={student[1].parentPhone}
+                parent2N={student[2].parentName}
+                parent2P={student[2].parentPhone}
+                field = {student[0].field}
                 
                 
             />
