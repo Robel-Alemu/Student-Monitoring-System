@@ -17,6 +17,7 @@ import DataEncoderLayout from "../layout/DataEncoderLayout";
 import AttendanceList from "../data-encoder/AttendanceList";
 import CommonLayout from "../layout/CommonLayout";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
+import Login from "../authentication/Login";
 function UpdateAttendancePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedStudent, setLoadedStudent] = useState([]);
@@ -36,7 +37,7 @@ const [termBar,setTermBar] = useState("choose term");
 const [gradeBar,setGradeBar] = useState("choose grade");
 const [sectionBar,setSectionBar] = useState("choose section");
   
-
+let userRole = localStorage.getItem("role");
 
 // const [term, setTerm] = useState(["Select Term"])
 const [sections,setSections]=useState(["Select Section"]);
@@ -165,25 +166,65 @@ fetch(
      
   },[]);
 
-  if (isLoading) {
-    return (
-      <section>
-          <DataEncoderLayout>  <Button variant="primary" disabled>
-    <Spinner
-      as="span"
-      animation="border"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-    />
-    <span className="visually-hidden">Loading...please wait</span>
+  // if (isLoading) {
+  //   return (
+  //     <section>
+  //         <DataEncoderLayout>  <Button variant="primary" disabled>
+  //   <Spinner
+  //     as="span"
+  //     animation="border"
+  //     size="sm"
+  //     role="status"
+  //     aria-hidden="true"
+  //   />
+  //   <span className="visually-hidden">Loading...please wait</span>
   
-  </Button></DataEncoderLayout>
+  // </Button></DataEncoderLayout>
         
-      </section>
-    );
-  }
+  //     </section>
+  //   );
+  // }
+  if (isLoading) {
+    if(userRole == "Data Encoder"){
+      return (
+        <section>
+          <DataEncoderLayout>
+          <section>
+        <div >
+      
+            
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+        </div>
+           
+         
+        </section>
+          </DataEncoderLayout>
+        </section>
+      );
+    }
+    else{
+      return (
+        <section>
+        
+          
+        <div >
+      
+        {/* style={{display: "flex" ,justifyContent: "center", alignItems: "center", height:"800px" ,opacity:"0.9"}}    */}
+<h5 style={{color:"black"}}>Loading Please Wait...</h5>
+<Spinner style={{color:"black"}} animation="border" />
+        </div>
+           
+         
+       
+         
+        </section>
+      );
+    }
+     
+    } 
 
+    else if (userRole == "Data Encoder") {
   return (
     <section >
        <DataEncoderCenterLayout >  <Container  style={ {marginBottom:"30px"}}>
@@ -265,6 +306,12 @@ fetch(
 
     </section>
   );
+        }
+        else{
+          return(
+            <Login/>
+          )
+        }
 }
 
 export default UpdateAttendancePage;

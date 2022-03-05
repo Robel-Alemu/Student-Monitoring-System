@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
+import Login from "../authentication/Login";
 
 function AddGrade() {
   const subjectRef = useRef();
@@ -29,7 +30,7 @@ function AddGrade() {
   const [fileName, setFileName]= useState("Choose File");
   const[grade,setGrade] = useState();
 
-
+  let userRole = localStorage.getItem("role");
   let grades = [];
 
   const readUploadFile = (e) => {
@@ -210,6 +211,8 @@ function AddGrade() {
 
   }
 
+
+   if (userRole == "Data Encoder") {
   return (
     <>
       <DataEncoderCenterLayout>
@@ -322,6 +325,12 @@ function AddGrade() {
       </DataEncoderCenterLayout>
     </>
   );
+}
+else {
+  return(
+    <Login/>
+  )
+}
 }
 
 export default AddGrade;
