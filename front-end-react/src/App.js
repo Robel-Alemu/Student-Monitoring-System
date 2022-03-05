@@ -1,75 +1,4 @@
-// import AddUser from "./components/admin/AddUser";
-// import Layout from "./components/layout/Layout";
-// import AddNewUserPage from "./components/pages/AddNewUserPage";
-// import LogInPage from "./components/pages/LogInPage";
-// import React, { useState, useEffect } from "react";
-// import app from "./firebase";
 
-// function App() {
-//   const [user, setUser] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const clearInputs = () => {
-//     setEmail("");
-//     setPassword("");
-//   };
-//   const handleLogin = () => {
-//     app
-//       .auth()
-//       .signInWithEmailAndPassword(email, password)
-//       .catch((err) => {
-//         console.log(err);
-//       });
-
-//     };
-//     const authListener = () => {
-//       app.auth().onAuthStateChanged((user) => {
-//         if (user) {
-//           clearInputs();
-//           setUser(user);
-//         } else {
-//           setUser("");
-//         }
-//       });
-//     };
-//     useEffect(() => {
-//       authListener();
-//     }, []);
-//  let x = 5;
-
-//  if (x<0)
-//  return(
-//   <div className="App">
-//       <Layout>
-//             <AddNewUserPage />
-//           </Layout>
-//     </div>
-//  );
-// else{
-
-//     return (
-//       <div className="App">
-//         {
-//         user ? (
-//           <Layout>
-//             <AddNewUserPage />
-//           </Layout>
-//         ) : (
-//           <Layout>
-//             <h1>LogIn</h1><LogInPage
-//           email={email}
-//           setEmail={setEmail}
-//           password={password}
-//           setPassword={setPassword}
-//           handleLogin={handleLogin}
-//         /></Layout>
-//         )}
-//       </div>
-//     );
-//         }
-// };
-
-// export default App;
 
 import React from "react";
 import SignUp from "./components/authentication/SignUp";
@@ -80,7 +9,7 @@ import Dashboard from "./components/admin/Dashboard";
 import Login from "./components/authentication/Login";
 import PrivateRoute from "./routes/PrivateRoute";
 //import ForgotPassword from "./ForgotPassword"
-import UpdateProfile from "./components/admin/UpdateProfile";
+
 import AddUser from "./components/admin/AddUser";
 import SignupPage from "./components/pages/SignupPage";
 
@@ -117,54 +46,10 @@ import SendMessage from "./components/admin/SendMessage";
 import AllBroadcastMessagesPage from "./components/pages/AllBroadcastMessagesPage";
 import ViewAttendance from "./components/pages/ViewAttendanceCommon";
 import UpdateProfilePage from "./components/pages/UpdateProfilePage";
+import ViewGrades from "./components/pages/ViewGradesCommon";
 
 function App() {
-  let x = 4;
-
-  if (x < 0) {
-    return (
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "40vh", height: "80%" }}
-      >
-        {/* <div className="w-100" style={{ maxHeight: "400px" }}> 
-      <Router><AuthProvider><SignUp /></AuthProvider></Router> */}
-        <Router>
-          <AuthProvider>
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/data-encoder"
-                component={DataEncoderDashboard}
-              />
-              <PrivateRoute exact path="/" component={Dashboard} />
-              <PrivateRoute path="/update-profile" component={UpdateProfile} />
-              <PrivateRoute
-                path="/update-profile-d"
-                component={DataEncoderUpdatePassword}
-              />
-              <PrivateRoute path="/add-user" component={AddNewUserPage} />
-              <PrivateRoute path="/add-student" component={AddStudentPage} />
-              <PrivateRoute
-                path="/broadcast-message"
-                component={AddBroadcastPage}
-              />
-              <PrivateRoute path="/all-students" component={AllStudentsPage} />
-              <PrivateRoute
-                path="/update-student"
-                component={EditStudentPage}
-              />
-              {/* <PrivateRoute path ="/update-student" component={UpdateStudent}/> */}
-              <Route path="/signup" component={SignupPage} />
-              <Route path="/login" component={Login} />
-
-              {/* <Route path="/forgot-password" component={ForgotPassword} /> */}
-            </Switch>
-          </AuthProvider>
-        </Router>
-      </Container>
-    );
-  } else {
+  
     return (
       <Container
         className="w-100 d-flex align-items-center justify-content-center"
@@ -174,20 +59,7 @@ function App() {
           <Router>
             <AuthProvider>
               <Switch>
-                {/* <PrivateRouteRoleCheck exact path="/" component={Dashboard}/>
-              <PrivateRouteRoleCheck path="/data-encoder" component={DataEncoderNavigation}/>
-              <PrivateRouteRoleCheck path="/update-profile" component={UpdateProfile}/>
-              <PrivateRouteRoleCheck path="/add-user" component={AddNewUserPage}/>
-              <PrivateRouteRoleCheck path="/users" component={AllUsersPage}/>
-              <PrivateRouteRoleCheck path="/broadcast-message" component={AddBroadcastPage}/>
-              <PrivateRoute path ="/update-student" component={UpdateStudent}/>
-             
-              <PrivateRoute path ="/add-student" component={AddStudentPage}/> */}
-
-
-{/* <PrivateRoute path="/view-attendance-admin"  >
-                  <ViewAttendance title={"Admin"}/>
-                </PrivateRoute> */}
+              
 
                 
                 <PrivateRoute path="/view-attendance">
@@ -228,39 +100,26 @@ function App() {
                               component={UpdateAttendancePage}
                             />
                 <PrivateRoute path="/add-grade" component={AddGrade} />  
+                <PrivateRoute path="/update-grade" component={UpdateGrade} />
+                <PrivateRoute
+                  path="/add-attendance"
+                  component={AddAttendance}
+                />
+                <PrivateRoute path="/view-grades">
+                  <ViewGrades/>
+                </PrivateRoute>
+                <Route path="/login" component={Login} />
 {/* ************************************************************************* */}
                 
                
-                  
-                  
-                
-               
-
-
-            
-                <PrivateRoute
+              <PrivateRoute
                   path="/update-profile-d"
                   component={DataEncoderUpdatePassword}
                 />
                 {/* <PrivateRoute path="/add-user" component={AddNewUserPage} /> */}
                
                 
-                
-                
-                
-
-
-
-                
-                
-                {/* <PrivateRoute path="/add-student" component={AddStudentPage} /> */}
-               
-               
-
-
-               
-                
-                <PrivateRoute path="/all-students" component={AllStudentList} />
+                 <PrivateRoute path="/all-students" component={AllStudentList} />
                 
                
                 {/* <PrivateRoute
@@ -268,36 +127,20 @@ function App() {
                   component={UpdateStudent}
                 /> */}
                 <Route path="/signup" component={SignupPage} />
-                <Route path="/login" component={Login} />
-
-               
+              
                 <PrivateRoute
                   path="/update-attendance"
                   component={UpdateAttendance}
                 />
-                {/* <PrivateRoute path ="/view-attendance" component={ViewAttendancePage  {...title}="admin"} /> */}
-               
-
-                <PrivateRoute path="/view-grades-admin">
-                  <ViewGradePage title={"admin"}/>
-                </PrivateRoute>
-                <PrivateRoute path="/view-grades">
-                  <ViewGradePage title={"Data Encoder"}/>
-                </PrivateRoute>
-
-               
-                <PrivateRoute path="/update-grade" component={UpdateGrade} />
-                <PrivateRoute
-                  path="/add-attendance"
-                  component={AddAttendance}
-                />
+          
+                
               </Switch>
             </AuthProvider>
           </Router>
         </div>
       </Container>
     );
-  }
+  
 }
 
 export default App;

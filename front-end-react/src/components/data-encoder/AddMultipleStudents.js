@@ -16,6 +16,7 @@ function AddMultipleStudents() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   let userRole = localStorage.getItem("role")
+  const [students,setStudents] = useState()
   // let subjectNormal = ['maths','physics','chemistry'];
   // let subjectArt = ['history','business','art'];
 
@@ -29,11 +30,12 @@ function AddMultipleStudents() {
   // selectedSubjects = [...subjectArt];
   const [fileName, setFileName]= useState("Choose File");
 
-  let students = [];
+  // let students = [];
 
   const readUploadFile = (e) => {
     e.preventDefault();
     if (e.target.files) {
+      setFileName(e.target.files[0].name)
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target.result;
@@ -44,27 +46,28 @@ function AddMultipleStudents() {
         const json = xlsx.utils.sheet_to_json(worksheet);
         console.log(json);
 
-        students = [...json];
-        console.log(students);
+        // students = [...json];
+      setStudents(json);
         
-        setFileName((document.getElementById("upload").value).split("\\").pop()) 
+       
       };
       reader.readAsArrayBuffer(e.target.files[0]);
       
     }
   };
+  console.log(students,"***************");
 
   function clickHandler(e) {
    
-
-    console.log(students);
+    e.preventDefault();
+    console.log(students,"///////////");
    
 
-    e.preventDefault();
+  
 
     fetch(
       // https://student-monitoring.herokuapp.com
-      "http://localhost:8080/api//add-multiple-students",
+      "http://localhost:8080/api/add-multiple-students",
       {
         method: "POST",
         body: JSON.stringify(students),
@@ -128,6 +131,26 @@ function AddMultipleStudents() {
   </div>
   
 </div>
+{/* 
+<div className="input-group">
+  <div className="input-group-prepend">
+    <span className="input-group-text" id="inputGroupFileAddon01">
+      Upload
+    </span>
+  </div>
+  <div className="custom-file">
+    <input
+      type="file"
+      className="custom-file-input"
+      id="upload"
+      onChange={readUploadFile}
+      aria-describedby="inputGroupFileAddon01"
+    />
+    <label className="custom-file-label" htmlFor="inputGroupFile01">
+      Choose file
+    </label>
+  </div>
+</div> */}
               </Form.Group>
               <Button className="w-100" type="submit">
                 Add

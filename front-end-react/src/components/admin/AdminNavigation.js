@@ -135,7 +135,7 @@ function Adminavigation() {
                <Link style={{color:"black"}} to="/all-students">View Students</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/view-grades-admin">View Grade</Link>
+               <Link style={{color:"black"}} to="/view-grades">View Grade</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/view-attendance">View Attendance</Link>

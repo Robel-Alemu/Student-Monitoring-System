@@ -19,19 +19,25 @@ const AddStudentAndParent = async (req, res, next) => {
     // data.studentId = (data.studentId).toString()
 
     await firestore.collection("Student-Information").doc().set(student);
-    parent.forEach(async (g) => {
+    for(let x=0; x<parent.length;x++){
+      const P = await firestore
+          .collection("Parent-Information")
+          .where("parentPhone", "==", parent[x].parentPhone);
+          const data = await P.get();
+          if(data.empty){
+            await firestore.collection("Parent-Information").doc().set(parent[x]);
+          }
+          else continue;
+    }
+    // parent.forEach(async (g) => {
      
-      // if (g.firstTest == undefined) g.firstTest = defaultValue;
-      // if (g.secondTest == undefined) g.secondtTest = defaultValue;
-
-      // if (g.final == undefined) g.final = defaultValue;
-      // if (g.assessements == undefined) g.assessements = defaultValue;
-      await firestore.collection("Parent-Information").doc().set(g);
+     
+    //   await firestore.collection("Parent-Information").doc().set(g);
       
-      // await addGrade(g);
+    //   // await addGrade(g);
 
-      // return true;
-    })
+    //   // return true;
+    // })
    
     
 
@@ -708,8 +714,8 @@ const AddMultipleStudentAndParent = async (req, res) => {
         validStudentData.push(newStudentData);
       }
     });
-    console.log(validStudentData, "***********");
-    console.log(parentData, "***********");
+    console.log(validStudentData, "*****valid student data******");
+    console.log(parentData, "****valid student data*******");
 
     // const term = data[lastItem].term;
     // const grade = data[lastItem].grade;
@@ -879,9 +885,20 @@ const AddMultipleStudentAndParent = async (req, res) => {
 
             // return true;
           });
-          parentData.forEach(async (g) => {
-            await firestore.collection("Parent-Information").doc().set(g);
-          });
+
+          for(let x=0; x<parentData.length;x++){
+            const P = await firestore
+                .collection("Parent-Information")
+                .where("parentPhone", "==", parentData[x].parentPhone);
+                const data = await P.get();
+                if(data.empty){
+                  await firestore.collection("Parent-Information").doc().set(parentData[x]);
+                }
+                else continue;
+          }
+          // parentData.forEach(async (g) => {
+          //   await firestore.collection("Parent-Information").doc().set(g);
+          // });
 
           res.status(200).send({ message: "Students added successfully!" });
         } else if (!validate.studentIdExist) {

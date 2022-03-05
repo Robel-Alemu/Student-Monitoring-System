@@ -13,9 +13,12 @@ function Broadcast(props) {
     const broadcastMessage = broadcastRef.current.value;
    const title = titleRef.current.value;
     const date = new Date();
+// date.setDate(date.getDate()+20)
 
-    const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-    
+    // const currentDate = ` '0'+ ${date.getDate()}/ '0'+ ${date.getMonth()+1}/${date.getFullYear()}`;
+    const currentDate = ('0' + date.getDate()).slice(-2) + '/'
+    + ('0' + (date.getMonth()+1)).slice(-2) + '/'
+    + date.getFullYear();
     const message = {
         title: title,
         datePosted :  currentDate,
