@@ -235,7 +235,7 @@ function EditGrade(props) {
                 type="text"
                 ref={finalRef}
                 size="sm"
-                required
+            
                 defaultValue={props.final}
               />
            

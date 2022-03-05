@@ -317,7 +317,7 @@ const UpdateGrades = async (req, res) => {
     const grade = data[lastItem].grade;
     const section = data[lastItem].section;
     const subject = data[lastItem].subject;
-    const defaultValue = "";
+    const defaultValue = null;
     data.pop();
     function checkUniqueStudentId(array) {
       let isUnique = true;
@@ -468,7 +468,7 @@ const AddGrades = async (req, res) => {
 
     let canAdd = false;
 
-    const defaultValue = "";
+    const defaultValue = null;
     let firebaseResult = await fetch_firebase(term, grade, section, subject);
     if (firebaseResult == true) canAdd = true;
     console.log(firebaseResult);
@@ -565,7 +565,7 @@ const AddGrades = async (req, res) => {
         data.forEach(async (g) => {
           g.studentId = g.studentId.toString();
           if (g.firstTest == undefined) g.firstTest = defaultValue;
-          if (g.secondTest == undefined) g.secondtTest = defaultValue;
+          if (g.secondTest == undefined) g.secondTest = defaultValue;
 
           if (g.final == undefined) g.final = defaultValue;
           if (g.assessements == undefined) g.assessements = defaultValue;
