@@ -24,9 +24,10 @@ function AddAttendance() {
   let userRole = localStorage.getItem("role");
   const date = new Date();
 
-  const currentDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()}`;
+  // const currentDate = `${date.getFullYear()}-${
+  //   date.getMonth() + 1
+  // }-${date.getDate()}`;
+  const currentDate = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2)
   const year = `${date.getFullYear()}`;
 
   const [attendances, setAttendance] = useState();
