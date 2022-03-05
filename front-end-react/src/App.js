@@ -218,8 +218,16 @@ function App() {
                   path="/edit-broadcast-message"
                   component={EditBroadcastMessage}
                 />
-
-
+                 <PrivateRoute path="/edit-grades" component={SearchGradePage} />
+                <PrivateRoute
+                  path="/update-student"
+                  component={EditStudentPage}
+                />
+                <PrivateRoute
+                              path="/update-attendance"
+                              component={UpdateAttendancePage}
+                            />
+                <PrivateRoute path="/add-grade" component={AddGrade} />  
 {/* ************************************************************************* */}
                 
                
@@ -254,11 +262,7 @@ function App() {
                 
                 <PrivateRoute path="/all-students" component={AllStudentList} />
                 
-                <PrivateRoute path="/edit-grades" component={SearchGradePage} />
-                <PrivateRoute
-                  path="/update-student"
-                  component={EditStudentPage}
-                />
+               
                 {/* <PrivateRoute
                   path="/update-student"
                   component={UpdateStudent}
@@ -266,10 +270,7 @@ function App() {
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/login" component={Login} />
 
-                <PrivateRoute
-                  path="/update-attendance"
-                  component={UpdateAttendancePage}
-                />
+               
                 <PrivateRoute
                   path="/update-attendance"
                   component={UpdateAttendance}
@@ -284,7 +285,7 @@ function App() {
                   <ViewGradePage title={"Data Encoder"}/>
                 </PrivateRoute>
 
-                <PrivateRoute path="/add-grade" component={AddGrade} />
+               
                 <PrivateRoute path="/update-grade" component={UpdateGrade} />
                 <PrivateRoute
                   path="/add-attendance"

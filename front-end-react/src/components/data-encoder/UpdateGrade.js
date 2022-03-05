@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
+import Login from "../authentication/Login";
 
 function UpdateGrade(){
    
@@ -28,7 +29,7 @@ function UpdateGrade(){
   const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT"];
   
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
-
+  let userRole = localStorage.getItem("role");
   
   
   function termHandler(e){
@@ -203,7 +204,7 @@ console.log(grades);
     }
 
 
-    
+    if (userRole == "Data Encoder") {
 
     return(
 
@@ -314,6 +315,13 @@ console.log(grades);
 
 
     )
+
+}
+else {
+  return(
+    <Login/>
+  )
+}
 };
 
 export default UpdateGrade;

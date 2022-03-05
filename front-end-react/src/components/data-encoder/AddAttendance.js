@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import LayoutCenter from "../layout/LayoutCenter";
 
 import xlsx from "xlsx";
+import Login from "../authentication/Login";
 
 function AddAttendance() {
   const termRef = useRef();
@@ -20,7 +21,7 @@ function AddAttendance() {
   const [sections,setSections]=useState(["Select Section"]);
   const [classes,setClasses] = useState(["Select Grade"]);
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
-
+  let userRole = localStorage.getItem("role");
   const date = new Date();
 
   const currentDate = `${date.getFullYear()}-${
@@ -196,7 +197,7 @@ function AddAttendance() {
           setSections(["Select Section"])
         });
     }
-  
+    if (userRole == "Data Encoder") {
 
     return (
       <>
@@ -268,6 +269,11 @@ function AddAttendance() {
         </DataEncoderCenterLayout>
       </>
     );
-  
+}
+else {
+  return(
+    <Login/>
+  )
+}
 }
 export default AddAttendance;
