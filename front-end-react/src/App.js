@@ -259,10 +259,10 @@ function App() {
                   path="/update-student"
                   component={EditStudentPage}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                   path="/update-student"
                   component={UpdateStudent}
-                />
+                /> */}
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/login" component={Login} />
 

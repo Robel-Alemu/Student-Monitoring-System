@@ -291,7 +291,8 @@ function fieldHandler(e){
     const id = studentId.current.value;
 
     fetch(
-      "https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
+      "http://localhost:8080/api/delete-student/" + id, {
+      // "https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
       method: "DELETE",
       //   body: JSON.stringify(studentData),
       headers: { "Content-Type": "application/json" },
@@ -400,7 +401,7 @@ function fieldHandler(e){
             <Form.Group id="section">
               <Form.Label>Section</Form.Label>
               <Form.Control
-              
+             
                 size="sm"
                 as="select"
                 ref={sectionRef}
