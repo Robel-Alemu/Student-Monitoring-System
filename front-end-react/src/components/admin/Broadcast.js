@@ -33,23 +33,26 @@ function Broadcast(props) {
      <LayoutCenter><Card>
      <Form onSubmit={submitHandler}>
      <Form.Group id="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control type="text" ref={titleRef} size="sm" required />
+                <Form.Label style={{marginLeft:"15px", marginTop:"15px"}}>Title</Form.Label>
+                <Form.Control type="text" ref={titleRef} size="sm" required style={{marginLeft:"15px", width:"95%"}}/>
               </Form.Group>
        <Form.Group controlId="exampleForm.ControlTextarea1">
          
-         <Form.Label>Message</Form.Label>
+         <Form.Label style={{marginLeft:"15px"}}>Message</Form.Label>
          <Form.Control
            as="textarea"
            rows={6}
            ref={broadcastRef}
+           style={{marginLeft:"15px", width:"95%"}}
            required
          />
        </Form.Group>
-       
-       <Button  className="w-100" type="submit">
+      <div style={{display:"flex", justifyContent:"center"}}>
+      <Button style={{marginBottom:"20px"}}  className="w-50" type="submit">
          Broadcast Announcement
        </Button>
+      </div>
+
      </Form>
    </Card></LayoutCenter>
         

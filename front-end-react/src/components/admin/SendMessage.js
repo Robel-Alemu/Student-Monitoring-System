@@ -127,7 +127,7 @@ function SendMessage() {
             placeholder="Search student's parent phone by Student ID"
             ref={id}
             className=" mr-sm-2"
-            style={{ marginTop: "25px", width: "50%" }}
+            style={{ marginTop: "25px", width: "50%", marginLeft:"15px" }}
             required
           />
           <Form >
@@ -144,31 +144,35 @@ function SendMessage() {
             </Button>
           </Form>
         </Row>
-        <Card>
-          <Form onSubmit={submitHandler}>
+        <Card >
+          <Form onSubmit={submitHandler} >
             <Form.Group id="phone">
-              <Form.Label>To</Form.Label>
+              <Form.Label style={{marginLeft:"15px", width:"90%",marginTop:"15px"}}>To</Form.Label>
               <Form.Control
                 type="text"
                 ref={subjectRef}
                 size="sm"
                 required
+                disabled={true}
                 value={parentPhones}
+                style={{marginLeft:"15px", width:"95%"}}
               />
             </Form.Group>
 
             <Form.Group id="title">
-              <Form.Label>Subject</Form.Label>
-              <Form.Control type="text" ref={subjectRef} size="sm" required />
+              <Form.Label style={{marginLeft:"15px", width:"90%"}}>Subject</Form.Label>
+              <Form.Control type="text" ref={subjectRef} size="sm" required style={{marginLeft:"15px", width:"95%"}} />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Message</Form.Label>
-              <Form.Control as="textarea" rows={6} ref={messageRef} required />
+              <Form.Label style={{marginLeft:"15px", width:"90%"}}>Message</Form.Label>
+              <Form.Control as="textarea" rows={6} ref={messageRef} required style={{marginLeft:"15px", width:"95%"}}/>
             </Form.Group>
-
-            <Button className="w-100" type="submit">
+<div style={{display:"flex", justifyContent:"center", marginBottom:"20px"}}>
+<Button className="w-50" style={{marginBottom:"20px"}}  type="submit">
               Send Message
             </Button>
+</div>
+            
           </Form>
         </Card>
       </LayoutCenter>
