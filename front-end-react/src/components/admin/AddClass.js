@@ -19,38 +19,48 @@ let userRole = localStorage.getItem("role")
 
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
-    const [sections,setSections] = useState();
-    const [isRequired,setIsRequired] = useState(true)
-const section = [];
-
+    const classes  = [1,2,3,4,5,6,7,8,9,10,11,12];
+    const sectionsAvailale = ['A','B','C','D','E','F','G']
+    // const [isRequired,setIsRequired] = useState(true)
+  
+    const [section,setSection]=useState([])
+    
     function sectionHandler(e){
-        e.preventDefault();
+      e.preventDefault();
+      const sections = [...section]
+        
         const sectionName = sectionInputRef.current.value;
-        section.push(sectionName)
-        document.getElementById("sec").value=null;
-setIsRequired(false);
+        sections.push(sectionName);
+        setSection(sections)
+        console.log(sectionName,"--------",section)
+        // document.getElementById("sec").value=null;
+// setIsRequired(false);
     
       }
-
+      console.log(section,"********")
+     
   function submitHandler(event) {
-   
-    
-    const className = classInputRef.current.value;
-    const sectionName = sectionInputRef.current.value;
-    // const enteredRole = roleInputRef.current.value; 
-    // const enteredEmail = emailInputRef.current.value;
-    // const enteredPassword = passwordInputRef.current.value;
-    let uniqueSections = [...new Set(section)];
-
-    const classData = {
-      class: className,
-      sections: uniqueSections,
-      
-    };
-    console.log(classData);
-    console.log(uniqueSections,"unique");
-    
     event.preventDefault();
+    
+    console.log(section,"right after")
+      // const sectionName = sectionInputRef.current.value;
+          let uniqueSections = [...new Set(section)];
+      const className = classInputRef.current.value;
+      const classData = {
+        class: className,
+        sections: uniqueSections,
+        
+      };
+   
+      // setSection(...sections);
+      
+      
+      console.log(classData);
+      // console.log(uniqueSections,"unique");
+    
+   
+     
+   
 
     fetch(
       "http://localhost:8080/api/add-class",
@@ -68,9 +78,12 @@ setIsRequired(false);
         if (data.message == "Class Added successfully") {
           setSuccess(data.message);
           setError("");
+          setSection([])
         } else {
           setError(data.message);
           setSuccess("");
+          setSection([])
+         
         }
         // alert(data.message);
         console.log(data)
@@ -110,15 +123,38 @@ if (userRole == "Admin"){
               <Container>
                 <Row>
                   <Col sm = {3}>
+
                   <Form.Group id="class">
+              <Form.Label>Class</Form.Label>
+                <Form.Control as="select" ref={classInputRef} size="sm" required>
+                  
+{classes.map(item => {
+      return (<option  >{item}</option>);})}
+
+                </Form.Control>
+              </Form.Group>
+                    
+                  {/* <Form.Group id="class">
                 <Form.Label>Class</Form.Label>
                 <Form.Control type="text" placeholder="Enter Class" ref={classInputRef} size="sm" required />
-              </Form.Group>
+              </Form.Group> */}
               </Col>
-              <Col  sm={3}><Form.Group id="section">
+              <Col  sm={3}>
+              <Form.Group id="section">
+              <Form.Label>Section</Form.Label>
+                <Form.Control as="select" ref={sectionInputRef} size="sm" required ref={sectionInputRef} >
+                  
+{sectionsAvailale.map(item => {
+      return (<option  >{item}</option>);})}
+
+                </Form.Control>
+              </Form.Group>
+                
+                {/* <Form.Group id="section">
                 <Form.Label>Section</Form.Label>
                 <Form.Control id="sec" type="text" placeholder="Enter Section" ref={sectionInputRef} size="sm" required={isRequired} />
-              </Form.Group></Col>
+              </Form.Group> */}
+              </Col>
               
               
                   <Col style={{marginTop:"30px"}} sm={4}><Button  className="w-100" onClick={sectionHandler}>

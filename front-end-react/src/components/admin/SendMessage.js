@@ -38,7 +38,8 @@ function SendMessage() {
         }
         // setIsLoading(false);
         setStudent(student);
-        setParentPhones(student[0].parentPhones);
+        setParentPhones(student[0][0].parentPhones);
+        console.log(student[0][0])
         setIsLoading(false);
       });
   }
@@ -51,11 +52,11 @@ function SendMessage() {
     const date = new Date();
 
     const currentDate =
-      ("0" + date.getDate()).slice(-2) +
-      "/" +
+      date.getFullYear() +
+      "-" +
       ("0" + (date.getMonth() + 1)).slice(-2) +
-      "/" +
-      date.getFullYear();
+      "-" +
+      ("0" + date.getDate()).slice(-2);
 
     if (parentPhones.length > 1) {
       const m = [
@@ -129,11 +130,15 @@ function SendMessage() {
             style={{ marginTop: "25px", width: "50%" }}
             required
           />
-          <Form onSubmit={searchHandler}>
+          <Form >
             <Button
               className="w-100"
-              style={{ marginTop: "25px", marginBottom: "40px" ,marginLeft:"15px"}}
-              type="submit"
+              style={{
+                marginTop: "25px",
+                marginBottom: "40px",
+                marginLeft: "15px",
+              }}
+              onClick={searchHandler}
             >
               Search
             </Button>
