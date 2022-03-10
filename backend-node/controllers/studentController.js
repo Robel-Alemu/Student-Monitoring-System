@@ -1168,7 +1168,7 @@ const AddAttendance = async (req, res) => {
       //     message:
       //       "Term selected and Term value in file did not match, please check your file again!",
       //   });
-      // } else if (!validate.gradeMatched) {
+      } else if (!validate.gradeMatched) {
         res.status(400).send({
           message:
             "Grade selected and Grade value in file did not match, please check your file again!",
@@ -1269,7 +1269,7 @@ const SearchStudentGrade = async (req, res) => {
       });
 
       studentGradeArray = studentGradeArray.filter((student) => {
-        return student.studentId == parseInt(studentId);
+        return student.studentId == studentId;
       });
 
       res.send(studentGradeArray);
