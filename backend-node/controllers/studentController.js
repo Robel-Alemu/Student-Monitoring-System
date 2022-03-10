@@ -17,31 +17,42 @@ const AddStudentAndParent = async (req, res, next) => {
     const parent = data[1];
     console.log(student, parent, "/////////////");
     // data.studentId = (data.studentId).toString()
-
-    await firestore.collection("Student-Information").doc().set(student);
-    for(let x=0; x<parent.length;x++){
-      const P = await firestore
-          .collection("Parent-Information")
-          .where("parentPhone", "==", parent[x].parentPhone);
-          const data = await P.get();
-          if(data.empty){
-            await firestore.collection("Parent-Information").doc().set(parent[x]);
-          }
-          else continue;
-    }
-    // parent.forEach(async (g) => {
+    const s = await firestore
+    .collection("Student-Information")
+    .where("studentId", "==", student.studentId)
+    const sData = await s.get()
+    if(sData.empty){
+      await firestore.collection("Student-Information").doc().set(student);
+      for(let x=0; x<parent.length;x++){
+        const P = await firestore
+            .collection("Parent-Information")
+            .where("parentPhone", "==", parent[x].parentPhone);
+            const data = await P.get();
+            if(data.empty){
+              await firestore.collection("Parent-Information").doc().set(parent[x]);
+            }
+            else continue;
+      }
+      // parent.forEach(async (g) => {
+       
+       
+      //   await firestore.collection("Parent-Information").doc().set(g);
+        
+      //   // await addGrade(g);
+  
+      //   // return true;
+      // })
      
-     
-    //   await firestore.collection("Parent-Information").doc().set(g);
       
-    //   // await addGrade(g);
+  
+      res.status(200).send({ message: "Student Added successfully" });
+    }
+    else{
+      res.status(200).send({ message: "Student Already Exist with the given ID" });
+    }
+  
 
-    //   // return true;
-    // })
-   
     
-
-    res.status(200).send({ message: "Student Added successfully" });
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
@@ -1279,7 +1290,7 @@ const ViewGrades = async (req, res) => {
       .doc(term)
       .collection("grade-" + grade)
       .doc("section " + section)
-      .collection(subject);
+      .collection(subject).orderBy("studentId","asc");
 
     const data = await studentGrade.get();
 

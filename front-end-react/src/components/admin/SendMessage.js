@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import Layout from "../layout/Layout";
 import Card from "../ui/Card";
-import { Form, Button, FormControl, Row, Spinner } from "react-bootstrap";
+import { Form, Button, FormControl, Row,Alert, Spinner } from "react-bootstrap";
 import LayoutCenter from "../layout/LayoutCenter";
 import Login from "../authentication/Login";
 function SendMessage() {
@@ -14,6 +14,8 @@ function SendMessage() {
   const messageRef = useRef();
   const subjectRef = useRef();
   const [parentPhones, setParentPhones] = useState();
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
 
   let userRole = localStorage.getItem("role");
   function searchHandler() {
@@ -98,8 +100,18 @@ function SendMessage() {
         return response.json();
       })
       .then((data) => {
-        alert(data.message);
-        console.log(data);
+        // alert(data.message);
+        // console.log(data);
+        if (data.message == "Message Sent!") {
+          setSuccess(data.message);
+          setError("");
+        
+        } else {
+          setError(data.message);
+          setSuccess("");
+          
+         
+        }
       });
   }
 
@@ -121,7 +133,10 @@ function SendMessage() {
   if (userRole == "Admin") {
     return (
       <LayoutCenter>
+         {error && <Alert variant="danger">{error}</Alert>}
+       {success && <Alert variant="success">{success}</Alert>}
         <Row>
+       
           <FormControl
             type="text"
             placeholder="Search student's parent phone by Student ID"

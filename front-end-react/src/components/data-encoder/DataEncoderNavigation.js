@@ -36,7 +36,7 @@ function DataEncoderNavigation() {
       <Nav className={classes.nav}>
       <ul  >
              <li >
-                <Link className={classes.links} style={{"color":"white"}} to="/">Home</Link>
+                <Link className={classes.links} style={{"color":"white"}} to="/data-encoder">Home</Link>
               </li>
               {/* <li>
                <Link className={classes.links} style={{"color":"white"}} to="/update-profile-d">Update Profile</Link>

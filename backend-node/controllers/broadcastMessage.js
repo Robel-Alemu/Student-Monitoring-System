@@ -70,8 +70,10 @@ const ViewMessages = async (req, res, next) => {
           doc.id,
           doc.data().date,
           doc.data().subject,
-          doc.data().parentPhone,
+          doc.data().parentPhones,
+          
           doc.data().message,
+          
          
         );
         messageArray.push(message);

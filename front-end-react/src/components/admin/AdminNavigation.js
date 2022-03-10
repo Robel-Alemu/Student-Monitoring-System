@@ -120,7 +120,7 @@ function Adminavigation() {
                <Link style={{color:"black"}} to="/send-message">Send Message</Link>
               </NavDropdown.Item>
           <NavDropdown.Item > 
-               <Link style={{color:"black"}} to="/users">Sent Messages</Link>
+               <Link style={{color:"black"}} to="/messages">Sent Messages</Link>
               </NavDropdown.Item>
      
           </NavDropdown></li>

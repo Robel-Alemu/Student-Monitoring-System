@@ -47,6 +47,7 @@ import AllBroadcastMessagesPage from "./components/pages/AllBroadcastMessagesPag
 import ViewAttendance from "./components/pages/ViewAttendanceCommon";
 import UpdateProfilePage from "./components/pages/UpdateProfilePage";
 import ViewGrades from "./components/pages/ViewGradesCommon";
+import ViewMessages from "./components/admin/ViewMessages";
 
 function App() {
   
@@ -67,6 +68,9 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute exact path="/">
                   <AllBroadcastMessagesPage title={"Admin"} />
+                </PrivateRoute>
+                <PrivateRoute exact path="/messages">
+                  <ViewMessages />
                 </PrivateRoute>
                 <PrivateRoute path="/data-encoder">
                   <DataEncoderDashboard />
