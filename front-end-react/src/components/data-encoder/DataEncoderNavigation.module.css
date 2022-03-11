@@ -33,10 +33,11 @@ transform: scale(1.5);
   padding: 0;
   display: flex;
   align-items: baseline;
+  justify-content: right;
 }
 
  .nav li {
-  margin-left: 3rem;
+  margin-left: 5rem;
 }
 
 #nav-dropdown-dark-example  a{
@@ -66,4 +67,14 @@ transform: scale(1.5);
   border-radius: 12px;
   padding: 0 1rem;
   margin-left: 0.5rem;
+}
+
+
+.download:hover{
+  text-decoration: none;
+  color: white;
+
+  transition: .6;
+  height: 3em;
+
 }

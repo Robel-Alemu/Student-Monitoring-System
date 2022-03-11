@@ -282,17 +282,17 @@ module.exports = {
     getAllAccount,
 
     getAccount,
+    listAllUsers,
     
     
     
-    
+    /* **************USED***************/
     AddUser,
     DeleteUser,
     ViewUsers,
     GetUser,
-    
-    
     login,
-    listAllUsers,
+    
+    
     
 };

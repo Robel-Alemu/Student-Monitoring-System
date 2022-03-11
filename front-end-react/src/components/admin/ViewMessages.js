@@ -120,7 +120,7 @@ function ViewMessages() {
 
   else if (userRole == "Admin") {
   return (
-    <LayoutCenter><h1>All Announcements</h1>
+    <LayoutCenter><h1>Sent Messages</h1>
 
       
     <ParentMessageList  messages = {loadedMessages} /></LayoutCenter>

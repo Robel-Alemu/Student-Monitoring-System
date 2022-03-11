@@ -37,6 +37,13 @@ function SendMessage() {
             ...data[key],
           };
           student.push(studentData);
+          if (data.message == "No student record found") {
+            setError(data.message);
+            setSuccess("");
+            setTimeout(() => {  setError(""); }, 1000);
+          
+          } 
+
         }
         // setIsLoading(false);
         setStudent(student);
@@ -105,10 +112,12 @@ function SendMessage() {
         if (data.message == "Message Sent!") {
           setSuccess(data.message);
           setError("");
+          setTimeout(() => {  setSuccess(""); }, 1000);
         
         } else {
           setError(data.message);
           setSuccess("");
+          setTimeout(() => {  setError(""); }, 1000);
           
          
         }
@@ -155,7 +164,9 @@ function SendMessage() {
               }}
               onClick={searchHandler}
             >
-              Search
+            <svg style={{marginRight:"10px"}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>  Search
             </Button>
           </Form>
         </Row>
@@ -184,7 +195,9 @@ function SendMessage() {
             </Form.Group>
 <div style={{display:"flex", justifyContent:"center", marginBottom:"20px"}}>
 <Button className="w-50" style={{marginBottom:"20px"}}  type="submit">
-              Send Message
+<svg xmlns="http://www.w3.org/2000/svg" style={{marginRight:"10px"}} width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+</svg>  Send Message
             </Button>
 </div>
             

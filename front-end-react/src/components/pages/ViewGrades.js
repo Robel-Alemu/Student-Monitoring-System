@@ -35,10 +35,11 @@ function ViewGradePage() {
   const [grades,setGrades] = useState(["Select Grade"]);
   const [subject,setSubject] = useState(["Select Subject"]);
   const subjects = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT", "Geography", "History", "Economics" ];
-  
-  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT", "Geography", "History", "Economics" ];
-  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT"];
-  
+  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT","Technical Drawing", "Geography", "History", "Economics","General Business" ];
+  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "Physical Education", "IT"];
+const subjectOf1To4 = ["Amharic","English","English Maths","Amharic Maths","English Science","Amharic Science","Music Art"]
+const subjectOf5And6 = ["Amharic","English","Maths","General Science","Social Studies","Civics","Music Art","Physical Education"]
+const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education","Social Studies"];  
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
 function onLoadHandler(e){
   e.preventDefault();
@@ -83,6 +84,25 @@ function onLoadHandler(e){
   
   
     
+  }
+
+
+  function subjectHandler(e){
+    e.preventDefault()
+    
+        if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
+          setSubject(subjectsOf9And10)
+        }
+        else if(gradeRef.current.value == 7 || gradeRef.current.value == 8)
+         setSubject(subjectOf7And8)
+         else if(gradeRef.current.value == 6 || gradeRef.current.value == 5)
+         setSubject(subjectOf5And6)
+         else if(gradeRef.current.value == 1 || gradeRef.current.value == 2 && gradeRef.current.value == 3 || gradeRef.current.value == 4)
+         setSubject(subjectOf1To4)
+         else if(gradeRef.current.value == 11 || gradeRef.current.value == 12)
+         setSubject(subjectsOf11And12)
+  
+  
   }
 
   function termHandler(e){
@@ -157,8 +177,18 @@ function onLoadHandler(e){
       if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
         setSubject(subjectsOf9And10)
       }
-      else setSubject(subjectsOf11And12)
-      console.log(classArray[0].section);
+      else if(gradeRef.current.value == 7 || gradeRef.current.value == 8)
+       setSubject(subjectOf7And8)
+       else if(gradeRef.current.value == 6 || gradeRef.current.value == 5)
+       setSubject(subjectOf5And6)
+       else if(gradeRef.current.value == 1 || gradeRef.current.value == 2 && gradeRef.current.value == 3 || gradeRef.current.value == 4)
+       setSubject(subjectOf1To4)
+       else if(gradeRef.current.value == 11 || gradeRef.current.value == 12)
+       setSubject(subjectsOf11And12)
+      
+      
+      
+       console.log(classArray[0].section);
       console.log(sections,"*********");
       sections.forEach(element => {
         console.log(element)
@@ -210,7 +240,8 @@ function onLoadHandler(e){
         setSections([section])
           setSubject([subject])
           setTerm([term])
-        if (data.message == "No student record found") setError(data.message);
+        if (data.message == "No student record found") {setError(data.message);
+        setTimeout(() => {  setError(""); }, 2000);}
         else setError("");
                
       });
@@ -254,9 +285,10 @@ return(
             </Col>
           </Row>
 
-          <Row></Row>
+         
           <Row >
-            <Form.Group id="term">
+            <Col sm={8}>
+              <Row> <Form.Group id="term">
               <Form.Label>Term</Form.Label>
               <Form.Control size="sm" as="select" ref={termRef} required onClick={termHandler}>
              
@@ -268,7 +300,7 @@ return(
             <Form.Group id="grade" style={{marginLeft:"30px"}}>
               <Form.Label>Grade</Form.Label>
               <Form.Control size="sm" as="select" ref={gradeRef} required 
-              onClick={termHandler}>
+              onClick={termHandler} >
                 
 
                 {grades.map(item => {
@@ -278,7 +310,7 @@ return(
             </Form.Group>
             <Form.Group id="section" style={{marginLeft:"30px"}}>
               <Form.Label>Section</Form.Label>
-              <Form.Control size="sm" as="select" ref={sectionRef} required>
+              <Form.Control size="sm" as="select" ref={sectionRef} required onClick={gradeChangeHandler}>
                
                 
 {sections.map(item => {
@@ -288,19 +320,22 @@ return(
             </Form.Group>
             <Form.Group id="subject" style={{marginLeft:"30px"}}>
               <Form.Label>Subject</Form.Label>
-              <Form.Control size="sm" as="select" ref={subjectRef} required>
+              <Form.Control size="sm" as="select" ref={subjectRef} required onClick={subjectHandler} >
               {subject.map(item => {
       return (<option  >{item}</option>);
   })}
                
               </Form.Control>
-            </Form.Group>
-
+            </Form.Group></Row>
+             </Col>
+            <Col sm={4}><Button style={{ marginTop: "25px" }} className="w-75" onClick={searchHandler}>
+            <svg style={{marginRight:"10px"}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>  Search 
+              </Button></Col>
+            
             </Row>
-            <Row >   <Button className="w-25" onClick={searchHandler}>
-                Search
-              </Button>
-           </Row>
+           
           
           
 

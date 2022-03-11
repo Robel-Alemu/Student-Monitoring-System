@@ -201,31 +201,11 @@ if(enteredParent1Name && enteredParent1Phone && enteredParent2Name && enteredPar
   })
   parentPhone.push(enteredParent1Phone,enteredParent2Phone)
   
-  // const parent=[
-  //   {
-  //     parentName: enteredParent1Name,
-  //     parentPhone : enteredParent1Phone
-  //   },
-  //   {
-  //     parentName: enteredParent2Name,
-  //     parentPhone : enteredParent2Phone
-  //   }
-  // ]
-  // const pPhones = [enteredParent1Phone,enteredParent2Phone]
-  // setParentPhones(pPhones);
-  // setParent(parent);
+  
   
 }
 else if(enteredParent1Name && enteredParent1Phone ){
-  // const parent=[
-  //   {
-  //     parentName: enteredParent1Name,
-  //     parentPhone : enteredParent1Phone
-  //   }]
-  //   const pPhones = [enteredParent1Phone]
-  //   setParent(parent);
-    
-  //   setParentPhones(pPhones);
+
   parent.push({
     parentName: enteredParent1Name,
     parentPhone : enteredParent1Phone
@@ -233,17 +213,7 @@ else if(enteredParent1Name && enteredParent1Phone ){
   parentPhone.push(enteredParent1Phone)
   
 }
-// else if(enteredParent2Name && enteredParent2Phone ){
-//   const parent=[
-//     {
-//       parentName: enteredParent2Name,
-//       parentPhone : enteredParent2Phone
-//     }]
-//     const pPhones = [enteredParent2Phone]
-//     setParent(parent);
-    
-//     setParentPhones(pPhones);
-// }
+
 
     const studentData = {
       studentId: enteredStudentId,
@@ -283,9 +253,11 @@ else if(enteredParent1Name && enteredParent1Phone ){
         if (data.message == "Student Added successfully") {
           setSuccess(data.message);
           setError("");
+          setTimeout(() => {  setSuccess(""); }, 1000);
         } else {
           setError(data.message);
           setSuccess("");
+          setTimeout(() => {  setError(""); }, 1000);
         }
         // alert(data.message);
 
@@ -385,6 +357,7 @@ else if(enteredParent1Name && enteredParent1Phone ){
                         ref={sectionRef}
                         required
                         placeholder="choose section"
+                        onClick={gradeChangeHandler}
                       >
                         {sections.map(item => {
       return (<option  >{item}</option>);
@@ -434,9 +407,13 @@ else if(enteredParent1Name && enteredParent1Phone ){
                   </Col>
                 </Row>
                 <Form.Group id="id">
-                  <Button disabled={loading} className="w-100" type="submit">
-                    Add Student
-                  </Button>
+                  <div style={{display:"flex",justifyContent:"center"}}><Button disabled={loading} className="w-100" type="submit">
+                  <svg style={{marginRight:"10px"}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+</svg>  Add Student 
+                  </Button></div>
+                  
                 </Form.Group>
               </Container>
             </Form>

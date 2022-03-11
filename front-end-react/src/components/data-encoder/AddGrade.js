@@ -21,10 +21,11 @@ function AddGrade() {
   const [sections,setSections]=useState(["Select Section"]);
   const [classes,setClasses] = useState(["Select Grade"]);
   const [subject,setSubject] = useState(["Select Subject"]);
-  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT", "Geography", "History", "Economics" ];
-  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT"];
-  
-  
+  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT","Technical Drawing", "Geography", "History", "Economics","General Business" ];
+  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "Physical Education", "IT"];
+const subjectOf1To4 = ["Amharic","English","English Maths","Amharic Maths","English Science","Amharic Science","Music Art"]
+const subjectOf5And6 = ["Amharic","English","Maths","General Science","Social Studies","Civics","Music Art","Physical Education"]
+const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education","Social Studies"];  
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
   
   const [fileName, setFileName]= useState("Choose File");
@@ -141,7 +142,14 @@ function AddGrade() {
       if (gradeRef.current.value == 9 || gradeRef.current.value == 10){
         setSubject(subjectsOf9And10)
       }
-      else setSubject(subjectsOf11And12)
+      else if(gradeRef.current.value == 7 || gradeRef.current.value == 8)
+       setSubject(subjectOf7And8)
+       else if(gradeRef.current.value == 6 || gradeRef.current.value == 5)
+       setSubject(subjectOf5And6)
+       else if(gradeRef.current.value == 1 || gradeRef.current.value == 2 && gradeRef.current.value == 3 || gradeRef.current.value == 4)
+       setSubject(subjectOf1To4)
+       else if(gradeRef.current.value == 11 || gradeRef.current.value == 12)
+       setSubject(subjectsOf11And12)
       // setResponse(data.message);
 
     });
@@ -192,10 +200,12 @@ function AddGrade() {
       })
       .then((data) => {
         if (data.message == "Grades added successfully!") {setSuccess(data.message);
-        setError("");}
+        setError("");
+        setTimeout(() => {  setSuccess(""); }, 1000);}
 
         else {setError(data.message);
-                setSuccess("");}
+                setSuccess("");
+                setTimeout(() => {  setError(""); }, 1000);}
 
         // alert(data.message);
         
@@ -317,8 +327,11 @@ function AddGrade() {
 </div>
               </Form.Group>
               <Button className="w-100" type="submit">
-                Add Grade
-              </Button>
+              <svg  style={{marginRight:"10px"}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+</svg>
+         Add Grade       </Button>
             </Form>
           </Card.Body>
         </Card>

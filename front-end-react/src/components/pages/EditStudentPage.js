@@ -6,6 +6,7 @@ import { useRef } from "react";
 import StudentList from "../data-encoder/StudentList";
 import DataEncoderLayout from "../layout/DataEncoderLayout";
 import Login from "../authentication/Login";
+import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
 
 function EditStudentPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +121,7 @@ function EditStudentPage() {
 
   return (
     <section >
-        <DataEncoderLayout><Container>
+        <DataEncoderCenterLayout><Container>
   <Row>
     <Col sm={8}><h2>Search and Update Student</h2>
       {error && <Alert variant="danger">{error}</Alert>}
@@ -129,7 +130,9 @@ function EditStudentPage() {
     <Form onSubmit={searchHandler}>
     <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"20px"}} required/>
     <Button  className="w-100" type="submit">
-                Search
+    <svg style={{marginRight:"10px"}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>  Search 
               </Button>
               </Form>
  </Col>
@@ -137,7 +140,7 @@ function EditStudentPage() {
 </Container>
 
       
-      <StudentList student = {loadedStudent}   /></DataEncoderLayout>
+      <StudentList student = {loadedStudent}   /></DataEncoderCenterLayout>
       
 
     </section>
