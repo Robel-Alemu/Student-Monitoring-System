@@ -21,8 +21,8 @@ function AddGrade() {
   const [sections,setSections]=useState(["Select Section"]);
   const [classes,setClasses] = useState(["Select Grade"]);
   const [subject,setSubject] = useState(["Select Subject"]);
-  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT","Technical Drawing", "Geography", "History", "Economics","General Business" ];
-  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "Physical Education", "IT"];
+  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "HPE", "IT","TD", "Geography", "History", "Economics","Business" ];
+  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "HPE", "IT"];
 const subjectOf1To4 = ["Amharic","English","English Maths","Amharic Maths","English Science","Amharic Science","Music Art"]
 const subjectOf5And6 = ["Amharic","English","Maths","General Science","Social Studies","Civics","Music Art","Physical Education"]
 const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education","Social Studies"];  
@@ -32,6 +32,7 @@ const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Ch
   const[grade,setGrade] = useState();
 
   let userRole = localStorage.getItem("role");
+  const token = localStorage.getItem("token")
   let grades = [];
 
   const readUploadFile = (e) => {
@@ -191,7 +192,7 @@ const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Ch
       {
         method: "POST",
         body: JSON.stringify(grade),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
     )
       .then((response) => {
@@ -201,11 +202,11 @@ const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Ch
       .then((data) => {
         if (data.message == "Grades added successfully!") {setSuccess(data.message);
         setError("");
-        setTimeout(() => {  setSuccess(""); }, 1000);}
+        setTimeout(() => {  setSuccess(""); }, 2000);}
 
         else {setError(data.message);
                 setSuccess("");
-                setTimeout(() => {  setError(""); }, 1000);}
+                setTimeout(() => {  setError(""); }, 2000);}
 
         // alert(data.message);
         

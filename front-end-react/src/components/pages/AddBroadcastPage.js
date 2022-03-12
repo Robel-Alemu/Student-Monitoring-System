@@ -11,6 +11,7 @@ function AddBroadcastPage() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   let userRole = localStorage.getItem("role")
+  const token = localStorage.getItem("token")
 //   const [responses, setResponse] = useState();
   function addBroadcaastHandler(message) {
     
@@ -20,7 +21,7 @@ function AddBroadcastPage() {
       {
         method: "POST",
         body: JSON.stringify(message),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
       
       )

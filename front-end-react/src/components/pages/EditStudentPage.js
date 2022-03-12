@@ -121,12 +121,13 @@ function EditStudentPage() {
 
   return (
     <section >
-        <DataEncoderCenterLayout><Container>
+        <DataEncoderLayout>
+          <Container style={{marginBottom:"30px"}}>
   <Row>
     <Col sm={8}><h2>Search and Update Student</h2>
       {error && <Alert variant="danger">{error}</Alert>}
             </Col>
-    <Col sm={4}>
+    <Col sm={3}>
     <Form onSubmit={searchHandler}>
     <FormControl type="text" placeholder="Search by ID" ref={id} className=" mr-sm-2" style={{marginBottom:"20px"}} required/>
     <Button  className="w-100" type="submit">
@@ -136,11 +137,18 @@ function EditStudentPage() {
               </Button>
               </Form>
  </Col>
+ <Row>
+</Row>
   </Row>
-</Container>
+  
+
 
       
-      <StudentList student = {loadedStudent}   /></DataEncoderCenterLayout>
+      
+
+      </Container><StudentList  student = {loadedStudent}   />
+  
+</DataEncoderLayout>
       
 
     </section>

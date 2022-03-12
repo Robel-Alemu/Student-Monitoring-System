@@ -15,11 +15,14 @@ const BroadcastAnnouncements = async (req, res, next) => {
         
         const data = req.body;
         
-            
+        jwt.verify(req.token, 'secretkey', async (err,d) => {
+          if(err) {
+            res.sendStatus(403);
+          } else { 
         await firestore.collection("Broadcast-Messages").doc().set(data);
         res.status(200).send({message:'Announcement Added Successfully!'});
-        
-       
+          }
+        })
     } catch(error){
         res.send(error.message);
     }
@@ -32,12 +35,17 @@ const SendMessage = async (req, res, next) => {
       
       const data = req.body;
       console.log(data);
+      jwt.verify(req.token, 'secretkey',  (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else { 
           data.forEach( async x=>{
             await firestore.collection("Parent-Messages").doc().set(x);
           })
       
       res.status(200).send({message:'Message Sent!'});
-      
+        }
+      })
      
   } catch(error){
       res.send(error.message);
@@ -93,11 +101,16 @@ const EditMessage = async (req, res, next) => {
   try {
       const id = req.params.id;
       const data = req.body;
+      jwt.verify(req.token, 'secretkey', async (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else { 
       const message =  await firestore.collection('Parent-Messages').doc(id);
       await message.update(data);
       
         res.status(200).send({message:'Message Updated successfuly'});
-          
+        }
+      })
   } catch (err) {
     res.status(400).send({message:err.message});
      

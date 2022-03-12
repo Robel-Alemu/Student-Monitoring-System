@@ -9,7 +9,7 @@ const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
 const SchoolClass = require("../models/Admin");
 const Section = require("../models/Admin");
-
+const jwt = require('jsonwebtoken')
 async function checkClass(c){
 const schoolClass = await firestore.collection("Class-Information").where("class", "==", c).get();
 let classArray = []
@@ -28,6 +28,10 @@ const AddClass = async (req, res, next) => {
       let result = await checkClass(schoolClass)
 
       console.log(data);
+      jwt.verify(req.token, 'secretkey', async (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else { 
   if (result == true){
     await firestore.collection("Class-Information").doc().set(data);
     res.status(200).send({ message: "Class Added successfully" });
@@ -35,6 +39,9 @@ const AddClass = async (req, res, next) => {
       
   else if (result == false)
   res.status(400).send({ message: "Class already exists!" });
+
+}
+      })
     } catch (err) {
       res.status(400).send({ message: err.message });
     }
@@ -119,6 +126,10 @@ const UpdateClass = async (req, res, next) => {
     
 
     const classId = (req.params.classId).toString();
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const classData = await firestore
   .collection("Class-Information").where("class", "==", classId).get();
   if(classData.empty) res.status(400).send({message: "Class Does Not Exist!"})
@@ -150,6 +161,9 @@ const UpdateClass = async (req, res, next) => {
     await g.update(updatedData)
     res.status(200).send({message:"class updated successfully"})
   }
+
+}
+    })
 }catch(error){res.status(400).send({message: error.message})
 }
 

@@ -12,6 +12,7 @@ import {
 
 import { Link, useHistory } from "react-router-dom";
 import DataEncoderCenterLayout from "../layout/DataEncoderCenterLayout";
+import DataEncoderLayout from "../layout/DataEncoderLayout";
 
 function UpdateStudent(props) {
   //     const [sId, setSId] = useState("");
@@ -27,7 +28,7 @@ function UpdateStudent(props) {
 
   const [loading, setLoading] = useState(true);
   const [loade, setLoaded] = useState([]);
-
+  const token = localStorage.getItem("token")
   //     const {getStudent} = useAuth();
 
   // const id = useRef();
@@ -267,7 +268,7 @@ function UpdateStudent(props) {
     fetch("http://localhost:8080/api/update-student/" + enteredStudentId, {
       method: "PUT",
       body: JSON.stringify(FinaStudentData),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
     })
       .then((response) => {
         // console.log(response);
@@ -297,7 +298,7 @@ function UpdateStudent(props) {
         // "https://student-monitoring.herokuapp.com/api/delete-student/" + id, {
         method: "DELETE",
         //   body: JSON.stringify(studentData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       })
         .then((response) => {
           // console.log(response);
@@ -324,7 +325,8 @@ function UpdateStudent(props) {
 
   return (
     <>
-      <Card style={{ marginTop: "30px",maxWidth:"50%" }}>
+    
+      <Card style={{ marginTop: "30px" }}>
         <Card.Body>
           {/* <h3 className="text-center mb-4">Update Student Detail</h3> */}
 
@@ -513,6 +515,8 @@ function UpdateStudent(props) {
           </Form>
         </Card.Body>
       </Card>
+   
+
     </>
   );
 }

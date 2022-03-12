@@ -29,14 +29,14 @@ function ViewGradePage() {
   const gradeRef = useRef();
   const sectionRef = useRef();
   const subjectRef = useRef();
-  
+  const token = localStorage.getItem("token")
   const [term, setTerm] = useState(["Select Term"])
   const [sections,setSections]=useState(["Select Section"]);
   const [grades,setGrades] = useState(["Select Grade"]);
   const [subject,setSubject] = useState(["Select Subject"]);
   const subjects = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT", "Geography", "History", "Economics" ];
-  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education", "IT","Technical Drawing", "Geography", "History", "Economics","General Business" ];
-  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "Physical Education", "IT"];
+  const subjectsOf11And12 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "HPE", "IT","TD", "Geography", "History", "Economics","Business" ];
+  const subjectsOf9And10 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry","Geography","History", "Civics", "HPE", "IT"];
 const subjectOf1To4 = ["Amharic","English","English Maths","Amharic Maths","English Science","Amharic Science","Music Art"]
 const subjectOf5And6 = ["Amharic","English","Maths","General Science","Social Studies","Civics","Music Art","Physical Education"]
 const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Chemistry", "Civics", "Physical Education","Social Studies"];  
@@ -216,8 +216,11 @@ function onLoadHandler(e){
         "/" +
         section +
         "/" +
-        subject
-    )
+        subject,{
+          method: "GET",
+          
+          headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
+        })
       .then((response) => {
         console.log(response.body);
         return response.json();

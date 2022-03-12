@@ -15,6 +15,7 @@ function UpdateClass() {
 //   const emailInputRef = useRef("");
 //   const passwordInputRef = useRef("");
 let userRole = localStorage.getItem("role")
+const token = localStorage.getItem("token")
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
     const [sections,setSections] = useState();
@@ -39,6 +40,8 @@ function sectionHandler(e){
     sections.push(sectionName);
     setSection(sections)
     console.log(sectionName,"--------",section)
+    setSuccess("Section Added")
+    setTimeout(() => {  setSuccess(""); }, 2000);
     // document.getElementById("sec").value=null;
 setIsRequired(false);
 
@@ -86,7 +89,7 @@ setIsRequired(false);
       {
         method: "PUT",
         body: JSON.stringify(classData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
      
      ).then((response) => {
@@ -98,12 +101,12 @@ setIsRequired(false);
           setSuccess(data.message);
           setError("");
           setSection([])
-          setTimeout(() => {  setSuccess(""); }, 1000);
+          setTimeout(() => {  setSuccess(""); }, 2000);
         } else {
           setError(data.message);
           setSuccess("");
           setSection([])
-          setTimeout(() => {  setError(""); }, 1000);
+          setTimeout(() => {  setError(""); }, 2000);
         }
         // alert(data.message);
         console.log(data)

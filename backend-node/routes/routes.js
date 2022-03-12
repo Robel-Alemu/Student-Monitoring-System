@@ -72,9 +72,10 @@ const router = express.Router();
 
 router.post("/login", login);
 router.post("/Users",verifyToken, AddUser);
-router.delete("/User-Accounts/:id", DeleteUser);
+// router.delete("/User-Accounts/:id",verifyToken, DeleteUser);
 router.get("/users",verifyToken, ViewUsers);
 router.get("/users/:email", GetUser);
+router.delete("/delete/:id",verifyToken, DeleteUser);
 
 // USED ROUTES ***********FROM ACCOUNT CONTROLER***************
 
@@ -86,23 +87,23 @@ router.get("/User-Accounts/:id", getAccount);
 router.get("/account", listAllUsers);
 
 
-router.delete("/delete-student/:id", DeleteStudent);
+router.delete("/delete-student/:id",verifyToken, DeleteStudent);
 router.get("/Student-Information", ViewStudents);
 router.get("/Student-Information/:studentId", SearchStudent);
-router.post("/Student-Information", AddStudentAndParent);
+router.post("/Student-Information",verifyToken, AddStudentAndParent);
 
-router.put("/update-grade", UpdateGrades);
+router.put("/update-grade",verifyToken, UpdateGrades);
 
-router.post("/add-multiple-students", AddMultipleStudentAndParent);
+router.post("/add-multiple-students",verifyToken, AddMultipleStudentAndParent);
 
-router.post("/add-grade", AddGrades);
-router.get("/filter-grades/:term/:grade/:section/:subject", ViewGrades);
+router.post("/add-grade",verifyToken, AddGrades);
+router.get("/filter-grades/:term/:grade/:section/:subject",verifyToken, ViewGrades);
 router.get(
   "/get-grade/:term/:grade/:section/:subject/:studentId",
   SearchStudentGrade
 );
 router.put(
-  "/edit-grade/:term/:grade/:section/:subject/:studentId",
+  "/edit-grade/:term/:grade/:section/:subject/:studentId",verifyToken,
   EditGrade
 );
 
@@ -110,32 +111,32 @@ router.get(
   "/get-attendance/:grade/:section/:studentId/:date",
   SearchStudentAttendance
 );
-router.post("/add-attendance", AddAttendance);
-router.put("/update-attendance/:id", UpdateAttendance);
+router.post("/add-attendance",verifyToken, AddAttendance);
+router.put("/update-attendance/:id",verifyToken, UpdateAttendance);
 router.get(
-  "/filter-attendance/:grade/:section/:date",
+  "/filter-attendance/:grade/:section/:date",verifyToken,
   ViewAttendance
 );
 
 // router.get("/broadcast-messages", ViewAnnouncements);
-router.post("/broadcast-message", BroadcastAnnouncements);
+router.post("/broadcast-message",verifyToken, BroadcastAnnouncements);
 
 
 
 
 router.put("/update-message/:id", UpdateAnnouncements);
-router.post("/send-message/", SendMessage);
-router.get("/view-messages/", ViewMessages);
-router.put("/edit-message/:id", EditMessage);
+router.post("/send-message/",verifyToken, SendMessage);
+router.get("/view-messages/",verifyToken, ViewMessages);
+router.put("/edit-message/:id",verifyToken, EditMessage);
 
-router.put("/update-student/:id", UpdateStudentAndParent);
+router.put("/update-student/:id",verifyToken, UpdateStudentAndParent);
 
-router.delete("/delete/:id", DeleteUser);
 
-router.post("/add-class", AddClass);
+
+router.post("/add-class",verifyToken, AddClass);
 router.get("/get-class/:classId", GetClass);
 router.get("/get-all-class/", GetAllClass);
-router.put("/update-class/:classId", UpdateClass);
+router.put("/update-class/:classId",verifyToken, UpdateClass);
 
 router.get("/broadcast-messages",verifyToken,  ViewAnnouncements);
 

@@ -40,7 +40,7 @@ function EditGrade(props) {
   const [success,setSuccess] = useState();
   const history = useHistory();
   let userRole = localStorage.getItem("role")
-
+  const token = localStorage.getItem("token")
   function submitHandler(event) {
     event.preventDefault();
     const enteredStudentId = studentId.current.value;
@@ -72,7 +72,7 @@ function EditGrade(props) {
       "http://localhost:8080/api/edit-grade/" + term + "/" + grade + "/" + section + "/" + subject + "/" + enteredStudentId, {
       method: "PUT",
       body: JSON.stringify(studentData),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
     })
       .then((response) => {
         // console.log(response);
@@ -83,11 +83,11 @@ function EditGrade(props) {
         console.log(data);
         if (data.message == "Student Grade Updated successfuly") {setSuccess(data.message);
           setError("");
-          setTimeout(() => {  setSuccess(""); }, 1000);}
+          setTimeout(() => {  setSuccess(""); }, 2000);}
   
           else {setError(data.message);
                   setSuccess("");
-                  setTimeout(() => {  setError(""); }, 1000);}
+                  setTimeout(() => {  setError(""); }, 2000);}
 
         //   setResponse(data);
       });

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useState ,useEffect} from "react";
 function Users(props) {
   const history = useHistory();
-
+  const token = localStorage.getItem("token")
   const [value, setValue] = useState();
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
@@ -21,7 +21,7 @@ function Users(props) {
       fetch("http://localhost:8080/api/delete/" + id, {
         method: "DELETE",
         //   body: JSON.stringify(studentData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       })
       .then((response) => {
         // console.log(response);
@@ -37,7 +37,8 @@ function Users(props) {
           setSuccess("");}
         // alert(data.message);
         console.log(data);
-        setTimeout(() => {  setError(""); }, 1000);
+        setTimeout(() => {  setError(""); }, 3000);
+      
         const refresh = () => {
           // re-renders the component
           setValue({});

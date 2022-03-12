@@ -37,6 +37,7 @@ function AddStudent(props) {
   const [field, setField] = useState();
 
   let userRole = localStorage.getItem("role")
+  const token = localStorage.getItem("token")
 
   // const [parent,setParent] = useState();
   // const [parentPhones,setParentPhones] = useState()
@@ -242,7 +243,7 @@ else if(enteredParent1Name && enteredParent1Phone ){
       {
         method: "POST",
         body: JSON.stringify(FinaStudentData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
     )
       .then((response) => {
@@ -253,11 +254,11 @@ else if(enteredParent1Name && enteredParent1Phone ){
         if (data.message == "Student Added successfully") {
           setSuccess(data.message);
           setError("");
-          setTimeout(() => {  setSuccess(""); }, 1000);
+          setTimeout(() => {  setSuccess(""); }, 2000);
         } else {
           setError(data.message);
           setSuccess("");
-          setTimeout(() => {  setError(""); }, 1000);
+          setTimeout(() => {  setError(""); }, 2000);
         }
         // alert(data.message);
 

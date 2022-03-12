@@ -22,6 +22,7 @@ function AddAttendance() {
   const [classes,setClasses] = useState(["Select Grade"]);
   const terms = ["first-term", "second-term", "third-term", "fourth-term"];
   let userRole = localStorage.getItem("role");
+  const token = localStorage.getItem("token")
   const date = new Date();
 
   // const currentDate = `${date.getFullYear()}-${
@@ -174,7 +175,7 @@ function AddAttendance() {
         {
           method: "POST",
           body: JSON.stringify(attendances),
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
         }
       )
         .then((response) => {

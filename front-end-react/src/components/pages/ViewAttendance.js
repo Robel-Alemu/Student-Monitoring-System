@@ -27,7 +27,7 @@ import Login from "../authentication/Login";
 function ViewAttendancePage({ title }) {
   const { currentUser, getUser } = useAuth();
  
-
+  const token = localStorage.getItem("token")
   const [isLoading, setIsLoading] = useState(false);
   const [loadedStudent, setLoadedStudent] = useState([]);
   const [error, setError] = useState();
@@ -174,8 +174,11 @@ function ViewAttendancePage({ title }) {
         "/" +
         section +
         "/" +
-        startDate
-    )
+        startDate,{
+          method: "GET",
+          
+          headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
+        })
       .then((response) => {
         console.log(response.body);
         return response.json();

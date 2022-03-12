@@ -9,7 +9,7 @@ const StudentAttendance = require("../models/StudentAttendance");
 const StudentGrade = require("../models/StudentGrade");
 const firestore = firebase.firestore();
 const StudentInformation = require("../models/StudentInformation");
-
+const jwt = require('jsonwebtoken')
 const AddStudentAndParent = async (req, res, next) => {
   try {
     const data = req.body;
@@ -17,6 +17,10 @@ const AddStudentAndParent = async (req, res, next) => {
     const parent = data[1];
     console.log(student, parent, "/////////////");
     // data.studentId = (data.studentId).toString()
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const s = await firestore
     .collection("Student-Information")
     .where("studentId", "==", student.studentId)
@@ -47,12 +51,14 @@ const AddStudentAndParent = async (req, res, next) => {
   
       res.status(200).send({ message: "Student Added successfully" });
     }
+    
     else{
       res.status(200).send({ message: "Student Already Exist with the given ID" });
     }
   
 
-    
+  }
+})
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
@@ -184,6 +190,11 @@ const UpdateStudentAndParent = async (req, res, next) => {
     const student_ = data[0];
     const parent = data[1];
     console.log(student_, parent, "/////////////");
+
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const student = await firestore
       .collection("Student-Information")
       .where("studentId", "==", id)
@@ -211,6 +222,9 @@ const UpdateStudentAndParent = async (req, res, next) => {
       
     }
     res.status(200).send({ message: "Student Updated successfuly" });
+      }
+    })
+  
   } catch (err) {
     res.status(400).send({ message: err.message });
     res.status(400).send(error.message);
@@ -220,7 +234,10 @@ const UpdateStudentAndParent = async (req, res, next) => {
 const DeleteStudent = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const student = await firestore
       .collection("Student-Information")
       .where("studentId", "==", id)
@@ -230,6 +247,8 @@ const DeleteStudent = async (req, res, next) => {
       doc.ref.delete();
     });
     res.status(200).send({ message: "Student deleted successfuly" });
+  }
+})
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
@@ -309,9 +328,15 @@ const EditGrade = async (req, res, next) => {
     //   .collection("Student-Information")
     //   .where("studentId", "==", id)
     //   .get();
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     await updateGrade(term, grade, section, subject, data);
 
     res.status(200).send({ message: "Student Grade Updated successfuly" });
+      }
+    })
   } catch (err) {
     res.status(400).send({ message: err.message });
     res.status(400).send(error.message);
@@ -330,6 +355,10 @@ const UpdateGrades = async (req, res) => {
     const subject = data[lastItem].subject;
     const defaultValue = null;
     data.pop();
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     function checkUniqueStudentId(array) {
       let isUnique = true;
       let idExist = true;
@@ -456,6 +485,8 @@ const UpdateGrades = async (req, res) => {
           "Subject selected and Subject value in file did not match, please check your file again!",
       });
     }
+  }
+})
   } catch (error) {
     console.log(error.message);
     res.status(200).send({ message: error.message });
@@ -478,7 +509,10 @@ const AddGrades = async (req, res) => {
     let hasError = false;
 
     let canAdd = false;
-
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const defaultValue = null;
     let firebaseResult = await fetch_firebase(term, grade, section, subject);
     if (firebaseResult == true) canAdd = true;
@@ -623,6 +657,8 @@ const AddGrades = async (req, res) => {
           "file contains student grade  that already exist, please use update option if necessary, please check your file again!",
       });
     }
+  }
+})
   } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
@@ -669,7 +705,10 @@ const AddMultipleStudentAndParent = async (req, res) => {
 
     const validStudentData = [];
     const parentData = [];
-
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     data.forEach((x) => {
       if (x.parent1Name && x.parent1Phone && x.parent2Name && x.parent2Phone) {
         parentData.push(
@@ -950,6 +989,8 @@ const AddMultipleStudentAndParent = async (req, res) => {
         });
       }
     }
+  }
+})
   } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
@@ -1020,7 +1061,10 @@ const AddAttendance = async (req, res) => {
     let hasError = false;
 
     let canAdd = false;
-
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const defaultValue = "";
     let firebaseResult = await fetch_firebaseAttendance(
       // year,
@@ -1185,6 +1229,8 @@ const AddAttendance = async (req, res) => {
           "file contains student attendance entry that already exist, please use update option if necessary, please check your file again!",
       });
     }
+  }
+})
   } catch (error) {
     console.log(error.message);
     res.status(400).send({ message: error.message });
@@ -1203,6 +1249,10 @@ const UpdateAttendance = async (req, res, next) => {
     const grade = data.grade;
     const section = data.section;
     console.log(data.date);
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const g = await firestore
       .collection("Attendance")
       // .doc(year)
@@ -1221,6 +1271,8 @@ const UpdateAttendance = async (req, res, next) => {
     console.log("updated");
 
     res.status(200).send({ message: "Attendance Updated successfuly" });
+      }
+    })
   } catch (err) {
     res.status(400).send({ message: err.message });
     // res.status(400).send(error.message);
@@ -1285,6 +1337,10 @@ const ViewGrades = async (req, res) => {
   const subject = req.params.subject;
 
   try {
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const studentGrade = await firestore
       .collection("Grade")
       .doc(term)
@@ -1318,6 +1374,9 @@ const ViewGrades = async (req, res) => {
 
       res.send(studentGradeArray);
     }
+
+  }
+})
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
@@ -1441,6 +1500,10 @@ const ViewAttendance = async (req, res) => {
   console.log(z, "=========================");
   // console.log(check,"------------------")
   try {
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const attendance = await firestore
       .collection("Attendance")
       // .doc(year)
@@ -1476,6 +1539,9 @@ const ViewAttendance = async (req, res) => {
 
       res.send(studentAttendanceArray);
     }
+
+  }
+})
   } catch (error) {
     res.status(400).send({ message: error.message });
   }

@@ -95,9 +95,9 @@ function Adminavigation() {
           title="Student"
           menuVariant="dark"
         >
-          <NavDropdown.Item > 
+          {/* <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/all-students">View Students</Link>
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
           <NavDropdown.Item > 
                <Link style={{color:"black"}} to="/view-grades">View Grade</Link>
               </NavDropdown.Item>

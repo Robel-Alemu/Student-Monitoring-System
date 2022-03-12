@@ -11,6 +11,10 @@ const jwt = require('jsonwebtoken')
 const AddUser = async (req, res, next) => {
   try {
     const data = req.body;
+    jwt.verify(req.token, 'secretkey', async (err,d) => {
+      if(err) {
+        res.sendStatus(403);
+      } else { 
     const addAccount = await auth.createUserWithEmailAndPassword(data.email, data.password);
     const user = addAccount.user;
     
@@ -23,6 +27,9 @@ const AddUser = async (req, res, next) => {
      });
     res.status(200).send({message:'User Account created successfully'});
     console.log('data added successfully');
+
+      }
+    })
   } catch (err) {
     res.status(400).send({message:err.message});
     console.error(err);
@@ -46,7 +53,7 @@ const login = async (req, res, next) => {
             email: u.user.email
           }
           
-            jwt.sign({user}, 'secretkey', { expiresIn: '30000s' }, (err, token) => {
+            jwt.sign({user}, 'secretkey', { expiresIn: '1000000s' }, (err, token) => {
               res.send({
                 token: token,user: u
               });
@@ -107,12 +114,18 @@ const DeleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
        const toDelete = await firestore.collection('Users').where("uid", "==", id).get();
-
+       jwt.verify(req.token, 'secretkey', async (err,d) => {
+        if(err) {
+          res.sendStatus(403);
+        } else { 
        toDelete.forEach((doc) => {
           doc.ref.delete();
         });
         res.status(200).send({message:'Account deleted successfuly'});
-    } catch (err) {
+      }
+    })
+    
+      } catch (err) {
       res.status(400).send({message:err.message});
        
     }

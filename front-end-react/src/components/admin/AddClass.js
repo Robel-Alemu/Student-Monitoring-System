@@ -15,7 +15,7 @@ function AddClass() {
 //   const emailInputRef = useRef("");
 //   const passwordInputRef = useRef("");
 let userRole = localStorage.getItem("role")
-
+const token = localStorage.getItem("token")
 
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
@@ -36,7 +36,7 @@ let userRole = localStorage.getItem("role")
         // document.getElementById("sec").value=null;
 // setIsRequired(false);
       setSuccess("Section Added")
-      setTimeout(() => {  setSuccess(""); }, 1000);
+      setTimeout(() => {  setSuccess(""); }, 2000);
       
     
       }
@@ -73,7 +73,7 @@ let userRole = localStorage.getItem("role")
       {
         method: "POST",
         body: JSON.stringify(classData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
      
      ).then((response) => {
@@ -85,12 +85,12 @@ let userRole = localStorage.getItem("role")
           setSuccess(data.message);
           setError("");
           setSection([])
-          setTimeout(() => {  setSuccess(""); }, 1000);
+          setTimeout(() => {  setSuccess(""); }, 2000);
         } else {
           setError(data.message);
           setSuccess("");
           setSection([])
-          setTimeout(() => {  setError(""); }, 1000);
+          setTimeout(() => {  setError(""); }, 2000);
          
         }
         // alert(data.message);

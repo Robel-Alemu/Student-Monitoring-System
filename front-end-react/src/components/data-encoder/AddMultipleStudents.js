@@ -16,6 +16,7 @@ function AddMultipleStudents() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
   let userRole = localStorage.getItem("role")
+  const token = localStorage.getItem("token")
   const [students,setStudents] = useState()
   // let subjectNormal = ['maths','physics','chemistry'];
   // let subjectArt = ['history','business','art'];
@@ -71,7 +72,7 @@ function AddMultipleStudents() {
       {
         method: "POST",
         body: JSON.stringify(students),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
       }
     )
       .then((response) => {
@@ -81,11 +82,11 @@ function AddMultipleStudents() {
       .then((data) => {
         if (data.message == "Students added successfully!") {setSuccess(data.message);
         setError("");
-        setTimeout(() => {  setSuccess(""); }, 1000);}
+        setTimeout(() => {  setSuccess(""); }, 2000);}
 
         else {setError(data.message);
                 setSuccess("");
-                setTimeout(() => {  setError(""); }, 1000);}
+                setTimeout(() => {  setError(""); }, 2000);}
 
         // alert(data.message);
         

@@ -8,7 +8,7 @@ import ReactDOM from "react-dom";
 function SentMessages(props) {
   const [loading, setLoading] = useState(true);
   const message = useRef();
-  
+  const token = localStorage.getItem("token")
   const history = useHistory();
   function editHandler(event) {
     event.preventDefault();
@@ -42,7 +42,7 @@ function SentMessages(props) {
     fetch("http://localhost:8080/api/edit-message/" + id, {
       method: "PUT",
       body: JSON.stringify(editMessage),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
     })
       .then((response) => {
         // console.log(response);
@@ -52,11 +52,11 @@ function SentMessages(props) {
         // alert(data.message);
         if (data.message == "Message Updated successfuly") {setSuccess(data.message);
           setError("");
-          setTimeout(() => {  setSuccess(""); }, 1000);}
+          setTimeout(() => {  setSuccess(""); }, 2000);}
   
           else {setError(data.message);
                   setSuccess("");
-                  setTimeout(() => {  setError(""); }, 1000);}
+                  setTimeout(() => {  setError(""); }, 2000);}
         console.log(data);
         const refresh = () => {
           // re-renders the component

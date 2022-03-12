@@ -32,7 +32,7 @@ function UpdateAttendance(props) {
 
   // const id = useRef();
   // const enteredId = id.current.value;
-
+  const token = localStorage.getItem("token")
 
 
   const studentIdRef = useRef();
@@ -89,7 +89,7 @@ function UpdateAttendance(props) {
     fetch("http://localhost:8080/api/update-attendance/" + enteredStudentId, {
       method: "PUT",
       body: JSON.stringify(attendanceData),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
     })
       .then((response) => {
         // console.log(response);
@@ -103,11 +103,11 @@ function UpdateAttendance(props) {
            
             if (data.message == "Attendance Updated successfuly") {setSuccess(data.message);
                 setError("");
-                setTimeout(() => {  setSuccess(""); }, 1000);}
+                setTimeout(() => {  setSuccess(""); }, 2000);}
         
                 else {setError(data.message);
                         setSuccess("");
-                        setTimeout(() => {  setError(""); }, 1000);}
+                        setTimeout(() => {  setError(""); }, 2000);}
                   
         //   setResponse(data);
       });

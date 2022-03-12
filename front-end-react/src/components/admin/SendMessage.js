@@ -18,6 +18,7 @@ function SendMessage() {
   const [success, setSuccess] = useState();
 
   let userRole = localStorage.getItem("role");
+  const token = localStorage.getItem("token")
   function searchHandler() {
     setIsLoading(true);
     fetch(
@@ -100,7 +101,7 @@ function SendMessage() {
     fetch("http://localhost:8080/api/send-message", {
       method: "POST",
       body: JSON.stringify(message),
-      headers: { "Content-Type": "application/json" },
+     headers: { "Content-Type": "application/json" , "Authorization":"Bearer " + token},
     })
       .then((response) => {
         //  console.log(response);
