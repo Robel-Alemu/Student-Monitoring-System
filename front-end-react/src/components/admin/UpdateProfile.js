@@ -37,7 +37,9 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/")
+        if (userRole == "Admin"){history.push("/")}
+        else if(userRole == "Data Encoder") {history.push("/data-encoder")}
+        
       })
       .catch((e) => {
         setError(e.message)

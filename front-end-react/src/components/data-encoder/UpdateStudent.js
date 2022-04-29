@@ -280,9 +280,11 @@ function UpdateStudent(props) {
         if (data.message == "Student Updated successfuly") {
           setSuccess(data.message);
           setError("");
+          setTimeout(() => {  setSuccess(""); }, 2000);
         } else {
           setError(data.message);
           setSuccess("");
+          setTimeout(() => {  setError(""); }, 2000);
         }
 
         //   setResponse(data);
@@ -310,11 +312,11 @@ function UpdateStudent(props) {
           if (data.message == "Student Deleted successfuly") {
             setSuccess(data.message);
             setError("");
-            setTimeout(() => {  setSuccess(""); }, 1000);
+            setTimeout(() => {  setSuccess(""); }, 2000);
           } else {
             setError(data.message);
             setSuccess("");
-            setTimeout(() => {  setError(""); }, 1000);
+            setTimeout(() => {  setError(""); }, 2000);
           }
           //   setResponse(data);
         });

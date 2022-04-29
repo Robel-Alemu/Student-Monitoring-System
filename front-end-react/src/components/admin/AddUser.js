@@ -54,11 +54,11 @@ function AddUser(props) {
         if (data.message == "User Account created successfully") {
           setSuccess(data.message);
           setError("");
-          setTimeout(() => {  setSuccess(""); }, 1000);
+          setTimeout(() => {  setSuccess(""); }, 2000);
         } else {
           setError(data.message);
           setSuccess("");
-          setTimeout(() => {  setError(""); }, 1000);
+          setTimeout(() => {  setError(""); }, 2000);
         }
         // alert(data.message);
         console.log(data)

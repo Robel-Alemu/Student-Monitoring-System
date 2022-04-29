@@ -61,8 +61,8 @@ function AttendanceList(props){
               {/* <th>Term</th> */}
               <th>Grade</th>
               <th>Section</th>
-              <th>date</th>
-              <th>status</th>
+              <th>Date</th>
+              <th>Status</th>
              
 
                     </tr>

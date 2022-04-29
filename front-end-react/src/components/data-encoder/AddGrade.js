@@ -173,7 +173,7 @@ const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Ch
       grade: enteredGrade,
       section: enteredSection,
       subject: enteredSubject,
-    };
+    };  
     setGrade(grade.push(gradeEntryData));
     grades.push(gradeEntryData);
 
@@ -213,7 +213,7 @@ const subjectOf7And8 = ["Amharic", "English", "Maths", "Physics", "Biology", "Ch
         document.getElementById("upload").value = null;
         setFileName("Choose File")
         setTerm(["Select Term"])
-        setClasses(["Select Grade"])
+        setClasses(["Select Class"])
         setSections(["Select Section"])
         setSubject(["Select Subject"])
       });
