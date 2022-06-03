@@ -322,12 +322,14 @@ const EditGrade = async (req, res, next) => {
     const term = data.term;
     const grade = data.grade;
     const section = data.section;
-    const subject = data.subject;
+    const subject = data.subject; 
 
     // const student = await firestore
     //   .collection("Student-Information")
     //   .where("studentId", "==", id)
     //   .get();
+
+    
     jwt.verify(req.token, 'secretkey', async (err,d) => {
       if(err) {
         res.sendStatus(403);
