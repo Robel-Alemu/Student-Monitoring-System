@@ -66,8 +66,13 @@ function App() {
                 <PrivateRoute path="/view-attendance">
                   <ViewAttendance  />
                 </PrivateRoute>
-                <PrivateRoute exact path="/">
+                <PrivateRoute  path="/admin">
                   <AllBroadcastMessagesPage title={"Admin"} />
+                </PrivateRoute>
+
+                <PrivateRoute exact path="/">
+            
+                  <Login  />
                 </PrivateRoute>
                 <PrivateRoute exact path="/messages">
                   <ViewMessages />

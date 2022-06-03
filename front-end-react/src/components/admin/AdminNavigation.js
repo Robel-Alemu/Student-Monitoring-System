@@ -34,7 +34,7 @@ function Adminavigation() {
       <Nav className={classes.nav} style={{textDecoration: "none"}}>
       <ul style={{textDecoration: "none"}}  >
              <li style={{textDecoration: "none"}}>
-                <Link className={classes.links} style={{"color":"white"}} to="/">Home</Link>
+                <Link className={classes.links} style={{"color":"white"}} to="/admin">Home</Link>
               </li>
               <li>
                <Link style={{"color":"white"}} to="/broadcast-message">Announcement</Link>

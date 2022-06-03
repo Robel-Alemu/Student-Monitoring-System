@@ -55,7 +55,7 @@ const  [loggedIn,setLoggedIn]= useState(false);
           localStorage.setItem('role', user.role)
         
          localStorage.setItem('email',user.email)
-            if (user.role === 'Admin') history.push("/");
+            if (user.role === 'Admin') history.push("/admin");
             else  history.push("/data-encoder");
             
                   console.log(user);

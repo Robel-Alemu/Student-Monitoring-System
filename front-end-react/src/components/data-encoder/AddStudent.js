@@ -46,7 +46,8 @@ function AddStudent(props) {
 
 
     fetch(
-      "http://localhost:8080/api/get-class/"+gradeRef.current.value
+      // "http://localhost:8080/api/get-class/"+gradeRef.current.value
+      "https://student-monitoring-system-backend.vercel.app/api/get-class/"+gradeRef.current.value
       // "https://student-monitoring.herokuapp.com/api/Student-Information",
      
       
@@ -93,7 +94,8 @@ function AddStudent(props) {
 function gradeHandler(e){
   e.preventDefault()
   fetch(
-    "http://localhost:8080/api/get-all-class"
+    "https://student-monitoring-system-backend.vercel.app/api/get-all-class"
+    // "http://localhost:8080/api/get-all-class"
     // "https://student-monitoring.herokuapp.com/api/Student-Information",
    
     
@@ -138,7 +140,8 @@ function gradeHandler(e){
 
 
 fetch(
-  "http://localhost:8080/api/get-class/"+gradeRef.current.value
+  "https://student-monitoring-system-backend.vercel.app/api/get-class/"+gradeRef.current.value
+  // "http://localhost:8080/api/get-class/"+gradeRef.current.value
   // "https://student-monitoring.herokuapp.com/api/Student-Information",
  
   
@@ -238,7 +241,8 @@ else if(enteredParent1Name && enteredParent1Phone ){
     console.log(field);
     event.preventDefault();
     fetch(
-      "http://localhost:8080/api/Student-Information",
+      "https://student-monitoring-system-backend.vercel.app/api/Student-Information"
+      // "http://localhost:8080/api/Student-Information",
       // "https://student-monitoring.herokuapp.com/api/Student-Information",
       {
         method: "POST",
