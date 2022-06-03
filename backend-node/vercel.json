@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "student-monitoring-system",
+    "builds": [
+      { "src": "script.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/(.*)", "dest": "/index.js" }
+    ]
+  }
